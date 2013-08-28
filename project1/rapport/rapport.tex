@@ -1,0 +1,291 @@
+% Dokumentklassen sættes til memoir.
+% Manual: http://ctan.org/tex-archive/macros/latex/contrib/memoir/memman.pdf
+\documentclass[a4paper,oneside,article]{memoir}
+% Danske udtryk (fx figur og tabel) samt dansk orddeling og fonte med
+% danske tegn. Hvis LaTeX brokker sig over æ, ø og å skal du udskifte
+% "utf8" med "latin1" eller "applemac".
+\usepackage[utf8]{inputenc}
+% Erstat english med danish for at få dansk dato
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{todonotes}
+
+% Algoritmer
+\usepackage{pseudocode}
+
+% Matematisk udtryk, fede symboler, theoremer og fancy ting (fx kædebrøker)
+\usepackage{amsmath,amssymb}
+%\usepackage{bm}
+\usepackage{amsthm}
+%\usepackage{mathtools}
+
+% Kodelisting. Husk at læse manualen hvis du vil lave fancy ting.
+% Manual: http://mirror.ctan.org/macros/latex/contrib/listings/listings.pdf
+%\usepackage{listings}
+
+% Fancy ting med enheder og datatabeller. Læs manualen til pakken
+% Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/siunitx/siunitx.pdf
+%\usepackage{siunitx}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{definition}[Lemma]{Definition}
+% Indsættelse af grafik.
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+
+\begin{document}
+\title{Dynamic algorithms}
+\author{
+       Bo Mortensen - 20073241\\
+       Mads Ravn - 20071580\\
+       Johan Abildskov - 20063623
+}
+\date{\today}
+
+\maketitle
+\chapter{Transitive Closures and arithmetic modulo}
+\section{Floyd-Warshall}
+In this section we describe an algorithm for computing the transitive
+closure of a graph based on Floyd-Warshall as described in Cormen et
+al.\cite{IntAlg}.  To be able to provide the functions
+\texttt{init(\textit{n})}, \texttt{insert(\textit{i,j})},
+\texttt{delete(\textit{i,j})} and \texttt{transitiveclosure?} we have
+created a datastructure called FloydWarshall. \\ Internally this
+datastructure maintains a $n \times n$ matrix \texttt{M} defined as
+$$M_{ij} =
+\begin{cases}
+  1 & \text{if } (i,j) \in E \\
+  0 & \text{if } (i,j) \notin E 
+\end{cases}
+$$\\
+This can be summed up as having the matrix \texttt{M} maintain all edges of our graph \texttt{G}.
+\subsection{\texttt{init(n):}}
+In the \texttt{init(n)} method we construct an $m \times m$ matrix and
+populate all the entries with zeros. This conforms to the idea that
+the initial graph should contain all the vertices of \texttt{G} and no
+edges. As we initialize all \texttt{n} entries of the matrix to 0, we
+end up with a running time for \texttt{init(\textit{n})} of
+$\Theta(\textit{n})$.
+\subsection{\texttt{insert(\textit{i,j})} and \texttt{delete(\textit{i,j}):}}
+The insertion and deletion of edges from \textit{i} to \textit{j}
+in our graph \texttt{G} simply constitutes setting $M_{ij} = 1$ for
+insertion and $M_{ij} = 0$ for deletion.  As the matrix is represented
+as a one dimensional array we can do the operation in constant time.
+Therefore, the time complexity for \texttt{insert(\textit{i,j})} and
+\texttt{del(\textit{i,j})} is $\Theta(1)$. This, of course, assumes that
+we can keep our array in memory, and does not need to do I/O
+operations.
+\subsection{\texttt{transitiveclosure?}:}
+Our datastructure supports the method call
+\texttt{transitiveclosure?}, returning the number of edges in the
+transitive closure graph naively, by recomputing the transitive closure
+graph using the FloydWarshall algorithm, as described in \cite{IntAlg}.
+The algorithm computes $n\text{ } n \times n$ matrices. The last
+matrix computed contains the transitive closure graph of \texttt{G}. Intermediate matrices are defined as follows.
+$$T^{(0)}_{ij} =
+\begin{cases}
+  1 & \text{if } i = j\text{ } or\text{ } (i,j) \in E \\
+  0 & \text{if } i \neq j\text{ } and \text{ } (i,j) \notin E
+\end{cases}
+$$
+For k > 0:
+$$T^{(k)} =
+\begin{cases}
+  1 & \text{if } T^{k-1}_{ij} \text{ or } ( T^{k-1}_{kj} \text{ and } T^{k-1}_{ik} ) \\
+  0 & \text{otherwise}
+\end{cases}
+$$ Our algorithm computes the intermediary matrices $T^{(1)}$ through
+$T^{(n)}$ in place and we thus end up with a space complexity of
+$\Theta(n)$.  After we have computed $T^{n}$ we run through its
+entries and count the number of ones.  This allows us to return the
+number of edges in the transitive closure graph.  Our construction of
+$T^{0}$ takes $\Theta(n)$ time.  This is similar to our computation of
+the number of edges in the transitive closure graph, so as we visit all
+entries in the matrix $T^{n}$ we have a running time of $\Theta(n)$.
+For the computation of the intermediary matrices we visit all of the
+entries of the $n\text{ } n \times n$ matrices, yielding a running time
+of $\Theta(n^3)$. This sums up to a time complexity of
+$\Theta(n^3)$.\\ Were this datastructure to be used in practice,
+depending on the use case, the re-computation of the transitive closure
+graph might be delegated to graph changes (\texttt{del(\textit{i,j})}
+and \texttt{insert(\textit{i,j})}). This would allow us to do the call
+\texttt{transitiveclosure?} in constant time at the cost of increasing
+the time complexity of \texttt{del(\textit{i,j})} and
+\texttt{insert(\textit{i,j})} to $\Theta(n^3)$.
+
+\section{Sherman-Morrison and Sankowski}
+In this section we describe a dynamic algorithm for maintaining a
+matrix inverse for the transitive closure of a graph using the
+Sankowski algorithm in conjunction with the Sherman-Morrison formula.
+This approach is outlined in \cite{sankowski}
+\newtheorem{Sankowski}{Theorem}
+\begin{Sankowski}
+Let A be the adjacency matrix of a graph G. There exists a path in G
+from i to j iff $adj(I - A)_{ij}$ as polynomial of entries of A is
+symbolically not equal to zero. Moreover $adj(I - A)_{ij}$ is non-zero
+over finite field $Z_p$.
+\end{Sankowski}
+The idea in this algorithm is based on the fact that the adjoint of a
+matrix is its own transitive closure matrix. Using the relation $(I -
+B)^{-1}=\frac{adj(I - B)}{det(I - B)}$, if we can compute the inverse
+of the matrix, and the determinant of the matrix is 1, we can compute
+the transitive closure matrix. As the transitive closure matrix only
+contains ones and zeroes, the determinant will be zero with high
+probability. To remedy this, the non-zero entries are set to a random
+number between one and a chosen prime. These random numbers resides in
+the matrix $R$, which is generated as preprocessing, and a single
+value $r_{ij} \in R$ is only recomputed should $(I - B)$ become
+singular. Before reverting to the transitive closure graph from this
+we set the non-zero entries to 1.
+\subsubsection{\texttt{init(\textit{n})}:}
+In this function we initialize the matrices $M, C, R$
+and $(I-B)^{-1}$ with each matrix being of size $n\times n$. Each
+entry in R is a random float between 1 and $2^{31}-1$. The matrix $(I - B)^{-1}$
+represents a matrix one step away from our transitive closure matrix,
+with the following rules:
+$$(I - B)^{-1}_{ij} =
+\begin{cases}
+  \neq 0 & \text{if } (i,j) \in E \\
+ = 0 & \text{if } (i,j) \notin E 
+\end{cases}
+$$
+The matrix $C$ represents our transitive closure matrix, obeying the following rules:
+$$C_{ij} =
+\begin{cases}
+  1 & \text{if} (i,j) \in E \\
+  0 & \text{if} (i,j) \notin E 
+\end{cases}
+$$ We temporarily use the matrix $B$ defined as $B_{ij} = M_{ij} \cdot
+R_{ij}$. This matrix has the sole purpose of computing the $(I -
+B)^{-1}$ matrix. Matrix $M$ is defined as the identity matrix $I^n$.
+
+\subsubsection{\texttt{insert(\textit{i,j})}:}
+To implement \texttt{insert(\textit{i,j})} we use the Sherman-Morrison
+formula to maintain the inverse matrix $(I - B)^{-1}$:
+
+$$(A+uv^T)^{-1}=A^{-1} + \dfrac{(A^{-1}uv^TA^{-1})}{(1 -
+  v^TA^{-1}u)}$$ with $A = (I - B)$, $A^{-1}$ is the current inverse
+and $(A+uv^T)^{-1}$ is the updated inverse. $u$ and $v$ is vectors
+with all zeros except for $i$ in $u$ and $j$ in $v$.  There exists a
+possibility that the matrix computed will become singular, if this
+happens we generate a new random value in $R_{ij}$ and recompute the
+matrix.
+\subsubsection{\texttt{delete(\textit{i,j})}:}
+As in \texttt{insert(\textit{i,j})} we use the Sherman-Morrison
+formula, but with opposite signs:
+
+$$(A+uv^T)^{-1}=A^{-1} - \dfrac{(A^{-1}uv^TA^{-1})}{(1+v^TA^{-1}u)}$$
+
+The entry $R_{ij}$ is recalculated, such that we do not reuse the
+random values, because this could cause the matrix to become singular.
+
+\subsubsection{\texttt{transitiveClosure?}}
+Computes and returns the transitive closure matrix $C$ according to
+the aforementioned rules:
+$$C_{ij} =
+\begin{cases}
+  1 & \text{if} (I - B)^{-1}_{ij} \neq 0 \\
+  0 & \text{if} (I - B)^{-1}_{ij} = 0
+\end{cases}
+$$
+\newpage
+\subsection{Complexity analysis}
+In this section we will analyze the complexity of the aforementioned
+operations in relation to $n$ and $p$:
+\subsubsection{\textit{init(n)}:}
+This initialization method only initializes a few $n\times n$
+matrices which is done in times $O(n^2)$. One of these matrices are
+filled with random numbers in the range $[1,p-1]$. We assume that it's
+possible to generate a uniformly distributed random k-bit number in
+time $O(k)$, so the final complexity of the init function is
+$O(n^2\log p)$.
+\subsubsection{\textit{insert(i,j)} and \textit{delete(i,j)}:}
+These methods both perform $n^2$ operations in addition to the
+arithmetic modulo operation which we, per the problem description,
+assume runs in $O(\log^2p)$. We then end up with complexity
+$O(n^2\log^2p)$.
+\subsubsection{\textit{transitiveClosure?}:}
+This method converts the $(I - B)^{-1}$ matrix to the transitive closure matrix $C$.
+As this is done by traversing each entry $C_{ij}$ of $C$ and setting it to one \textit{iff} $(I - B)^{-1} == 1)$ and zero otherwise, the time complexity of this method is $O(n^2)$ 
+
+\begin{center}
+\begin{tabular}{|c|l|}
+  \hline
+
+  \textit{init(n)} & $O(n^2\log p)$ \\ \hline
+  \textit{insert(i,j)} &  $O(n^2\log^2p)$ \\ \hline
+  \textit{delete(i,j)} &  $O(n^2\log^2p)$ \\ \hline
+  \textit{transitiveClosure?} & $O(n^2)$ \\
+  \hline
+\end{tabular}
+\end{center}
+
+\section{Extended-Euclidean algorithm}
+Modular arithmetic with addition, subtraction and multiplication has some easy rules which makes the time complexity easy. The rules are that given $a \equiv b (\text{mod } n)$ and $a' \equiv b' (\text{mod } n)$ we know that:
+
+\begin{align*}
+  a+b &\equiv a'+b' (\text{mod } n) \\
+  a-b &\equiv a'-b' (\text{mod } n) \\
+  ab &\equiv a'b' (\text{mod } n)
+\end{align*}
+
+\noindent However, these rules does not apply to modular division. The time complexity for addition and subtraction are $O(log(n))$. For modular multiplication \cite{complexity} gives a time complexity of $log_2{k}*\frac{4}{3}$. To find the time complexity of modular division we first need to understand what it semantically means. What should the expression $\frac{a}{b} (\text{mod } n)$ give? We split the expression up into $a \frac{1}{b} (\text{mod } n)$. So in essence we are interested in finding the multiplicative inverse of a number modulo n. The multiplicative inverse of a number $b$ means that there exists a number $x$ such that $bx = 1$. So the same must apply here: We are looking for a number $x$ which satisfies the expression $bx \equiv 1 (\text{mod } n)$. To this purpose we can use the extended Euclidean algorithm which computes the Bezout identity $ax + by = d$. The algorithm finds $(x,y,d)$ given $a$ and $b$.. Since we are looking for a number $x$ to satisfy $bx \equiv 1 (\text{mod } n)$ there must exists an integer $q$ which gives $bx -1 = qn$ and rewriting that expression gives us $bx -qn = 1$ which is something that looks like the Bezout identify. Thus, we can use the extended Euclidean algorithm to find $x$ and $q$ given $b$ and $n$. We can then discard $q$ because we are only interested in the $x$. The greatest common divisor of $b$ and $n$ has to be $1$ or else $b$ does not have a multiplicative inverse modulo $n$. This is because $b$ and $n$ have to be co-primes.
+
+\begin{pseudocode}{Extended-Euclid}{a, b}
+  \IF b = 0 \THEN \RETURN{(a, i, o)}\\
+  (d\prime , x\prime , y\prime  \GETS \CALL{Extended-Euclid}{\textit{b}, \textit{a} \text{ mod } \textit{b}}\\
+  (d, x, y) \GETS (d\prime , y\prime , x\prime  -\lfloor a/b \rfloor y\prime )\\
+  \RETURN{(d,x,y)}
+\end{pseudocode}
+
+The extended Euclidean algorithm gcd(a,b) returns the tuple $(x,y,d)$ of the Bezout identity and has a time complexity of $O(log^2(n))$ assuming $|b| < n$. The extended Euclidean algorithm takes $O(log(b)) < O(log(n))$ recursive steps before it terminates and each step takes $O(log(n))$. Finally the multiplication of $a \frac{1}{b} (\text{mod } n)$ takes $O(log^2(k)\frac{4}{3}) < O(log^2(n)\frac{4}{3})$. Adding these time complexities together we get $O(log(n)log(n)) + O(log^2(n)\frac{4}{3}) = O(\frac{7}{3}log^2(n)) = O(log^2(n))$.
+
+\section{Implementation}
+We implemented the algorithms in C++ with the Floyd-Warshall algorithm
+in the \texttt{FloydWarshall.cpp/.hpp} files, and the
+Sankowski/Sherman-Morrison algorithm in the
+\texttt{ShermanMorrison.cpp/.hpp} files. Additionally, we implemented
+a matrix class with all the necessary methods for the algorithms.
+
+\section{Experimentation}
+In order to test whether our implementation performs as expected given
+the theoretical bounds of the algorithms treated in this report, we
+ran our code on the data supplied by Gudmund for up to graphs with 100 nodes.
+We have run these tests numerous times and have plotted the data on the graphs below.
+
+
+\subsection{FloydWarshall}
+
+\subsection{Sankowski}
+
+\subsubsection{Error probability}
+\begin{Lemma}
+let $f \in F[X1, ...,X_n]$ be a non-zero-polynomial over a field F, let S be a finite subset of F and let $r1,...,.r_n$ be selected randomly from S.
+Then $P[f(r1,...,r_n)=0]\leq \frac{n}{|S|}$
+\end{Lemma}
+Using the Schwartz-Zippel Lemma, we can see that the Sankowski algorithm will yield an incorrect answer with a probability less than $n/p$ where $p$ is the chosen prime $2^{31}-1$ and $n$ is the maximum rank of the transitive closure matrix.
+This means that to keep the probability for an incorrect answer lower than $\frac{1}{n}$, $p$ must be larger than $n^2$. This means that we can guarantee an error probability less than $\frac{1}{n}$ only if $n < \sqrt{p}$.
+
+
+\subsection{Conclusion}
+
+%%\section{pseudocode}
+%%\begin{pseudocode}{testFunction}{Arg1, Arg1}
+%%\FOR i \GETS 0 \TO 10 \DO
+%%some processing\\
+%%
+%%\IF <condition> \THEN <stmt>
+%%\IF <condition> \THEN <stmt> \ELSE <stmt>
+%%\IF <condition> \THEN <stmt> \ELSEIF <stmt> \THEN <stmt>\\
+%%
+%%f \GETS {9c/5} + 32\\
+%%\RETURN{f}
+%%\end{pseudocode}
+
+
+\bibliographystyle{plain} \bibliography{refs}
+
+\end{document}
