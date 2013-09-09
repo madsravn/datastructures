@@ -8,7 +8,9 @@ class FNode {
         FNode();
     
     private:
-        std::list<std::unique_ptr<FNode>> children;
+        // TODO: Skal nok laves om til bare to pointers
+        // en til højre og en til venstre
+        std::list<std::shared_ptr<FNode>> children;
 
 };
 

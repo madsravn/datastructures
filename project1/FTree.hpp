@@ -8,7 +8,7 @@ class FTree {
         FTree();
 
     private:
-        std::unique_ptr<FNode> root;
+        std::shared_ptr<FNode> root;
 
 };
 

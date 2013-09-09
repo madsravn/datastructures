@@ -2,11 +2,13 @@
 #define FHEAP_HPP_
 
 #include "FTree.hpp"
+#include "IQueue.hpp"
 #include <vector>
 
-class FHeap {
+class FHeap : public IQueue {
     public:
         FHeap();
+        virtual void MakeHeap();
     private:
         std::vector<FTree> forest;
 };

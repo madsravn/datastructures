@@ -3,3 +3,9 @@
 FHeap::FHeap() {
 
 }
+
+void 
+FHeap::MakeHeap() {
+    //Kode her
+   
+}
