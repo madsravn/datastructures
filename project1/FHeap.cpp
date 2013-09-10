@@ -1,4 +1,5 @@
 #include "FHeap.hpp"
+#include "FNode.hpp"
 
 FHeap::FHeap() {
 
@@ -6,7 +7,7 @@ FHeap::FHeap() {
 
 void 
 FHeap::MakeHeap() {
-    //Kode her
+	forest[0] = FTree();
 }
 
 void
@@ -16,13 +17,14 @@ FHeap::sayName() {
 
 int
 FHeap::FindMin() {
-
-    return 5;
+    return forest[0].root->n;
 }
 
 void
 FHeap::Insert(int i) {
-
+	auto heap = std::make_shared<FHeap>();
+	heap->Insert(i);
+	Meld(heap);
 }
 
 void
@@ -33,6 +35,9 @@ FHeap::DeleteMin() {
 void 
 FHeap::DecreaseKey(int k, int i) {
 
+}
 
-
+void
+FHeap::Meld(std::shared_ptr<FHeap> heap) {
+	
 }
