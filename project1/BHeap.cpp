@@ -8,6 +8,11 @@ BHeap::MakeHeap() {
     //Kode her
 }
 
+void
+BHeap::sayName() {
+    std::cout << "I am BHeap" << std::endl;
+}
+
 int
 BHeap::FindMin() {
 

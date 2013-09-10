@@ -8,6 +8,7 @@ class IQueue {
         virtual void Insert(int i) = 0;
         virtual void DeleteMin() = 0;
         virtual void DecreaseKey(int k, int i) = 0;
+        virtual void sayName() = 0;
     protected:
         IQueue() {}
 

@@ -9,6 +9,11 @@ FHeap::MakeHeap() {
     //Kode her
 }
 
+void
+FHeap::sayName() {
+    std::cout << "I am FHeap" << std::endl;
+}
+
 int
 FHeap::FindMin() {
 

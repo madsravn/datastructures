@@ -4,6 +4,7 @@
 #include "FTree.hpp"
 #include "IQueue.hpp"
 #include <vector>
+#include <iostream>
 
 class FHeap : public IQueue {
     public:
@@ -14,6 +15,7 @@ class FHeap : public IQueue {
         virtual void DeleteMin();
         //Decrease value of Node k with i.
         virtual void DecreaseKey(int k, int i);
+        virtual void sayName();
     private:
         std::vector<FTree> forest;
 };
