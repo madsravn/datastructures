@@ -50,6 +50,7 @@ BHeap::Insert(int i) {
         }
     }
     size++;
+    //TODO: Bubble-up
 }
 
 void
