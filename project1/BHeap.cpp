@@ -48,9 +48,19 @@ BHeap::Insert(int i) {
         if(s.at(pos) == '1') {
             node->right = newnode;
         }
+        newnode->parent = node;
+        while(newnode->parent != nullptr) {
+            if(newnode->n < newnode->parent->n) {
+                int temp = newnode->n;
+                newnode->n = newnode->parent->n;
+                newnode->parent->n = temp;
+                std::cout << newnode->n << " bytter plads med " << newnode->parent->n << std::endl;
+            }
+            newnode = newnode->parent;
+        }
+
     }
     size++;
-    //TODO: Bubble-up
 }
 
 void

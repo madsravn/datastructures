@@ -4,6 +4,6 @@ BNode::BNode() {
 
 }
 
-BNode::BNode(int number) : n(number) {
+BNode::BNode(int number) : n(number),right(nullptr), left(nullptr), parent(nullptr) {
 
 }
