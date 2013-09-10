@@ -7,9 +7,11 @@ class BNode {
     public:
         BNode(int number);
         BNode();
+        std::shared_ptr<BNode> left, right;
+
     private:
         int n;
-        std::shared_ptr<BNode> left, right;
+
 };
 
 #endif

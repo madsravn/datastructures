@@ -4,6 +4,7 @@
 #include <iostream>
 #include "BNode.hpp"
 #include "IQueue.hpp"
+#include <bitset>
 
 class BHeap : public IQueue {
     public:
@@ -18,6 +19,7 @@ class BHeap : public IQueue {
 
     private:
         std::shared_ptr<BNode> root;
+        unsigned int size;
 };
 
 #endif
