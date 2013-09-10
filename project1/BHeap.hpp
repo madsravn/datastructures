@@ -1,21 +1,22 @@
-#ifndef FHEAP_HPP_
-#define FHEAP_HPP_
+#ifndef BHEAP_HPP_
+#define BEAHP_HPP
 
-#include "FTree.hpp"
+#include "BNode.hpp"
 #include "IQueue.hpp"
-#include <vector>
 
-class FHeap : public IQueue {
+class BHeap : public IQueue {
     public:
-        FHeap();
+        BHeap();
         virtual void MakeHeap();
         virtual int FindMin();
         virtual void Insert(int i);
         virtual void DeleteMin();
         //Decrease value of Node k with i.
         virtual void DecreaseKey(int k, int i);
+
     private:
-        std::vector<FTree> forest;
+        std::shared_ptr<BNode> root;
 };
 
 #endif
+
