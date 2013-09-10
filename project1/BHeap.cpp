@@ -19,6 +19,27 @@ BHeap::FindMin() {
     return 5;
 }
 
+std::string nodeInfo(std::shared_ptr<BNode> n) {
+    if(n->left == nullptr && n->right == nullptr) {
+        return ""; 
+    }
+    std::string temp = "";
+    if(n->left != nullptr) {
+        temp = temp + std::to_string(n->n) + " -> " + std::to_string( n->left->n) + "\n";
+        temp = temp + nodeInfo(n->left);
+    }
+    if(n->right != nullptr) {
+        temp = temp + std::to_string(n->n) + " -> " + std::to_string( n->right->n) + "\n";
+
+        temp = temp + nodeInfo(n->right);
+    }
+    return temp;
+}
+std::string
+BHeap::graph() {
+    return  "digraph G {\n\n" + nodeInfo(root) + "\n}";
+}
+
 void
 BHeap::Insert(int i) {
     if(size == 0) {
@@ -54,7 +75,7 @@ BHeap::Insert(int i) {
                 int temp = newnode->n;
                 newnode->n = newnode->parent->n;
                 newnode->parent->n = temp;
-                std::cout << newnode->n << " bytter plads med " << newnode->parent->n << std::endl;
+                //std::cout << newnode->n << " bytter plads med " << newnode->parent->n << std::endl;
             }
             newnode = newnode->parent;
         }
