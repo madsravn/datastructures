@@ -14,7 +14,7 @@ int main() {
     //d1.sayName();
     auto bheap = std::make_shared<BHeap>();
     for(int i = 0; i < 10; i++) {
-        bheap->Insert(12-i);
+        bheap->Insert(10, 12-i);
     }
     Dijkstra d2(bheap);
     //d2.sayName();

@@ -7,6 +7,7 @@ class FTree {
     public:
         FTree();
         void Insert(int n);
+		void deleteMin();
         std::shared_ptr<FNode> root;
 
 };

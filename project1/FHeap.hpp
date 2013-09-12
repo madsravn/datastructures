@@ -11,7 +11,7 @@ class FHeap : public IQueue {
         FHeap();
         virtual void MakeHeap();
         virtual int FindMin();
-        virtual void Insert(int i);
+        virtual void Insert(int k, int priority);
         virtual void DeleteMin();
         //Decrease value of Node k with i.
         virtual void DecreaseKey(int k, int i);
@@ -19,6 +19,8 @@ class FHeap : public IQueue {
         void Meld(std::shared_ptr<FHeap>);
     private:
         std::vector<FTree> forest;
+		std::shared_ptr<FNode> minRoot;
+
 };
 
 #endif

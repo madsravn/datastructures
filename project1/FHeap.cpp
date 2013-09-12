@@ -17,19 +17,21 @@ FHeap::sayName() {
 
 int
 FHeap::FindMin() {
-    return forest[0].root->n;
+    return forest[0].root->n; //TODO: måske?
 }
 
 void
-FHeap::Insert(int i) {
+FHeap::Insert(int k, int priority) {
 	auto heap = std::make_shared<FHeap>();
-	heap->Insert(i);
+	heap->Insert(k, priority);
 	Meld(heap);
 }
 
 void
 FHeap::DeleteMin() {
-
+/*	for (int i = 0; i < forest.size; i++) {
+		
+	}*/
 }
 
 void 

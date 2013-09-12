@@ -13,3 +13,7 @@ FTree::Insert(int n) {
     }
 }
 
+void FTree::deleteMin() {
+	root = nullptr;
+
+}
