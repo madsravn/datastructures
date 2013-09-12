@@ -15,6 +15,9 @@ BHeap::sayName() {
 
 std::string 
 nodeInfo(std::shared_ptr<BNode> n) {
+    if(n == nullptr) {
+        return "";
+    }
     if(n->left == nullptr && n->right == nullptr) {
         return ""; 
     }
