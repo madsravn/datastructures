@@ -13,12 +13,6 @@ BHeap::sayName() {
     std::cout << "I am BHeap" << std::endl;
 }
 
-int
-BHeap::FindMin() {
-
-    return 5;
-}
-
 std::string 
 nodeInfo(std::shared_ptr<BNode> n) {
     if(n->left == nullptr && n->right == nullptr) {
@@ -42,8 +36,16 @@ BHeap::graph() {
     return  "digraph G {\n\n" + nodeInfo(root) + "\n}";
 }
 
+int
+BHeap::FindMin() {
+
+    return 5;
+}
+
 void
-BHeap::Insert(int i) {
+BHeap::Insert(int k, int priority) {
+
+
     if(size == 0) {
         auto node = std::make_shared<BNode>(i);
         root = node;
