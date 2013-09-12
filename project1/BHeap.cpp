@@ -45,7 +45,7 @@ BHeap::FindMin() {
 void
 BHeap::Insert(int k, int priority) {
 
-
+	/*
     if(size == 0) {
         auto node = std::make_shared<BNode>(i);
         root = node;
@@ -85,7 +85,7 @@ BHeap::Insert(int k, int priority) {
         }
 
     }
-    size++;
+    size++;*/
 }
 
 void
