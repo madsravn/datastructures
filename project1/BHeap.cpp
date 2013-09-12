@@ -19,7 +19,8 @@ BHeap::FindMin() {
     return 5;
 }
 
-std::string nodeInfo(std::shared_ptr<BNode> n) {
+std::string 
+nodeInfo(std::shared_ptr<BNode> n) {
     if(n->left == nullptr && n->right == nullptr) {
         return ""; 
     }
@@ -35,6 +36,7 @@ std::string nodeInfo(std::shared_ptr<BNode> n) {
     }
     return temp;
 }
+
 std::string
 BHeap::graph() {
     return  "digraph G {\n\n" + nodeInfo(root) + "\n}";
