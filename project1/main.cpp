@@ -10,6 +10,13 @@ int main() {
     t.start();
 
     auto fheap = std::make_shared<FHeap>();
+	for(int i = 0; i < 10; i++) {
+        fheap->Insert(10, 12-i);
+    }
+	fheap->DecreaseKey(10, 3);
+	fheap->DeleteMin();
+	fheap->FindMin();
+	fheap->sayName();
     Dijkstra d1(fheap);
     //d1.sayName();
     auto bheap = std::make_shared<BHeap>();

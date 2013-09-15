@@ -23,10 +23,17 @@ FHeap::FindMin() {
 void
 FHeap::Insert(int k, int priority) {
 	if (minRoot != nullptr) {
-		auto heap = std::make_shared<FHeap>();
+		std::shared_ptr<FHeap> heap = std::make_shared<FHeap>();
+		heap->Insert(k, priority);
 		Meld(heap);
 	} else {
-		auto node = std::make_shared<FNode>(priority);
+		std::shared_ptr<FNode> node = std::make_shared<FNode>(priority);
+		node->child = nullptr;
+		node->parent = nullptr;
+		node->leftSibling = node;
+		node->rightSibling = node;
+		node->rank = 0;
+		node->marked = true; // Dunno wtf
 		minRoot = node;
 	}
 }
@@ -38,27 +45,42 @@ FHeap::DeleteMin() {
 	std::vector<std::shared_ptr<FNode>> roots;
 
 	// Add other roots to list
-	std::shared_ptr<FNode> rootSibling = minRoot->rightSibling;
-	while(rootSibling != minRoot) {
-		roots.push_back(rootSibling);
-		rootSibling = rootSibling->rightSibling;
+	
+	
+	if (minRoot != nullptr) {
+		std::shared_ptr<FNode> rootSibling = minRoot->rightSibling;
+		if (minRoot->leftSibling == minRoot) {
+			roots.push_back(minRoot);
+		}
+		while(rootSibling != minRoot) {
+			roots.push_back(rootSibling);
+			rootSibling = rootSibling->rightSibling;
+		}
 	}
+	
 
 	// Add deleted node's children to list
-	roots.push_back(minRoot->child);
-	rootSibling = minRoot->child->rightSibling;
-	while(rootSibling != minRoot->child) {
-		roots.push_back(rootSibling);
-		rootSibling = rootSibling->rightSibling;
+	if(minRoot->child != nullptr) {
+		roots.push_back(minRoot->child);
+		std::shared_ptr<FNode> rootSibling = minRoot->child->rightSibling;
+		if (rootSibling == rootSibling->leftSibling) {
+			roots.push_back(rootSibling);
+		}
+		while(rootSibling != minRoot->child) {
+			roots.push_back(rootSibling);
+			rootSibling = rootSibling->rightSibling;
+		}
 	}
-
-	minRoot = nullptr;
-
-	std::vector<std::shared_ptr<FNode>> finalRoots;
 	
-	for (int i = 0; i < finalRoots.size(); i++) {
-		finalRoots[i]->rightSibling = finalRoots[(i + 1) % finalRoots.size()];
-		finalRoots[i]->leftSibling  = finalRoots[(i - 1) % finalRoots.size()];
+	minRoot = nullptr;
+	
+	minRoot = roots[0];
+	for (int i = 0; i < roots.size(); i++) {
+		roots[i]->rightSibling = roots[(i + 1) % roots.size()];
+		roots[i]->leftSibling  = roots[(i - 1) % roots.size()];
+		if (roots[i]->n < minRoot->n) {
+			minRoot = roots[i];
+		}
 	}
 }
 
