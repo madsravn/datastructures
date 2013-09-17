@@ -69,7 +69,7 @@ BHeap::Insert(int k, int priority) {
             }
             pos++;
         }
-        auto newnode = std::make_shared<BNode>(i);
+        auto newnode = std::make_shared<BNode>(k, priority);
         if(s.at(pos) == '0') {
             node->left = newnode;
         }
