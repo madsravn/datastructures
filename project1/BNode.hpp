@@ -5,10 +5,11 @@
 
 class BNode {
     public:
-        BNode(int number);
+        BNode(int key, int priority);
         BNode();
         std::shared_ptr<BNode> left, right, parent;
         int n;
+		int key;
 
 };
 

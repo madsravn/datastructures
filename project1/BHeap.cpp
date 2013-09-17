@@ -1,7 +1,7 @@
 #include "BHeap.hpp"
 
-BHeap::BHeap() : size(0) {}
-
+BHeap::BHeap() : size(0), root(nullptr) {
+}
 
 void 
 BHeap::MakeHeap() {
@@ -38,16 +38,16 @@ BHeap::graph() {
 
 int
 BHeap::FindMin() {
-
-    return 5;
+	if(root == nullptr)
+		return -1;
+	else
+		return root->key;
 }
 
 void
 BHeap::Insert(int k, int priority) {
-
-	/*
     if(size == 0) {
-        auto node = std::make_shared<BNode>(i);
+        auto node = std::make_shared<BNode>(k, priority);
         root = node;
     } else {
         std::string s = std::bitset<64> (size+1).to_string();
@@ -85,7 +85,7 @@ BHeap::Insert(int k, int priority) {
         }
 
     }
-    size++;*/
+    size++;
 }
 
 void
