@@ -80,12 +80,14 @@ BHeap::Insert(int k, int priority) {
             node->right = newnode;
         }
         newnode->parent = node;
-        //TODO: FIX! Skal have byttet både parent og børn.
         while(newnode->parent != nullptr) {
             if(newnode->prio < newnode->parent->prio) {
-                int temp = newnode->prio;
+                int tprio = newnode->prio;
                 newnode->prio = newnode->parent->prio;
-                newnode->parent->prio = temp;
+                newnode->parent->prio = tprio;
+                int tkey = newnode->key;
+                newnode->key = newnode->parent->key;
+                newnode->parent->key = tkey;
                 //std::cout << newnode->n << " bytter plads med " << newnode->parent->n << std::endl;
             }
             newnode = newnode->parent;
@@ -117,6 +119,26 @@ BHeap::DeleteMin() {
 
 void
 BHeap::BubbleDown(std::shared_ptr<BNode> node) {
+
+}
+
+void
+BHeap::BubbleUp(std::shared_ptr<BNode> node) {
+
+}
+
+//TODO: Skal vi skifte rundt på hele noder eller skal vi bare bytte deres interne værdier?
+void 
+BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
+    std::shared_ptr<BNode> tparent = n1->parent;
+    std::shared_ptr<BNode> tleft = n1->left;
+    std::shared_ptr<BNode> tright = n1->right;
+    n1->parent = n2->parent;
+    n1->left = n2->left;
+    n1->right = n2->right;
+    n2->parent = tparent;
+    n2->left = tleft;
+    n2->right = tright;
 
 }
 

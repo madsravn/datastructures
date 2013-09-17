@@ -19,6 +19,8 @@ class BHeap : public IQueue {
         std::string graph();
         std::shared_ptr<BNode> Find(int place);
         void BubbleDown(std::shared_ptr<BNode> node);
+        void BubbleUp(std::shared_ptr<BNode> node);
+        void Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2);
 
     private:
         std::shared_ptr<BNode> root;

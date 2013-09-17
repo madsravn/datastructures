@@ -28,7 +28,7 @@ int main() {
     //d2.sayName();
     std::cout << bheap->graph() << std::endl;
     bheap->DeleteMin();
-    std::cout << bheap->graph() << std::endl;
+    //std::cout << bheap->graph() << std::endl;
     t.stop();
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
 
