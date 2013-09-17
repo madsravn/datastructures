@@ -17,6 +17,8 @@ class BHeap : public IQueue {
         virtual void DecreaseKey(int k, int i);
         virtual void sayName();
         std::string graph();
+        std::shared_ptr<BNode> Find(int place);
+        void BubbleDown(std::shared_ptr<BNode> node);
 
     private:
         std::shared_ptr<BNode> root;
