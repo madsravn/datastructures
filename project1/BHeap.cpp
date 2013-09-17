@@ -13,6 +13,7 @@ BHeap::sayName() {
     std::cout << "I am BHeap" << std::endl;
 }
 
+//TODO: Få den til at pege begge veje, så vi også kan holde øje med parents
 std::string 
 nodeInfo(std::shared_ptr<BNode> n) {
     if(n == nullptr) {
@@ -115,8 +116,9 @@ BHeap::DeleteMin() {
 }
 
 void
-BHeap::BubbleDown(std::shared_ptr<BNode node) {
+BHeap::BubbleDown(std::shared_ptr<BNode> node) {
 
+}
 
 std::shared_ptr<BNode> 
 BHeap::Find(int place) {
