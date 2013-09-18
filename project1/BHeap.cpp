@@ -161,12 +161,19 @@ void internalNodeInfo(std::shared_ptr<BNode> node) {
 
 void
 BHeap::BubbleUp(std::shared_ptr<BNode> node) {
-    std::shared_ptr<BNode> temp = node;
+    /*std::shared_ptr<BNode> temp = node;
     while(temp->parent != nullptr && temp->parent->prio > temp->prio) {
 
         Switch(temp,temp->parent);
         temp = temp->parent;
                     
+    }*/
+
+    if(node->parent != nullptr) {
+        if(node->parent->prio > node->prio) {
+            Switch(node,node->parent);
+            BubbleUp(node->parent);
+        }
     }
 
 }
