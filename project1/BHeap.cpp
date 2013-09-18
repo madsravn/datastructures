@@ -124,6 +124,30 @@ BHeap::DeleteMin() {
 
 void
 BHeap::BubbleDown(std::shared_ptr<BNode> node) {
+    // Der skal køres nedad, men også tages højde for at enten left eller right kan være nullptr
+    if(node->left != nullptr && node->right != nullptr) {
+        if(node->left->prio < node->right->prio) {
+            if(node->left->prio < node->prio) {
+                Switch(node,node->left);
+                BubbleDown(node->left);
+            }
+        } else {
+            if(node->right->prio < node->prio) {
+                Switch(node,node->right);
+                BubbleDown(node->right);
+            }
+        }
+    } else if(node->left != nullptr) {
+        if(node->left->prio < node->prio) {
+            Switch(node,node->left);
+            BubbleDown(node->left);
+        }
+    } else if(node->right != nullptr) {
+        if(node->right->prio < node->prio) {
+            Switch(node,node->right);
+            BubbleDown(node->right);
+        }
+    }
 
 }
 
