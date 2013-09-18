@@ -87,10 +87,8 @@ FHeap::DeleteMin() {
 void 
 FHeap::DecreaseKey(int k, int i) {
 	std::shared_ptr<FNode> key = std::make_shared<FNode>();
-	
-	if(k < 0) {
-		//TODO: SÅ GÅR DET GALT
-	}
+    //TODO: _ASSERT?! Er det sådan noget Windows pjat?
+	//_ASSERT(!(k < 0));//TODO: SÅ GÅR DET GALT
 
 	if(key->parent == nullptr){
 		key->n -= k;
@@ -131,33 +129,12 @@ FHeap::DecreaseKey(int k, int i) {
 
 void
 FHeap::Meld(std::shared_ptr<FHeap> heap) {
+	std::shared_ptr<FNode> end = heap->minRoot->leftSibling;
+	std::shared_ptr<FNode> mid = minRoot->leftSibling;
 
-	std::vector<std::shared_ptr<FNode>> roots;
+	minRoot->leftSibling = end;
+	mid->rightSibling = heap->minRoot;
 
-	std::shared_ptr<FNode> rootSibling = minRoot->rightSibling;
-
-	// Add this heap's roots to list
-	while (rootSibling != minRoot) {
-		roots.push_back(rootSibling);
-		rootSibling = rootSibling->rightSibling;
-	}
-
-	// Add other heap's roots to list
-	roots.push_back(heap->minRoot);
-	rootSibling = heap->minRoot->rightSibling;
-	while(rootSibling != heap->minRoot) {
-		roots.push_back(rootSibling);
-		rootSibling = rootSibling->rightSibling;
-	}
-
-	rootSibling = heap->minRoot->rightSibling;
-	while(rootSibling != heap->minRoot) {
-		roots.push_back(rootSibling);
-		rootSibling = rootSibling->rightSibling;
-	}
-
-	for (int i = 0; i < roots.size(); i++) {
-		roots[i]->rightSibling = roots[(i + 1) % roots.size()];
-		roots[i]->leftSibling  = roots[(i - 1) % roots.size()];
-	}
+	heap->minRoot->leftSibling = mid;
+	end->rightSibling = minRoot;
 }

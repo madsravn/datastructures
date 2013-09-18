@@ -1,7 +1,7 @@
 #include "BHeap.hpp"
 
-BHeap::BHeap() : size(0) {}
-
+BHeap::BHeap() : size(0), root(nullptr) {
+}
 
 void 
 BHeap::MakeHeap() {
@@ -51,7 +51,6 @@ BHeap::FindMin() {
 
 void
 BHeap::Insert(int k, int priority) {
-
     if(size == 0) {
         auto node = std::make_shared<BNode>(k, priority);
         root = node;
@@ -72,7 +71,7 @@ BHeap::Insert(int k, int priority) {
             }
             pos++;
         }
-        auto newnode = std::make_shared<BNode>(k,priority);
+        auto newnode = std::make_shared<BNode>(k, priority);
         if(s.at(pos) == '0') {
             node->left = newnode;
         }
