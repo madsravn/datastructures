@@ -45,7 +45,6 @@ BHeap::graph() {
     return  "digraph G {\n\n" + nodeInfo(root) + "\n}";
 }
 
-//TODO: Find ud af hvordan interface skal implementere med både std::shared_ptr<FNODE,BNODE>.
 int
 BHeap::FindMin() {
     if(size > 0) {
@@ -54,6 +53,7 @@ BHeap::FindMin() {
     return -1;
 }
 
+// TODO: Rewrite til at bruge Find i stedet for
 void
 BHeap::Insert(int k, int priority) {
     if(size == 0) {
@@ -120,6 +120,8 @@ BHeap::DeleteMin() {
         node->parent->right = nullptr;
     }
     size--;
+    root->parent = nullptr;
+    BubbleDown(root);
 }
 
 void
@@ -161,13 +163,6 @@ void internalNodeInfo(std::shared_ptr<BNode> node) {
 
 void
 BHeap::BubbleUp(std::shared_ptr<BNode> node) {
-    /*std::shared_ptr<BNode> temp = node;
-    while(temp->parent != nullptr && temp->parent->prio > temp->prio) {
-
-        Switch(temp,temp->parent);
-        temp = temp->parent;
-                    
-    }*/
 
     if(node->parent != nullptr) {
         if(node->parent->prio > node->prio) {
@@ -178,8 +173,10 @@ BHeap::BubbleUp(std::shared_ptr<BNode> node) {
 
 }
 
-// Vi skifter rundt på hele noder i stedet for bare interne værdier.
+// TODO: Implementeringsspørgsmål.
+// Vi burde skifte rundt på hele noder i stedet for bare interne værdier.
 // Hvis der er andet der peger på noderne bliver de ved med at pege på det samme.
+// Men er der nogensinde en situation hvor det sker (at der er noget ude fra der internt på vores nodes?
 void 
 BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
     
