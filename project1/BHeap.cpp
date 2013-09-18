@@ -16,13 +16,15 @@ BHeap::sayName() {
 //TODO: Få den til at pege begge veje, så vi også kan holde øje med parents
 std::string 
 nodeInfo(std::shared_ptr<BNode> n) {
+    
+    std::string temp = "";
+
     if(n == nullptr) {
-        return "";
+        temp = temp + "";
     }
     if(n->left == nullptr && n->right == nullptr) {
-        return ""; 
+        temp = temp + ""; 
     }
-    std::string temp = "";
     if(n->left != nullptr) {
         temp = temp + std::to_string(n->prio) + " -> " + std::to_string( n->left->prio) + "\n";
         temp = temp + nodeInfo(n->left);
@@ -31,6 +33,9 @@ nodeInfo(std::shared_ptr<BNode> n) {
         temp = temp + std::to_string(n->prio) + " -> " + std::to_string( n->right->prio) + "\n";
 
         temp = temp + nodeInfo(n->right);
+    }
+    if(n->parent != nullptr) {
+        temp = temp + std::to_string(n->prio) + " -> " + std::to_string(n->parent->prio) + "\n";
     }
     return temp;
 }
@@ -79,18 +84,19 @@ BHeap::Insert(int k, int priority) {
             node->right = newnode;
         }
         newnode->parent = node;
-        while(newnode->parent != nullptr) {
+        BubbleUp(newnode); 
+        /*while(newnode->parent != nullptr) {
             if(newnode->prio < newnode->parent->prio) {
-                int tprio = newnode->prio;
-                newnode->prio = newnode->parent->prio;
-                newnode->parent->prio = tprio;
-                int tkey = newnode->key;
-                newnode->key = newnode->parent->key;
-                newnode->parent->key = tkey;
-                //std::cout << newnode->n << " bytter plads med " << newnode->parent->n << std::endl;
+                //int tprio = newnode->prio;
+                //newnode->prio = newnode->parent->prio;
+                //newnode->parent->prio = tprio;
+                //int tkey = newnode->key;
+                //newnode->key = newnode->parent->key;
+                //newnode->parent->key = tkey;
+                Switch(newnode, newnode->parent);
             }
             newnode = newnode->parent;
-        }
+        }*/
 
     }
     size++;
@@ -121,23 +127,86 @@ BHeap::BubbleDown(std::shared_ptr<BNode> node) {
 
 }
 
+void internalNodeInfo(std::shared_ptr<BNode> node) {
+    if(node->parent != nullptr) {
+        std::cout << "nodeID: " << node << " and node->parentID: " << node->parent << std::endl;
+        std::cout << "node->prio = " << node->prio << " and node->parent->prio = " << node->parent->prio << std::endl;
+        std::cout << "===" << std::endl;
+    }
+}
+
 void
 BHeap::BubbleUp(std::shared_ptr<BNode> node) {
+    std::shared_ptr<BNode> temp = node;
+    while(temp->parent != nullptr && temp->parent->prio > temp->prio) {
+
+        Switch(temp,temp->parent);
+        temp = temp->parent;
+                    
+    }
 
 }
 
-//TODO: Skal vi skifte rundt på hele noder eller skal vi bare bytte deres interne værdier?
+// Vi skifter rundt på hele noder i stedet for bare interne værdier.
+// Hvis der er andet der peger på noderne bliver de ved med at pege på det samme.
 void 
 BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
+    
+    /*
+    //TODO: FIX!
+    // Imidlertidige værdier
     std::shared_ptr<BNode> tparent = n1->parent;
     std::shared_ptr<BNode> tleft = n1->left;
     std::shared_ptr<BNode> tright = n1->right;
+    // Vi bytter rundt på hvad de peger på.
+    if(n1 != root) {
+        if(n1->parent->left == n1) {
+            n1->parent->left = n2;
+        }
+        if(n1->parent->right == n1) {
+            n1->parent->right = n2;
+        }
+    } else {
+        root = n2;
+    }
+    if(n2 != root) {
+        if(n2->parent->left == n2) {
+            n2->parent->left = n1;
+        }
+        if(n2->parent->right = n2) {
+            n2->parent->right = n1;
+        }
+    } else {
+        root = n1;
+    }
+
     n1->parent = n2->parent;
     n1->left = n2->left;
     n1->right = n2->right;
     n2->parent = tparent;
     n2->left = tleft;
     n2->right = tright;
+    if(n2->right != nullptr) {
+        n2->right->parent = n2;
+    }
+    if(n2->left != nullptr) {
+        n2->left->parent = n2;
+    }
+    if(n1->left != nullptr) {
+        n1->left->parent = n1;
+    }
+    if(n1->right != nullptr) {
+        n1->right->parent = n2;
+    }
+    */
+    
+    int tkey = n1->key;
+    int tprio = n1->prio;
+    n1->key = n2->key;
+    n1->prio = n2->prio;
+    n2->key = tkey;
+    n2->prio = tprio;
+    
 
 }
 
