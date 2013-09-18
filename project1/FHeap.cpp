@@ -87,7 +87,7 @@ FHeap::DeleteMin() {
 void 
 FHeap::DecreaseKey(int k, int i) {
 	std::shared_ptr<FNode> key = std::make_shared<FNode>();
-    //TODO: _ASSERT?! Er det sådan noget Windows pjat?
+    //TODO: _Vi skal lige bruge rigtige C++ assertions, ikke Visual Studio macros.
 	//_ASSERT(!(k < 0));//TODO: SÅ GÅR DET GALT
 
 	if(key->parent == nullptr){
