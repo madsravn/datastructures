@@ -265,7 +265,9 @@ BHeap::Find(int place) {
 
 void 
 BHeap::DecreaseKey(int k, int i) {
-
-
+    //TODO: Assertions
+    std::shared_ptr<BNode> node = Find(k);
+    node->prio = node->prio-i;
+    BubbleUp(node);
 
 }
