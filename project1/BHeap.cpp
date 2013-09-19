@@ -53,6 +53,29 @@ BHeap::FindMin() {
     return -1;
 }
 
+void internalNodeInfo(std::shared_ptr<BNode> node) {
+    if(node == nullptr) {
+        std::cout << "something's fishy" << std::endl;
+    } else {
+        if(node->parent == nullptr) {
+            std::cout << "parent: null" << std::endl;
+        } else {
+            std::cout << "parent -> " << node->parent << std::endl;
+        }
+        if(node->right == nullptr) {
+            std::cout << "right: null" << std::endl;
+        } else {
+            std::cout << "right -> " << node->right << std::endl;
+        }
+        if(node->left == nullptr) {
+            std::cout << "left: null" << std::endl;
+        } else {
+            std::cout << "left -> " << node->left << std::endl;
+        }
+    }
+    std::cout << " = = = " << std::endl;
+}
+
 // TODO: Rewrite til at bruge Find i stedet for
 void
 BHeap::Insert(int k, int priority) {
@@ -153,13 +176,7 @@ BHeap::BubbleDown(std::shared_ptr<BNode> node) {
 
 }
 
-void internalNodeInfo(std::shared_ptr<BNode> node) {
-    if(node->parent != nullptr) {
-        std::cout << "nodeID: " << node << " and node->parentID: " << node->parent << std::endl;
-        std::cout << "node->prio = " << node->prio << " and node->parent->prio = " << node->parent->prio << std::endl;
-        std::cout << "===" << std::endl;
-    }
-}
+
 
 void
 BHeap::BubbleUp(std::shared_ptr<BNode> node) {
@@ -227,15 +244,64 @@ BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
         n1->right->parent = n2;
     }
     */
-    
+     
     int tkey = n1->key;
     int tprio = n1->prio;
     n1->key = n2->key;
     n1->prio = n2->prio;
     n2->key = tkey;
     n2->prio = tprio;
-    
+     
+    /*
+    //internalNodeInfo(n1);
+    //internalNodeInfo(n2);
+    std::shared_ptr<BNode> t1left = n1->left;
+    std::shared_ptr<BNode> t1right = n1->right;
+    std::shared_ptr<BNode> t1parent = n1->parent;
+    std::shared_ptr<BNode> t2left = n2->left;
+    std::shared_ptr<BNode> t2right = n2->right;
+    std::shared_ptr<BNode> t2parent = n2->parent;
+    if(n2->parent != nullptr) {
+        if(n2->parent->left == n2) {
+            n2->parent->left = n1;
+        } else if(n2->parent->right == n2) {
+            n2->parent->right = n1;
+        }
+    } else {
+        root = n2;
+    }
+    if(n1->parent != nullptr) {
+        if(n1->parent->left == n1) {
+            n1->parent->left = n2;
+        } else if(n1->parent->right == n1) {
+            n1->parent->right = n2;
+        }
+    } else {
+        root = n1;
+    }
+    if(n1->left != nullptr) {
+        n1->left->parent = n2;
+    }
+    if(n1->right != nullptr) {
+        n1->right->parent = n2;
+    }
+    if(n2->left != nullptr) {
+        n2->left->parent = n1;
+    }
+    if(n2->right != nullptr) {
+        n2->right->parent = n1;
+    }
+    n1->left = n2->left;
+    n1->right = n2->right;
+    n1->parent = n2->parent;
+    n2->left = t1left;
+    n2->right = t1right;
+    n2->parent = t1parent;
 
+    //internalNodeInfo(n1);
+    //internalNodeInfo(n2);
+    std::cout <<  "DONE SWITCHING" << std::endl << std::endl;
+    */
 }
 
 std::shared_ptr<BNode> 
