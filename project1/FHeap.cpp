@@ -1,8 +1,24 @@
 #include "FHeap.hpp"
 #include "FNode.hpp"
-
+#include <cassert>
+#include <string>
 FHeap::FHeap() {
 
+}
+
+std::string FHeap::toString(std::string label) {
+	std::shared_ptr<FNode> tempNode = std::make_shared<FNode>();
+	tempNode->child = minRoot;
+	minRoot->parent = tempNode;
+
+	std::string output = "";
+	output += "digraph " + std::to_string(minRoot->n) + " { \n";
+	output += "label=\"" + label + " \"; labelloc=top;";
+	output += nodeInfo(tempNode, 0);
+	output += "}\n";
+	minRoot->parent = nullptr;
+
+	return output;
 }
 
 void 
@@ -86,9 +102,9 @@ FHeap::DeleteMin() {
 
 void 
 FHeap::DecreaseKey(int k, int i) {
+	
 	std::shared_ptr<FNode> key = std::make_shared<FNode>();
-    //TODO: _Vi skal lige bruge rigtige C++ assertions, ikke Visual Studio macros.
-	//_ASSERT(!(k < 0));//TODO: SÅ GÅR DET GALT
+	assert (k >= 0);
 
 	if(key->parent == nullptr){
 		key->n -= k;
@@ -137,4 +153,42 @@ FHeap::Meld(std::shared_ptr<FHeap> heap) {
 
 	heap->minRoot->leftSibling = mid;
 	end->rightSibling = minRoot;
+}
+
+
+std::string FHeap::nodeInfo(std::shared_ptr<FNode> n, int rank) {
+	
+	std::string output = "";
+
+	if (n->parent != nullptr && n->parent->child == n) {
+		if(n->rightSibling != nullptr && n->rightSibling != n) {
+
+			auto firstSibling = n->parent->child;
+			auto sibling = n->parent->child->rightSibling;
+			//std::string cluster = "subgraph cluster_" + std::to_string(n->n) + " { ";
+			output += std::to_string(firstSibling->n) + " -> " + std::to_string(firstSibling->rightSibling->n) + "\n";
+			output += std::to_string(firstSibling->n) + " -> " + std::to_string(firstSibling->leftSibling->n) + "\n";
+
+			while (sibling != firstSibling) {
+				output += std::to_string(sibling->n) + " -> " + std::to_string(sibling->rightSibling->n) + "\n";
+				output += std::to_string(sibling->n) + " -> " + std::to_string(sibling->leftSibling->n) + "\n";
+				output += nodeInfo(n->rightSibling, rank);
+				sibling = sibling->rightSibling;
+			}
+
+			//output += " } ";
+		}
+	}
+
+	/*if (n->parent != nullptr) {
+		output = output + std::to_string(n->n) + " -> " + std::to_string(n->parent->n) + "\n";
+		output += nodeInfo(n->parent, rank - 1);
+	}*/
+	
+	if (n->child != nullptr) {		
+		output = output + std::to_string(n->n) + " -> " + std::to_string(n->child->n) + "\n";
+		output += nodeInfo(n->child, rank + 1);
+	}
+
+	return output;
 }

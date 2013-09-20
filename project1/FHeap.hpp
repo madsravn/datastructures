@@ -17,8 +17,9 @@ class FHeap : public IQueue {
         virtual void DecreaseKey(int k, int i);
         virtual void sayName();
         void Meld(std::shared_ptr<FHeap>);
+		std::string nodeInfo(std::shared_ptr<FNode> n, int rank);
+		std::string toString(std::string label);
     private:
-        std::vector<FTree> forest;
 		std::shared_ptr<FNode> minRoot;
 
 };
