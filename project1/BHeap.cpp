@@ -76,6 +76,58 @@ void internalNodeInfo(std::shared_ptr<BNode> node) {
     std::cout << " = = = " << std::endl;
 }
 
+void 
+BHeap::Swap() {
+    int i = size;
+    std::shared_ptr<BNode> n1 = Find(8);
+    std::shared_ptr<BNode> n2 = Find(13);
+    std::shared_ptr<BNode> t1left = n1->left;
+    std::shared_ptr<BNode> t1right = n1->right;
+    std::shared_ptr<BNode> t1parent = n1->parent;
+    std::shared_ptr<BNode> t2left = n2->left;
+    std::shared_ptr<BNode> t2right = n2->right;
+    std::shared_ptr<BNode> t2parent = n2->parent;
+    if(n2->parent != nullptr) {
+        if(n2->parent->left == n2) {
+            n2->parent->left = n1;
+        } else if(n2->parent->right == n2) {
+            n2->parent->right = n1;
+        }
+    } else {
+        root = n2;
+    }
+    if(n1->parent != nullptr) {
+        if(n1->parent->left == n1) {
+            n1->parent->left = n2;
+        } else if(n1->parent->right == n1) {
+            n1->parent->right = n2;
+        }
+    } else {
+        root = n1;
+    }
+    if(n1->left != nullptr) {
+        n1->left->parent = n2;
+    }
+    if(n1->right != nullptr) {
+        n1->right->parent = n2;
+    }
+    if(n2->left != nullptr) {
+        n2->left->parent = n1;
+    }
+    if(n2->right != nullptr) {
+        n2->right->parent = n1;
+    }
+    n1->left = n2->left;
+    n1->right = n2->right;
+    n1->parent = n2->parent;
+    n2->left = t1left;
+    n2->right = t1right;
+    n2->parent = t1parent;
+
+}
+
+
+
 // TODO: Rewrite til at bruge Find i stedet for
 void
 BHeap::Insert(int k, int priority) {
