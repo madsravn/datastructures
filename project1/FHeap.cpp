@@ -165,7 +165,7 @@ std::string FHeap::nodeInfo(std::shared_ptr<FNode> n, int rank) {
 
 			auto firstSibling = n->parent->child;
 			auto sibling = n->parent->child->rightSibling;
-			//std::string cluster = "subgraph cluster_" + std::to_string(n->n) + " { ";
+			output += "subgraph cluster_" + std::to_string(n->n) + " { \n label=\"\"";
 			output += std::to_string(firstSibling->n) + " -> " + std::to_string(firstSibling->rightSibling->n) + "\n";
 			output += std::to_string(firstSibling->n) + " -> " + std::to_string(firstSibling->leftSibling->n) + "\n";
 
@@ -176,7 +176,7 @@ std::string FHeap::nodeInfo(std::shared_ptr<FNode> n, int rank) {
 				sibling = sibling->rightSibling;
 			}
 
-			//output += " } ";
+			output += " } ";
 		}
 	}
 
