@@ -101,7 +101,8 @@ FHeap::DeleteMin() {
 }
 
 void 
-FHeap::DecreaseKey(int k, int i) {
+FHeap::DecreaseKey(int k, int i, std::shared_ptr<BNode> bnode,
+        std::shared_ptr<FNode> fnode) {
 	
 	std::shared_ptr<FNode> key = std::make_shared<FNode>();
 	assert (k >= 0);

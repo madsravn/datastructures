@@ -8,7 +8,7 @@
 int main() {
     Timer t;
     t.start();
-
+    /*
     auto fheap = std::make_shared<FHeap>();
 	for(int i = 0; i < 10; i++) {
         fheap->Insert(10, 12-i);
@@ -21,7 +21,7 @@ int main() {
 	std::cout <<fheap->toString("FindMin()") << std::endl;
 	fheap->sayName();
 	Dijkstra d1(fheap);
-    
+    */ 
     //d1.sayName();
     auto bheap = std::make_shared<BHeap>();
     for(int i = 0; i < 40; i++) {

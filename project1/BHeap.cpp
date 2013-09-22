@@ -79,8 +79,8 @@ void internalNodeInfo(std::shared_ptr<BNode> node) {
 void 
 BHeap::Swap() {
     int i = size;
-    std::shared_ptr<BNode> n1 = Find(8);
-    std::shared_ptr<BNode> n2 = Find(13);
+    std::shared_ptr<BNode> n1 = Find(size-2);
+    std::shared_ptr<BNode> n2 = Find(size-3);
     std::shared_ptr<BNode> t1left = n1->left;
     std::shared_ptr<BNode> t1right = n1->right;
     std::shared_ptr<BNode> t1parent = n1->parent;
@@ -140,8 +140,7 @@ BHeap::Insert(int k, int priority) {
         while(pos < s.size() && s.at(pos) == '0') {
             pos++;
         }
-        pos++;
-        std::shared_ptr<BNode> node = root;
+        pos++; std::shared_ptr<BNode> node = root;
         while(pos < s.size()-1) {
             if(s.at(pos) == '0') {
                 node = node->left;
@@ -296,64 +295,76 @@ BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
         n1->right->parent = n2;
     }
     */
-     
-    int tkey = n1->key;
-    int tprio = n1->prio;
-    n1->key = n2->key;
-    n1->prio = n2->prio;
-    n2->key = tkey;
-    n2->prio = tprio;
-     
-    /*
-    //internalNodeInfo(n1);
-    //internalNodeInfo(n2);
-    std::shared_ptr<BNode> t1left = n1->left;
-    std::shared_ptr<BNode> t1right = n1->right;
-    std::shared_ptr<BNode> t1parent = n1->parent;
-    std::shared_ptr<BNode> t2left = n2->left;
-    std::shared_ptr<BNode> t2right = n2->right;
-    std::shared_ptr<BNode> t2parent = n2->parent;
-    if(n2->parent != nullptr) {
-        if(n2->parent->left == n2) {
-            n2->parent->left = n1;
-        } else if(n2->parent->right == n2) {
-            n2->parent->right = n1;
+    //if(n1 == root || n2 == root) { 
+        int tkey = n1->key;
+        int tprio = n1->prio;
+        n1->key = n2->key;
+        n1->prio = n2->prio;
+        n2->key = tkey;
+        n2->prio = tprio;
+    /*} else {
+        std::cout << "non-int switch" << std::endl;
+        //std::shared_ptr<BNode> n1 = Find(size-2);
+        //std::shared_ptr<BNode> n2 = Find(size-3);
+        std::shared_ptr<BNode> t1left = n1->left;
+        std::shared_ptr<BNode> t1right = n1->right;
+        std::shared_ptr<BNode> t1parent = n1->parent;
+        std::shared_ptr<BNode> t2left = n2->left;
+        std::shared_ptr<BNode> t2right = n2->right;
+        std::shared_ptr<BNode> t2parent = n2->parent;
+        //TODO: FIX BY SAVING EVERYTHING IN TEMP VARIABLES!
+        if(n1->prio == 39 || n2->prio == 39) std::cout << 1 << std::endl << graph() << std::endl;
+        if(n2->parent != nullptr) {
+            if(n2->parent->left == n2) {
+                n2->parent->left = n1;
+            } else if(n2->parent->right == n2) {
+                n2->parent->right = n1;
+            }
+        } else {
+            root = n2;
         }
-    } else {
-        root = n2;
-    }
-    if(n1->parent != nullptr) {
-        if(n1->parent->left == n1) {
-            n1->parent->left = n2;
-        } else if(n1->parent->right == n1) {
-            n1->parent->right = n2;
+        if(n1->prio == 39 || n2->prio == 39) std::cout << 2 << std::endl << graph() << std::endl;
+
+        if(n1->parent != nullptr) {
+            if(n1->parent->left == n1) {
+                n1->parent->left = n2;
+            } else if(n1->parent->right == n1) {
+                n1->parent->right = n2;
+            }
+        } else {
+            root = n1;
         }
-    } else {
-        root = n1;
-    }
-    if(n1->left != nullptr) {
-        n1->left->parent = n2;
-    }
-    if(n1->right != nullptr) {
-        n1->right->parent = n2;
-    }
-    if(n2->left != nullptr) {
-        n2->left->parent = n1;
-    }
-    if(n2->right != nullptr) {
-        n2->right->parent = n1;
-    }
+        if(n1->prio == 39 || n2->prio == 39) std::cout << 3 << std::endl << graph() << std::endl;
+
+        if(n1->left != nullptr) {
+            n1->left->parent = n2;
+        }
+if(n1->prio == 39 || n2->prio == 39) std::cout << graph() << std::endl;
+
+        if(n1->right != nullptr) {
+            n1->right->parent = n2;
+        }
+ if(n1->prio == 39 || n2->prio == 39) std::cout << graph() << std::endl;
+       if(n2->left != nullptr) {
+            n2->left->parent = n1;
+        }
+  if(n1->prio == 39 || n2->prio == 39) std::cout << graph() << std::endl;
+      if(n2->right != nullptr) {
+            n2->right->parent = n1;
+        }
+      //TODO: Der skal tages hensyn til at den enes parent er den anden node.
     n1->left = n2->left;
     n1->right = n2->right;
-    n1->parent = n2->parent;
+    n1->parent = t2parent;
     n2->left = t1left;
     n2->right = t1right;
     n2->parent = t1parent;
+    if(n1->prio == 39 || n2->prio == 39) std::cout << graph() << std::endl;
 
-    //internalNodeInfo(n1);
-    //internalNodeInfo(n2);
-    std::cout <<  "DONE SWITCHING" << std::endl << std::endl;
-    */
+    }
+*/
+
+     
 }
 
 std::shared_ptr<BNode> 
@@ -382,7 +393,8 @@ BHeap::Find(int place) {
 
 
 void 
-BHeap::DecreaseKey(int k, int i) {
+BHeap::DecreaseKey(int k, int i, std::shared_ptr<BNode> bnode,
+        std::shared_ptr<FNode> fnode) {
     //TODO: Assertions
     std::shared_ptr<BNode> node = Find(k);
     node->prio = node->prio-i;
