@@ -284,8 +284,7 @@ BHeap::Find(int place) {
 
 
 void 
-BHeap::DecreaseKey(int k, int i, std::shared_ptr<BNode> bnode,
-        std::shared_ptr<FNode> fnode) {
+BHeap::DecreaseKey(int k, int i) {
     //TODO: Assertions
     std::shared_ptr<BNode> node = Find(k);
     node->prio = node->prio-i;

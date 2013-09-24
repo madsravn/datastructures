@@ -14,8 +14,7 @@ class FHeap : public IQueue {
         virtual void Insert(int k, int priority);
         virtual int DeleteMin();
         //Decrease value of Node k with i.
-        virtual void DecreaseKey(int k, int i, std::shared_ptr<BNode> bnode,
-                std::shared_ptr<FNode> fnode);
+        virtual void DecreaseKey(int k, int i);
         virtual void sayName();
         void Meld(std::shared_ptr<FHeap>);
 		std::string nodeInfo(std::shared_ptr<FNode> n, int rank);
