@@ -132,8 +132,9 @@ BHeap::Swap() {
 void
 BHeap::Insert(int k, int priority) {
     if(size == 0) {
-        auto node = std::make_shared<BNode>(k, priority);
+        std::shared_ptr<BNode> node = std::make_shared<BNode>(k, priority);
         root = node;
+        map.insert({{k,node}});
     } else {
         std::string s = std::bitset<64> (size+1).to_string();
         size_t pos = 0;
@@ -150,7 +151,7 @@ BHeap::Insert(int k, int priority) {
             }
             pos++;
         }
-        auto newnode = std::make_shared<BNode>(k, priority);
+        std::shared_ptr<BNode> newnode = std::make_shared<BNode>(k, priority);
         if(s.at(pos) == '0') {
             node->left = newnode;
         }
@@ -159,18 +160,7 @@ BHeap::Insert(int k, int priority) {
         }
         newnode->parent = node;
         BubbleUp(newnode); 
-        /*while(newnode->parent != nullptr) {
-            if(newnode->prio < newnode->parent->prio) {
-                //int tprio = newnode->prio;
-                //newnode->prio = newnode->parent->prio;
-                //newnode->parent->prio = tprio;
-                //int tkey = newnode->key;
-                //newnode->key = newnode->parent->key;
-                //newnode->parent->key = tkey;
-                Switch(newnode, newnode->parent);
-            }
-            newnode = newnode->parent;
-        }*/
+        map.insert({{k, newnode}});
 
     }
     size++;
@@ -248,6 +238,20 @@ void
 BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
     
     assert(n1->parent == n2);
+    /*
+    if(n2 == root) {
+        n1->parent = nullptr;
+        root = n1;
+    } else {
+        if(n2->parent->right == n2) {
+            n2->parent->right = n1;
+        } else if(n2->parent->left == n2) {
+            n2->parent->left = n1;
+        }
+        n1->parent = n2->parent;
+    }
+    */
+
     int tkey = n1->key;
     int tprio = n1->prio;
     n1->key = n2->key;
@@ -284,9 +288,12 @@ BHeap::Find(int place) {
 
 
 void 
-BHeap::DecreaseKey(int k, int i) {
+BHeap::DecreaseKey(const int k, int i) {
     //TODO: Assertions
-    std::shared_ptr<BNode> node = Find(k);
+    std::unordered_map<int, std::shared_ptr<BNode>>::const_iterator f = map.find(k);
+    assert(f != map.end());
+    std::shared_ptr<BNode> node = f->second;
+    //std::shared_ptr<BNode> node = Find(k);
     node->prio = node->prio-i;
     BubbleUp(node);
 

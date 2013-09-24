@@ -6,6 +6,7 @@
 #include "IQueue.hpp"
 #include <bitset>
 #include <cassert>
+#include <unordered_map>
 
 class BHeap : public IQueue {
     public:
@@ -27,6 +28,7 @@ class BHeap : public IQueue {
     private:
         std::shared_ptr<BNode> root;
         unsigned int size;
+        std::unordered_map<int, std::shared_ptr<BNode>> map;
 };
 
 #endif
