@@ -13,7 +13,7 @@ class BHeap : public IQueue {
         virtual void MakeHeap();
         virtual int FindMin();
         virtual void Insert(int k, int priority);
-        virtual void DeleteMin();
+        virtual int DeleteMin();
         //Decrease value of Node k with i.
         virtual void DecreaseKey(int k, int i, std::shared_ptr<BNode> bnode,
                 std::shared_ptr<FNode> fnode);

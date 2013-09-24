@@ -43,7 +43,7 @@ FHeap::Insert(int k, int priority) {
 		heap->Insert(k, priority);
 		Meld(heap);
 	} else {
-		std::shared_ptr<FNode> node = std::make_shared<FNode>(priority);
+		std::shared_ptr<FNode> node = std::make_shared<FNode>(k, priority);
 		node->child = nullptr;
 		node->parent = nullptr;
 		node->leftSibling = node;
@@ -54,10 +54,11 @@ FHeap::Insert(int k, int priority) {
 	}
 }
 
-void
+int
 FHeap::DeleteMin() {
 	auto root = minRoot;
-	
+	int retVal = root->key;
+
 	std::vector<std::shared_ptr<FNode>> roots;
 
 	// Add other roots to list
@@ -98,6 +99,8 @@ FHeap::DeleteMin() {
 			minRoot = roots[i];
 		}
 	}
+
+	return retVal;
 }
 
 void 
@@ -154,6 +157,9 @@ FHeap::Meld(std::shared_ptr<FHeap> heap) {
 
 	heap->minRoot->leftSibling = mid;
 	end->rightSibling = minRoot;
+
+	if(heap->minRoot->n < minRoot->n)
+		minRoot = heap->minRoot;
 }
 
 
