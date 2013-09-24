@@ -6,7 +6,7 @@
 
 class FNode {
     public:
-        FNode(int number);
+        FNode(int key, int priority);
         FNode();
         
         
@@ -15,6 +15,7 @@ class FNode {
 	bool marked;
 	std::shared_ptr<FNode> parent, child, leftSibling, rightSibling;
     int n;
+	int key;
 	bool null;
 
 };

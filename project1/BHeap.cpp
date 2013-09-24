@@ -176,8 +176,9 @@ BHeap::Insert(int k, int priority) {
     size++;
 }
 
-void
+int
 BHeap::DeleteMin() {
+	int retVal = root->key;
 
     std::shared_ptr<BNode> node = Find(size);
     node->left = root->left;
@@ -196,6 +197,8 @@ BHeap::DeleteMin() {
     size--;
     root->parent = nullptr;
     BubbleDown(root);
+
+	return retVal;
 }
 
 void
