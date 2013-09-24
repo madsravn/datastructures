@@ -5,6 +5,7 @@
 #include "BNode.hpp"
 #include "IQueue.hpp"
 #include <bitset>
+#include <cassert>
 
 class BHeap : public IQueue {
     public:
