@@ -18,9 +18,10 @@ class FHeap : public IQueue {
                 std::shared_ptr<FNode> fnode);
         virtual void sayName();
         void Meld(std::shared_ptr<FHeap>);
+		std::vector<std::vector<std::shared_ptr<FNode>>> FHeap::bucketSort(std::shared_ptr<FNode> root);
 		std::string nodeInfo(std::shared_ptr<FNode> n, int rank);
 		std::string toString(std::string label);
-    private:
+    //private:
 		std::shared_ptr<FNode> minRoot;
 
 };

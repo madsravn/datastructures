@@ -10,11 +10,10 @@ class FNode {
         FNode();
         
         
-
-	int rank;
-	bool marked;
+	int n;
 	std::shared_ptr<FNode> parent, child, leftSibling, rightSibling;
-    int n;
+	int rank;
+	bool marked;	
 	bool null;
 
 };

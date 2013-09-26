@@ -8,20 +8,23 @@
 int main() {
     Timer t;
     t.start();
-    /*
+    
     auto fheap = std::make_shared<FHeap>();
 	for(int i = 0; i < 10; i++) {
         fheap->Insert(10, 12-i);
     }
-	fheap->DecreaseKey(10, 3);
-	std::cout << fheap->toString("DecreaseKey(10, 3)\n") << std::endl;
+	//std::cout << fheap->toString("Start\n") << std::endl;
 	fheap->DeleteMin();
 	std::cout << fheap->toString("DeleteMin()") << std::endl;
-	fheap->FindMin();
-	std::cout <<fheap->toString("FindMin()") << std::endl;
+
+	fheap->DecreaseKey(10, 3, nullptr, fheap->minRoot->child->leftSibling->child);
+	
+	std::cout << fheap->toString("DecreaseKey(10, 3)\n") << std::endl;
+
+	std::cout << "FindMin()" << std::endl << fheap->FindMin() << std::endl << std::endl ;
 	fheap->sayName();
 	Dijkstra d1(fheap);
-    */ 
+    
     //d1.sayName();
     auto bheap = std::make_shared<BHeap>();
     for(int i = 0; i < 40; i++) {
