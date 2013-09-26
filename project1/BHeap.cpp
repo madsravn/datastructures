@@ -13,7 +13,6 @@ BHeap::sayName() {
     std::cout << "I am BHeap" << std::endl;
 }
 
-//TODO: Få den til at pege begge veje, så vi også kan holde øje med parents
 std::string 
 nodeInfo(std::shared_ptr<BNode> n) {
     
@@ -191,29 +190,30 @@ BHeap::DeleteMin() {
 	return retVal;
 }
 
+//TODO: Refactor
 void
 BHeap::BubbleDown(std::shared_ptr<BNode> node) {
     // Der skal køres nedad, men også tages højde for at enten left eller right kan være nullptr
     if(node->left != nullptr && node->right != nullptr) {
         if(node->left->prio < node->right->prio) {
             if(node->left->prio < node->prio) {
-                Switch(node,node->left);
+                Switch(node->left,node);
                 BubbleDown(node->left);
             }
         } else {
             if(node->right->prio < node->prio) {
-                Switch(node,node->right);
+                Switch(node->right,node);
                 BubbleDown(node->right);
             }
         }
     } else if(node->left != nullptr) {
         if(node->left->prio < node->prio) {
-            Switch(node,node->left);
+            Switch(node->left,node);
             BubbleDown(node->left);
         }
     } else if(node->right != nullptr) {
         if(node->right->prio < node->prio) {
-            Switch(node,node->right);
+            Switch(node->right,node);
             BubbleDown(node->right);
         }
     }
@@ -238,19 +238,6 @@ void
 BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
     
     assert(n1->parent == n2);
-    /*
-    if(n2 == root) {
-        n1->parent = nullptr;
-        root = n1;
-    } else {
-        if(n2->parent->right == n2) {
-            n2->parent->right = n1;
-        } else if(n2->parent->left == n2) {
-            n2->parent->left = n1;
-        }
-        n1->parent = n2->parent;
-    }
-    */
 
     int tkey = n1->key;
     int tprio = n1->prio;
