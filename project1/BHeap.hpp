@@ -5,6 +5,8 @@
 #include "BNode.hpp"
 #include "IQueue.hpp"
 #include <bitset>
+#include <cassert>
+#include <unordered_map>
 
 class BHeap : public IQueue {
     public:
@@ -12,10 +14,9 @@ class BHeap : public IQueue {
         virtual void MakeHeap();
         virtual int FindMin();
         virtual void Insert(int k, int priority);
-        virtual void DeleteMin();
+        virtual int DeleteMin();
         //Decrease value of Node k with i.
-        virtual void DecreaseKey(int k, int i, std::shared_ptr<BNode> bnode,
-                std::shared_ptr<FNode> fnode);
+        virtual void DecreaseKey(int k, int i);
         virtual void sayName();
         std::string graph();
         std::shared_ptr<BNode> Find(int place);
@@ -27,6 +28,7 @@ class BHeap : public IQueue {
     private:
         std::shared_ptr<BNode> root;
         unsigned int size;
+        std::unordered_map<int, std::shared_ptr<BNode>> map;
 };
 
 #endif

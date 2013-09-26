@@ -4,7 +4,7 @@ FNode::FNode() {
 
 }
 
-FNode::FNode(int number) : n(number) {
+FNode::FNode(int key, int priority) : n(priority), key(key) {
 }
 
 

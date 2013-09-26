@@ -44,7 +44,7 @@ void
 			heap->Insert(k, priority);
 			Meld(heap);
 		} else {
-			std::shared_ptr<FNode> node = std::make_shared<FNode>(priority);
+			std::shared_ptr<FNode> node = std::make_shared<FNode>(k, priority);
 			node->child = nullptr;
 			node->parent = nullptr;
 			node->leftSibling = node;
@@ -55,10 +55,13 @@ void
 		}
 }
 
-void
-	FHeap::DeleteMin() {
+int	FHeap::DeleteMin() {
+
+	int ret = 1;
 
 		if (minRoot != nullptr) {
+
+			ret = minRoot->n;
 
 			std::shared_ptr<FNode> root = minRoot;
 
@@ -152,17 +155,7 @@ void
 
 							childNode->rightSibling = parentNode->child;
 							childNode->leftSibling = parentNode->child->leftSibling;	
-
-							// If parent only has one child, do the siblings like this, otherwise it screws it all up
-							/*if(parentNode->child->rightSibling == parentNode->child){
-							parentNode->child->rightSibling = childNode;
-							parentNode->child->leftSibling = childNode;
-							} else {
-							parentNode->child->rightSibling->leftSibling = childNode;
-							parentNode->child->leftSibling->rightSibling = childNode;
-							}*/
-
-
+							
 							// Add childNode to list of children
 							parentNode->child->leftSibling->rightSibling = childNode;
 							parentNode->child->leftSibling = childNode;	
@@ -194,13 +187,13 @@ void
 				}
 			}
 		}
+		return ret;
 }
 
 void 
-	FHeap::DecreaseKey(int k, int i, std::shared_ptr<BNode> bnode,
-	std::shared_ptr<FNode> fnode) {
+	FHeap::DecreaseKey(int k, int i) {
 
-		std::shared_ptr<FNode> key = fnode; // TODO: Brug en rigtig node
+		std::shared_ptr<FNode> key = std::make_shared<FNode>(); // TODO: Brug en rigtig node
 
 		assert (k >= 0);
 

@@ -7,7 +7,7 @@ FTree::FTree() {
 void
 FTree::Insert(int n) {
     //std::shared_ptr<FNode> node(new Fnode(n));
-    auto node = std::make_shared<FNode>(2);
+    auto node = std::make_shared<FNode>(1, 2);
     if(root == nullptr) {
         root = node;
     }
