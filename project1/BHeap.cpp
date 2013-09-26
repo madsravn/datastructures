@@ -13,7 +13,6 @@ BHeap::sayName() {
     std::cout << "I am BHeap" << std::endl;
 }
 
-//TODO: Få den til at pege begge veje, så vi også kan holde øje med parents
 std::string 
 nodeInfo(std::shared_ptr<BNode> n) {
     
@@ -191,30 +190,31 @@ BHeap::DeleteMin() {
 	return retVal;
 }
 
+//TODO: Refactor
 void
 BHeap::BubbleDown(std::shared_ptr<BNode> node) {
     // Der skal køres nedad, men også tages højde for at enten left eller right kan være nullptr
     if(node->left != nullptr && node->right != nullptr) {
         if(node->left->prio < node->right->prio) {
             if(node->left->prio < node->prio) {
-                Switch(node,node->left);
-                BubbleDown(node->left);
+                Switch(node->left,node);
+                BubbleDown(node); //node->left
             }
         } else {
             if(node->right->prio < node->prio) {
-                Switch(node,node->right);
-                BubbleDown(node->right);
+                Switch(node->right,node);
+                BubbleDown(node); //node->right
             }
         }
     } else if(node->left != nullptr) {
         if(node->left->prio < node->prio) {
-            Switch(node,node->left);
-            BubbleDown(node->left);
+            Switch(node->left,node);
+            BubbleDown(node); //node->left
         }
     } else if(node->right != nullptr) {
         if(node->right->prio < node->prio) {
-            Switch(node,node->right);
-            BubbleDown(node->right);
+            Switch(node->right,node);
+            BubbleDown(node); //node->right
         }
     }
 
@@ -228,7 +228,8 @@ BHeap::BubbleUp(std::shared_ptr<BNode> node) {
     if(node->parent != nullptr) {
         if(node->parent->prio > node->prio) {
             Switch(node,node->parent);
-            BubbleUp(node->parent);
+            // Since node and node->parent has switched, node=node->parent
+            BubbleUp(node);
         }
     }
 
@@ -238,26 +239,50 @@ void
 BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
     
     assert(n1->parent == n2);
-    /*
+
+    std::shared_ptr<BNode> tleft = n1->left;
+    std::shared_ptr<BNode> tright = n1->right;
+    std::shared_ptr<BNode> tparent = n1->parent;
     if(n2 == root) {
         n1->parent = nullptr;
         root = n1;
     } else {
+        n1->parent = n2->parent;
         if(n2->parent->right == n2) {
             n2->parent->right = n1;
         } else if(n2->parent->left == n2) {
             n2->parent->left = n1;
         }
-        n1->parent = n2->parent;
     }
-    */
+    if(n2->right == n1) {
+        n1->right = n2;
+        n1->left = n2->left;
+        if(n1->left != nullptr) {
+            n1->left->parent = n1;
+        }
+    } else if(n2->left == n1) {
+        n1->left = n2;
+        n1->right = n2->right;
+        if(n1->right != nullptr) {
+            n1->right->parent = n1;
+        }
+    }
+    n2->parent = n1;
 
-    int tkey = n1->key;
+    n2->left = tleft;
+    n2->right = tright;
+    if(n2->left != nullptr) {
+        n2->left->parent = n2;
+    }
+    if(n2->right != nullptr) {
+        n2->right->parent = n2;
+    }
+    /*int tkey = n1->key;
     int tprio = n1->prio;
     n1->key = n2->key;
     n1->prio = n2->prio;
     n2->key = tkey;
-    n2->prio = tprio;
+    n2->prio = tprio;*/
 
      
 }
