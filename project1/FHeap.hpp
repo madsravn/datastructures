@@ -17,7 +17,7 @@ class FHeap : public IQueue {
         virtual void DecreaseKey(int k, int i);
         virtual void sayName();
         void Meld(std::shared_ptr<FHeap>);
-		std::vector<std::vector<std::shared_ptr<FNode>>> FHeap::bucketSort(std::shared_ptr<FNode> root);
+		std::vector<std::vector<std::shared_ptr<FNode>>> bucketSort(std::shared_ptr<FNode> root);
 		std::string nodeInfo(std::shared_ptr<FNode> n, int rank);
 		std::string toString(std::string label);
     private:

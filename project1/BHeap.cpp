@@ -170,22 +170,31 @@ BHeap::DeleteMin() {
 	int retVal = root->key;
 
     std::shared_ptr<BNode> node = Find(size);
-    node->left = root->left;
-    node->right = root->right;
-    root->left->parent = node;
-    root->right->parent = node;
-    root = node;
-    if(node->parent->left == node) {
-        // node is parents left node
-        node->parent->left = nullptr;
-    }
-    if(node->parent->right == node) {
-        // node is parents right node
-        node->parent->right = nullptr;
+    if(size>3) {
+        node->left = root->left;
+        node->right = root->right;
+        root->left->parent = node;
+        root->right->parent = node;
+        root = node;
+        if(node->parent->left == node) {
+            // node is parents left node
+            node->parent->left = nullptr;
+        }
+        if(node->parent->right == node) {
+            // node is parents right node
+            node->parent->right = nullptr;
+        }
+        root->parent = nullptr;
+
+    } else if(size == 2 || size == 3) {
+        Switch(node,root);
+    } else if(size == 1) {
+        root = nullptr;
     }
     size--;
-    root->parent = nullptr;
-    BubbleDown(root);
+    if(size>0) {
+        BubbleDown(root);
+    }
 
 	return retVal;
 }
