@@ -41,6 +41,9 @@ nodeInfo(std::shared_ptr<BNode> n) {
 
 std::string
 BHeap::graph() {
+    if(root == nullptr) {
+        return "digraph G {\n\n EMTPY \n\n}";
+    }
     return  "digraph G {\n\n" + nodeInfo(root) + "\n}";
 }
 
