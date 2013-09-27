@@ -13,6 +13,11 @@ BHeap::sayName() {
     std::cout << "I am BHeap" << std::endl;
 }
 
+bool
+BHeap::empty() {
+    return (size == 0);
+}
+
 std::string 
 nodeInfo(std::shared_ptr<BNode> n) {
     

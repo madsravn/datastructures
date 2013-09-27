@@ -10,6 +10,7 @@ class IQueue {
         virtual int DeleteMin() = 0;
         virtual void DecreaseKey(int k, int i) = 0;
         virtual void sayName() = 0;
+        virtual bool empty() = 0;
     protected:
         IQueue() {}
 

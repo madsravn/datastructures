@@ -8,6 +8,7 @@ class Dijkstra {
         //Dijkstra();
         Dijkstra(std::shared_ptr<IQueue> queue);
         void sayName();
+        void run();
 
 
     private:
