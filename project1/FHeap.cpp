@@ -59,184 +59,197 @@ int	FHeap::DeleteMin() {
 
 	int ret = 1;
 
-		if (minRoot != nullptr) {
+	if (minRoot != nullptr) {
 
-			ret = minRoot->n;
+		ret = minRoot->n;
 
-			std::shared_ptr<FNode> root = minRoot;
+		std::shared_ptr<FNode> root = minRoot;
 
-			std::vector<std::shared_ptr<FNode>> roots;
+		std::vector<std::shared_ptr<FNode>> roots;
 
-			// Delete root
-			std::shared_ptr<FNode> rootSibling = minRoot->rightSibling;
-			if (rootSibling == minRoot) {
-				minRoot->parent = nullptr;
-				minRoot->leftSibling = nullptr;
-				minRoot->rightSibling = nullptr;
-			}
+		// Delete root
+		std::shared_ptr<FNode> rootSibling = minRoot->rightSibling;
+		if (rootSibling == minRoot) {
+			minRoot->parent = nullptr;
+			minRoot->leftSibling = nullptr;
+			minRoot->rightSibling = nullptr;
+		}
 
 
-			// Add other roots to list
-			while(rootSibling != minRoot) {
+		// Add other roots to list
+		while(rootSibling != minRoot) {
+			roots.push_back(rootSibling);
+
+			auto sibling = rootSibling->rightSibling;
+
+			// Reset sibling and parent pointers
+			rootSibling->rightSibling = nullptr;
+			rootSibling->leftSibling = nullptr;
+			rootSibling->parent = nullptr;
+
+			rootSibling = sibling;
+
+
+		}
+
+		// Add deleted node's children to list
+		if(minRoot->child != nullptr) {
+			roots.push_back(minRoot->child);
+			std::shared_ptr<FNode> rootSibling = minRoot->child->rightSibling;
+
+			if (rootSibling == rootSibling->leftSibling) {
 				roots.push_back(rootSibling);
-
-				auto sibling = rootSibling->rightSibling;
-
-				// Reset sibling and parent pointers
-				rootSibling->rightSibling = nullptr;
-				rootSibling->leftSibling = nullptr;
-				rootSibling->parent = nullptr;
-
-				rootSibling = sibling;
-
-
 			}
 
-			// Add deleted node's children to list
-			if(minRoot->child != nullptr) {
-				roots.push_back(minRoot->child);
-				std::shared_ptr<FNode> rootSibling = minRoot->child->rightSibling;
-
-				if (rootSibling == rootSibling->leftSibling) {
-					roots.push_back(rootSibling);
-				}
-
-				while(rootSibling != minRoot->child) {
-					roots.push_back(rootSibling);
-					rootSibling = rootSibling->rightSibling;
-				}
-			}
-
-			minRoot = nullptr;
-
-			minRoot = roots[0];
-			for (int i = 0; i < roots.size(); i++) {
-				roots[i]->rightSibling = roots[(i + 1 + roots.size()) % roots.size()];
-				roots[i]->leftSibling  = roots[(i - 1 + roots.size()) % roots.size()];
-				if (roots[i]->n < minRoot->n) {
-					minRoot = roots[i];
-				}
-			}
-
-			// Checkpoint: Rigtige Nodes i roots, med pointers til siblings, og korrekt minRoot.
-
-
-			// Link nodes by rank
-			std::vector<std::vector<std::shared_ptr<FNode>>> buckets = bucketSort(minRoot);
-
-			for (int i = 0; i < buckets.size(); i++) {
-				std::vector<std::shared_ptr<FNode>> bucket = buckets.at(i);
-				if(bucket.size() > 1) {
-					for (int bucketi = 0; bucketi + 1 < bucket.size(); bucketi += 2) {
-
-						std::shared_ptr<FNode> parentNode;
-						std::shared_ptr<FNode> childNode;
-
-						if(bucket.at(bucketi)->n <= bucket.at(bucketi + 1)->n) {
-							// make bucketi parent of bucketi + 1
-							parentNode = bucket.at(bucketi);
-							childNode = bucket.at(bucketi + 1);
-						} else {
-							// make bucketi + 1 parent of bucketi
-							parentNode = bucket.at(bucketi);
-							childNode = bucket.at(bucketi + 1);
-						}
-
-						// Remove childNode from siblings
-						if (childNode->rightSibling != childNode) {
-							childNode->rightSibling->leftSibling = childNode->leftSibling;
-							childNode->leftSibling->rightSibling = childNode->rightSibling;
-						}
-						childNode->rightSibling = nullptr;
-						childNode->leftSibling = nullptr;
-
-						// If parentNode has children, add childNode to list
-						if(parentNode->child != nullptr) {
-
-							childNode->rightSibling = parentNode->child;
-							childNode->leftSibling = parentNode->child->leftSibling;	
-							
-							// Add childNode to list of children
-							parentNode->child->leftSibling->rightSibling = childNode;
-							parentNode->child->leftSibling = childNode;	
-							childNode->parent = parentNode;
-
-							// If new child is smallest child, change parent's child pointer
-							if(parentNode->child->n > childNode->n) {
-								parentNode->child = childNode;
-							}
-
-						} else {
-							parentNode->child = childNode;
-							childNode->parent = parentNode;
-
-							childNode->leftSibling = childNode;
-							childNode->rightSibling = childNode;
-						}					
-
-						parentNode->rank++;
-
-						// move bucketi to new position in buckets
-						if (buckets.size() <= parentNode->rank) {
-							buckets.resize(parentNode->rank + 1);
-						}
-						buckets.at(parentNode->rank).push_back(parentNode);
-
-
-					}		
-				}
+			while(rootSibling != minRoot->child) {
+				roots.push_back(rootSibling);
+				rootSibling = rootSibling->rightSibling;
 			}
 		}
-		return ret;
+
+		minRoot = nullptr;
+
+		minRoot = roots[0];
+		for (int i = 0; i < roots.size(); i++) {
+			roots[i]->rightSibling = roots[(i + 1 + roots.size()) % roots.size()];
+			roots[i]->leftSibling  = roots[(i - 1 + roots.size()) % roots.size()];
+			if (roots[i]->n < minRoot->n) {
+				minRoot = roots[i];
+			}
+		}
+
+		// Checkpoint: Rigtige Nodes i roots, med pointers til siblings, og korrekt minRoot.
+
+
+		// Link nodes by rank
+		std::vector<std::vector<std::shared_ptr<FNode>>> buckets = bucketSort(minRoot);
+
+		for (int i = 0; i < buckets.size(); i++) {
+			std::vector<std::shared_ptr<FNode>> bucket = buckets.at(i);
+			if(bucket.size() > 1) {
+				for (int bucketi = 0; bucketi + 1 < bucket.size(); bucketi += 2) {
+
+					std::shared_ptr<FNode> parentNode;
+					std::shared_ptr<FNode> childNode;
+
+					if(bucket.at(bucketi)->n <= bucket.at(bucketi + 1)->n) {
+						// make bucketi parent of bucketi + 1
+						parentNode = bucket.at(bucketi);
+						childNode = bucket.at(bucketi + 1);
+					} else {
+						// make bucketi + 1 parent of bucketi
+						parentNode = bucket.at(bucketi);
+						childNode = bucket.at(bucketi + 1);
+					}
+
+					// Remove childNode from siblings
+					if (childNode->rightSibling != childNode) {
+						childNode->rightSibling->leftSibling = childNode->leftSibling;
+						childNode->leftSibling->rightSibling = childNode->rightSibling;
+					}
+					childNode->rightSibling = nullptr;
+					childNode->leftSibling = nullptr;
+
+					// If parentNode has children, add childNode to list
+					if(parentNode->child != nullptr) {
+
+						childNode->rightSibling = parentNode->child;
+						childNode->leftSibling = parentNode->child->leftSibling;	
+
+						// Add childNode to list of children
+						parentNode->child->leftSibling->rightSibling = childNode;
+						parentNode->child->leftSibling = childNode;	
+						childNode->parent = parentNode;
+
+						// If new child is smallest child, change parent's child pointer
+						if(parentNode->child->n > childNode->n) {
+							parentNode->child = childNode;
+						}
+
+					} else {
+						parentNode->child = childNode;
+						childNode->parent = parentNode;
+
+						childNode->leftSibling = childNode;
+						childNode->rightSibling = childNode;
+					}					
+
+					parentNode->rank++;
+					childNode->marked = false;
+
+					// move bucketi to new position in buckets
+					if (buckets.size() <= parentNode->rank) {
+						buckets.resize(parentNode->rank + 1);
+					}
+					buckets.at(parentNode->rank).push_back(parentNode);
+
+
+				}		
+			}
+		}
+	}
+	return ret;
 }
 
-void 
-	FHeap::DecreaseKey(int k, int i) {
+void FHeap::DecreaseKey(int k, int i) {
 
-		std::shared_ptr<FNode> key = std::make_shared<FNode>(); // TODO: Brug en rigtig node
+	std::shared_ptr<FNode> key = std::make_shared<FNode>(); // TODO: Brug en rigtig node
 
-		assert (k >= 0);
+	assert (k >= 0);
 
-		if(key->parent == nullptr){
-			key->n -= k;
-		} else {
-			key->n -= k;
+	if(key->parent == nullptr){
+		key->n -= k;
+	} else {
+		key->n -= k;
 
-			// Remove parent pointer
-			std::shared_ptr<FNode> parent = key->parent;
-			key->parent = nullptr;
+		// Remove parent pointer
+		std::shared_ptr<FNode> parent = key->parent;
+		key->parent = nullptr;
 
-			// Remove key from list of siblings
-			std::shared_ptr<FNode> keySibling = key->rightSibling;
-			while (keySibling != key) {
-				if(keySibling->rightSibling == key) {
-					keySibling->rightSibling = key->rightSibling;
-				}
-				if(keySibling->leftSibling == key) {
-					keySibling->leftSibling = key->leftSibling;
-				}
-				keySibling = keySibling->rightSibling;
-			}
+		// Remove key from list of siblings
+		key->rightSibling->leftSibling = key->leftSibling;
+		key->leftSibling->rightSibling = key->rightSibling;			
+		key->rightSibling = nullptr;
+		key->leftSibling = nullptr;
 
-			// Remove child pointer from parent, decrease rank
-			if (parent->child == key) {
-				parent->child = key->rightSibling;
-				parent->rank--;
-			}
+		// Add to list of roots
+		minRoot->leftSibling->rightSibling = key;
+		minRoot->leftSibling = key;
 
-			// Add to list of roots
-			minRoot->leftSibling->rightSibling = key;
-			minRoot->leftSibling = key;
-
-			if (key->n < minRoot->n) {
-				minRoot = key;
-			}
-
-
-
-
-			//TODO: Cascading cuts
+		// If this is smaller than current minRoot, move pointer
+		if (key->n < minRoot->n) {
+			minRoot = key;
 		}
+
+		//TODO: Cascading cuts
+
+		// Remove child pointer from parent, decrease rank
+		parent->child = key->rightSibling;
+		parent->rank--;
+
+		
+	}
+}
+
+void cascadingCuts(std::shared_ptr<FNode> child,std::shared_ptr<FNode> parent) {
+	
+	if(parent->parent != nullptr) {
+		if(!parent->marked) {
+			parent->marked = true;
+		} else {
+			if (parent->child == child) {				
+				std::shared_ptr<FNode> sibling = child->rightSibling;
+				std::shared_ptr<FNode> minChild = sibling;
+				while (sibling != child) {
+					if (sibling->n < minChild->n) {
+						minChild = sibling;
+					}
+				}
+			}
+			child->rightSibling->leftSibling = child->leftSibling;
+			child->leftSibling->rightSibling = child->rightSibling;
+		}
+	}
 }
 
 std::vector<std::vector<std::shared_ptr<FNode>>> FHeap::bucketSort(std::shared_ptr<FNode> root) {
@@ -314,7 +327,6 @@ std::string FHeap::nodeInfo(std::shared_ptr<FNode> n, int rank) {
 					output += nodeInfo(sibling, rank);
 
 					graphRank += ", " + std::to_string(sibling->n);
-
 
 					sibling = sibling->rightSibling;
 				}
