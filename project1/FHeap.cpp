@@ -2,6 +2,7 @@
 #include "FNode.hpp"
 #include <cassert>
 #include <string>
+
 FHeap::FHeap() {
 
 }
@@ -22,6 +23,10 @@ std::string FHeap::toString(std::string label) {
 	return output;
 }
 
+bool
+FHeap::empty() {
+    return true;
+}
 void 
 	FHeap::MakeHeap() {
 		minRoot = nullptr;	

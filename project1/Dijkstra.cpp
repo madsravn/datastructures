@@ -13,3 +13,10 @@ void
 Dijkstra::sayName() {
     pq->sayName();
 }
+
+void
+Dijkstra::run() {
+    while(pq->empty() != true) {
+        pq->DeleteMin();
+    }
+}
