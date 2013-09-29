@@ -178,6 +178,7 @@ BHeap::DeleteMin() {
 	int retVal = root->key;
 
     std::shared_ptr<BNode> node = Find(size);
+    map.erase(retVal);
     if(size>3) {
         node->left = root->left;
         node->right = root->right;
