@@ -5,6 +5,11 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <map>
+
+struct vw {
+    int v,w;
+};
 class Dijkstra {
 
     public:
@@ -17,7 +22,7 @@ class Dijkstra {
 
     private:
         std::shared_ptr<IQueue> pq;
-
+        std::multimap<int, vw> edges;
 
 };
 #endif
