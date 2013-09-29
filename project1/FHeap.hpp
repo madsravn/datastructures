@@ -5,6 +5,7 @@
 #include "IQueue.hpp"
 #include <vector>
 #include <iostream>
+#include <unordered_map>
 
 class FHeap : public IQueue {
     public:
@@ -21,8 +22,10 @@ class FHeap : public IQueue {
 		std::vector<std::vector<std::shared_ptr<FNode>>> bucketSort(std::shared_ptr<FNode> root);
 		std::string nodeInfo(std::shared_ptr<FNode> n, int rank);
 		std::string toString(std::string label);
+		void cascadingCuts(std::shared_ptr<FNode> child);
     private:
 		std::shared_ptr<FNode> minRoot;
+		std::unordered_map<int, std::shared_ptr<FNode>> map;
 
 };
 
