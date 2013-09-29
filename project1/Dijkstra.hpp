@@ -2,6 +2,9 @@
 #define DIJKSTRA_HPP_
 #include "IQueue.hpp"
 #include <memory>
+#include <string>
+#include <iostream>
+#include <fstream>
 class Dijkstra {
 
     public:
@@ -9,6 +12,7 @@ class Dijkstra {
         Dijkstra(std::shared_ptr<IQueue> queue);
         void sayName();
         void run();
+        void load(std::string tfile);
 
 
     private:

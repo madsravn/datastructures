@@ -38,6 +38,8 @@ int main() {
     }
     //bheap->Swap();
     std::cout << bheap->graph() << std::endl;
+    Dijkstra d(bheap);
+    d.load("test.txt");
     t.stop();
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
 
