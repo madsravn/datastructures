@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include <thread>
 #include "FHeap.hpp"
 #include "Timer.hpp"
@@ -6,6 +7,18 @@
 #include "BHeap.hpp"
 
 int main() {
+
+    // Eksempel på tilfældige tal.
+    /*unsigned int seed = 12345;
+    std::default_random_engine dre(seed);
+    std::uniform_int_distribution<> dis(1, 1000);
+ 
+    for (int n=0; n<10; ++n)
+        std::cout << dis(dre) << ' ';
+    std::cout << '\n';
+    */
+
+
     Timer t;
     t.start();
     

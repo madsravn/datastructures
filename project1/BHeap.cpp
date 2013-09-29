@@ -30,16 +30,16 @@ nodeInfo(std::shared_ptr<BNode> n) {
         temp = temp + ""; 
     }
     if(n->left != nullptr) {
-        temp = temp + std::to_string(n->prio) + " -> " + std::to_string( n->left->prio) + "\n";
+        temp = temp + std::to_string(n->prio) + "-" +std::to_string(n->key) + " -> " + std::to_string( n->left->prio) + "-" + std::to_string(n->left->key) + "\n";
         temp = temp + nodeInfo(n->left);
     }
     if(n->right != nullptr) {
-        temp = temp + std::to_string(n->prio) + " -> " + std::to_string( n->right->prio) + "\n";
+        temp = temp + std::to_string(n->prio) + "-" + std::to_string(n->key) + " -> " + std::to_string( n->right->prio) + "-" + std::to_string(n->right->key) + "\n";
 
         temp = temp + nodeInfo(n->right);
     }
     if(n->parent != nullptr) {
-        temp = temp + std::to_string(n->prio) + " -> " + std::to_string(n->parent->prio) + "\n";
+        temp = temp + std::to_string(n->prio) + "-" + std::to_string(n->key) + " -> " + std::to_string(n->parent->prio) + "-" + std::to_string(n->parent->key) + "\n";
     }
     return temp;
 }
@@ -205,6 +205,7 @@ BHeap::DeleteMin() {
         BubbleDown(root);
     }
 
+    //std::cout << graph() << std::endl;
 	return retVal;
 }
 
