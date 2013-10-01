@@ -141,7 +141,7 @@ BHeap::Insert(int k, int priority) {
     if(size == 0) {
         std::shared_ptr<BNode> node = std::make_shared<BNode>(k, priority);
         root = node;
-        map.insert({{k,node}});
+		map.insert(std::make_pair(k,node));
     } else {
         std::string s = std::bitset<64> (size+1).to_string();
         size_t pos = 0;
@@ -167,7 +167,7 @@ BHeap::Insert(int k, int priority) {
         }
         newnode->parent = node;
         BubbleUp(newnode); 
-        map.insert({{k, newnode}});
+		map.insert(std::make_pair(k, newnode));
 
     }
     size++;

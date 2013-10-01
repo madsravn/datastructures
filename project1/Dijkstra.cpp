@@ -55,12 +55,12 @@ Dijkstra::run() {
         visited.insert({{u,1}});
     }*/
     std::map<int,int> dist;
-    dist.insert({{1,0}});
+	dist.insert(std::make_pair(1,0));
     pq->Insert(1,0);
     for(auto elem : edges) {
         if(dist.count(elem.second.v) == 0) {
             pq->Insert(elem.second.v, 10000);
-            dist.insert({{elem.second.v,10000}});
+			dist.insert(std::make_pair(elem.second.v,10000));
         }
     }
     while(pq->empty() != true) {
@@ -93,7 +93,7 @@ Dijkstra::load(std::string tfile) {
     if(file.is_open()) {
         while(file >> u >> v >> w) {
             vw edgeweight = {v,w};
-            edges.insert({ { u, edgeweight} });
+			edges.insert(std::make_pair( u, edgeweight));
         }
 
     } else {
