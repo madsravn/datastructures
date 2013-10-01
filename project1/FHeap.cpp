@@ -25,7 +25,11 @@ std::string FHeap::toString(std::string label) {
 
 bool
 FHeap::empty() {
-    return true;
+    if (minRoot == nullptr) {
+		return true;
+	} else {
+		return false;
+	}
 }
 void 
 	FHeap::MakeHeap() {
@@ -36,6 +40,7 @@ void
 	FHeap::sayName() {
 		std::cout << "I am FHeap" << std::endl;
 }
+
 
 int
 	FHeap::FindMin() {
