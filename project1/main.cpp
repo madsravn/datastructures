@@ -52,7 +52,7 @@ int main() {
     */
     //bheap->Swap();
     //std::cout << bheap->graph() << std::endl;
-    Dijkstra d(bheap);
+    Dijkstra d(fheap);
     d.load("test.txt");
     d.run();
     t.stop();
