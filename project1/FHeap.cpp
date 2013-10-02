@@ -60,7 +60,7 @@ void FHeap::Insert(int k, int priority) {
 		node->leftSibling = node;
 		node->rightSibling = node;
 		node->rank = 0;
-		node->marked = true; // Dunno wtf
+		node->marked = false;
 		minRoot = node;
 		map.insert(std::make_pair(k, node));
 	}
@@ -195,8 +195,6 @@ int	FHeap::DeleteMin() {
 						buckets.resize(parentNode->rank + 1);
 					}
 					buckets.at(parentNode->rank).push_back(parentNode);
-
-
 				}		
 			}
 		}
@@ -244,14 +242,7 @@ void FHeap::DecreaseKey(int k, int i) {
 			minRoot = key;
 		}
 
-
-
-		//TODO: Cascading cuts
-			cascadingCuts(parent);
-
-
-
-		
+		cascadingCuts(parent);
 	}
 }
 
