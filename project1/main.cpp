@@ -23,6 +23,7 @@ int main() {
     t.start();
     
     auto fheap = std::make_shared<FHeap>();
+    /*
 	for(int i = 0; i < 20; i++) {
         fheap->Insert(i + 5, 120-i);
     }
@@ -36,24 +37,25 @@ int main() {
 	std::cout << "FindMin()" << std::endl << fheap->FindMin() << std::endl << std::endl ;
 	fheap->sayName();
 	Dijkstra d1(fheap);
-    
+    */
     //d1.sayName();
     auto bheap = std::make_shared<BHeap>();
-    /*for(int i = 0; i < 40; i++) {
+    for(int i = 0; i < 40; i++) {
         bheap->Insert(2+i, 42-i);
     }
-    //d2.sayName();
-    //std::cout << bheap->graph() << std::endl;
     for(int i = 0; i < 40; i++) {
-        std::cout << i << std::endl;
+        bheap->DecreaseKey(2+i,2);
+    }
+    for(int i = 0; i < 40; i++) {
         bheap->DeleteMin();
     }
-    */
+    
     //bheap->Swap();
     //std::cout << bheap->graph() << std::endl;
-    Dijkstra d(bheap);
-    d.load("test.txt");
-    d.run();
+    //Dijkstra d(bheap);
+    //d.load("test2.txt");
+    //d.run();
+    bheap->printInformation();
     t.stop();
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
 

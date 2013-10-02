@@ -1,11 +1,22 @@
 #include "BHeap.hpp"
 
 BHeap::BHeap() : size(0), root(nullptr) {
+    ups = downs = inserts = lookups = deletions = swaps = 0;
 }
 
 void 
 BHeap::MakeHeap() {
     //Kode her
+}
+
+void
+BHeap::printInformation() {
+    std::cout << "ups: " << ups << std::endl;
+    std::cout << "downs: " << downs << std::endl;
+    std::cout << "inserts: " << inserts << std::endl;
+    std::cout << "lookups: " << lookups << std::endl;
+    std::cout << "deletions: " << deletions << std::endl;
+    std::cout << "swaps: " << swaps << std::endl;
 }
 
 void
@@ -82,7 +93,7 @@ void internalNodeInfo(std::shared_ptr<BNode> node) {
     }
     std::cout << " = = = " << std::endl;
 }
-
+/*
 void 
 BHeap::Swap() {
     int i = size;
@@ -132,15 +143,15 @@ BHeap::Swap() {
     n2->parent = t1parent;
 
 }
+*/
 
 
-
-// TODO: Rewrite til at bruge Find i stedet for
 void
 BHeap::Insert(int k, int priority) {
     if(size == 0) {
         std::shared_ptr<BNode> node = std::make_shared<BNode>(k, priority);
         root = node;
+        inserts++;
 		map.insert(std::make_pair(k,node));
     } else {
         std::string s = std::bitset<64> (size+1).to_string();
@@ -148,7 +159,9 @@ BHeap::Insert(int k, int priority) {
         while(pos < s.size() && s.at(pos) == '0') {
             pos++;
         }
-        pos++; std::shared_ptr<BNode> node = root;
+        pos++;
+        std::shared_ptr<BNode> node = root;
+
         while(pos < s.size()-1) {
             if(s.at(pos) == '0') {
                 node = node->left;
@@ -167,6 +180,8 @@ BHeap::Insert(int k, int priority) {
         }
         newnode->parent = node;
         BubbleUp(newnode); 
+
+        inserts++;
 		map.insert(std::make_pair(k, newnode));
 
     }
@@ -176,10 +191,13 @@ BHeap::Insert(int k, int priority) {
 int
 BHeap::DeleteMin() {
 	int retVal = root->key;
-
+    // Tag den sidste node
     std::shared_ptr<BNode> node = Find(size);
+
+    deletions++;
     map.erase(retVal);
     if(size>3) {
+        swaps++;
         node->left = root->left;
         node->right = root->right;
         root->left->parent = node;
@@ -212,7 +230,7 @@ BHeap::DeleteMin() {
 //TODO: Refactor
 void
 BHeap::BubbleDown(std::shared_ptr<BNode> node) {
-    // Der skal køres nedad, men også tages højde for at enten left eller right kan være nullptr
+    downs++;
     if(node->left != nullptr && node->right != nullptr) {
         if(node->left->prio < node->right->prio) {
             if(node->left->prio < node->prio) {
@@ -243,6 +261,7 @@ BHeap::BubbleDown(std::shared_ptr<BNode> node) {
 
 void
 BHeap::BubbleUp(std::shared_ptr<BNode> node) {
+    ups++;
 
     if(node->parent != nullptr) {
         if(node->parent->prio > node->prio) {
@@ -259,6 +278,7 @@ BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
     
     assert(n1->parent == n2);
 
+    swaps++;
     std::shared_ptr<BNode> tleft = n1->left;
     std::shared_ptr<BNode> tright = n1->right;
     std::shared_ptr<BNode> tparent = n1->parent;
@@ -333,7 +353,7 @@ BHeap::Find(int place) {
 
 void 
 BHeap::DecreaseKey(const int k, int i) {
-    //TODO: Assertions
+    lookups++;
     std::unordered_map<int, std::shared_ptr<BNode>>::const_iterator f = map.find(k);
     assert(f != map.end());
     std::shared_ptr<BNode> node = f->second;
