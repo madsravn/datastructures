@@ -126,7 +126,7 @@ int	FHeap::DeleteMin() {
 		for (int i = 0; i < roots.size(); i++) {
 			roots[i]->rightSibling = roots[(i + 1 + roots.size()) % roots.size()];
 			roots[i]->leftSibling  = roots[(i - 1 + roots.size()) % roots.size()];
-			if (roots[i]->n < minRoot->n) {
+			if (roots[i]->priority < minRoot->priority) {
 				minRoot = roots[i];
 			}
 		}
@@ -145,7 +145,7 @@ int	FHeap::DeleteMin() {
 					std::shared_ptr<FNode> parentNode;
 					std::shared_ptr<FNode> childNode;
 
-					if(bucket.at(bucketi)->n <= bucket.at(bucketi + 1)->n) {
+					if(bucket.at(bucketi)->priority <= bucket.at(bucketi + 1)->priority) {
 						// make bucketi parent of bucketi + 1
 						parentNode = bucket.at(bucketi);
 						childNode = bucket.at(bucketi + 1);
@@ -175,7 +175,7 @@ int	FHeap::DeleteMin() {
 						childNode->parent = parentNode;
 
 						// If new child is smallest child, change parent's child pointer
-						if(parentNode->child->n > childNode->n) {
+						if(parentNode->child->priority > childNode->priority) {
 							parentNode->child = childNode;
 						}
 
@@ -210,7 +210,7 @@ void FHeap::DecreaseKey(int k, int i) {
 
 	assert (k >= 0);
 
-	key->n -= i;
+	key->priority -= i;
 
 	if(key->parent != nullptr){
 		// Remove parent pointer
@@ -238,7 +238,7 @@ void FHeap::DecreaseKey(int k, int i) {
 		key->rightSibling->leftSibling = key;
 
 		// If this is smaller than current minRoot, move pointer
-		if (key->n < minRoot->n) {
+		if (key->priority < minRoot->priority) {
 			minRoot = key;
 		}
 
@@ -278,7 +278,7 @@ void FHeap::cascadingCuts(std::shared_ptr<FNode> node) {
 			node->leftSibling = minRoot->leftSibling;
 			node->rightSibling->leftSibling = node;
 			node->leftSibling->rightSibling = node;
-			if (node->n < minRoot->n) {
+			if (node->priority < minRoot->priority) {
 				minRoot = node;
 			}
 
@@ -329,7 +329,7 @@ void FHeap::Meld(std::shared_ptr<FHeap> heap) {
 	mid->rightSibling = heap->minRoot;
 	end->rightSibling = minRoot;
 
-	if (heap->minRoot->n < minRoot->n) {
+	if (heap->minRoot->priority < minRoot->priority) {
 		minRoot = heap->minRoot;
 	}
 
@@ -412,7 +412,7 @@ std::string FHeap::nodeInfo(std::shared_ptr<FNode> n, int rank) {
 		output += nodeInfo(n->child, rank + 1);
 	}
 	
-	std::string label = std::to_string(n->key) + " [label = \"" + std::to_string(n->key) + ", " + std::to_string(n->n)  + "\"]\n";
+	std::string label = std::to_string(n->key) + " [label = \"" + std::to_string(n->key) + ", " + std::to_string(n->priority)  + "\"]\n";
 	output += label;
 
 	return output;
