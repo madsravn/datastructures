@@ -21,7 +21,7 @@ Dijkstra::run() {
     pq->Insert(1,0);
     for(auto elem : edges) {
         if(dist.count(elem.second.v) == 0) {
-            pq->Insert(elem.second.v, 10000);
+            std::shared_ptr<INode> node = pq->Insert(elem.second.v, 10000);
 			dist.insert(std::make_pair(elem.second.v,10000));
         }
     }
