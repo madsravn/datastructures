@@ -48,11 +48,10 @@ int
 }
 
 std::shared_ptr<INode> FHeap::Insert(int k, int priority) {
-
 	if (minRoot != nullptr) {
 		std::shared_ptr<FHeap> heap = std::make_shared<FHeap>();
 		heap->Insert(k, priority);
-		Meld(heap);
+		return Meld(heap);
 	} else {
 		std::shared_ptr<FNode> node = std::make_shared<FNode>(k, priority);
 		node->child = nullptr;
@@ -62,7 +61,8 @@ std::shared_ptr<INode> FHeap::Insert(int k, int priority) {
 		node->rank = 0;
 		node->marked = false;
 		minRoot = node;
-		map.insert(std::make_pair(k, node));
+		return node;
+		//map.insert(std::make_pair(k, node));
 	}
 }
 
@@ -202,13 +202,9 @@ int	FHeap::DeleteMin() {
 	return ret;
 }
 
-void FHeap::DecreaseKey(int k, int i) {
+void FHeap::DecreaseKey(std::shared_ptr<INode> keyNode, int i) {
 	
-	std::unordered_map<int, std::shared_ptr<FNode>>::const_iterator f = map.find(k);
-    assert(f != map.end());
-    std::shared_ptr<FNode> key = f->second;
-
-	assert (k >= 0);
+	std::shared_ptr<FNode> key = std::static_pointer_cast<FNode>(keyNode);
 
 	key->priority -= i;
 
@@ -319,7 +315,7 @@ std::vector<std::vector<std::shared_ptr<FNode>>> FHeap::bucketSort(std::shared_p
 	return bucketList;
 }
 
-void FHeap::Meld(std::shared_ptr<FHeap> heap) {
+std::shared_ptr<FNode> FHeap::Meld(std::shared_ptr<FHeap> heap) {
 	std::shared_ptr<FNode> end = heap->minRoot->leftSibling;
 	std::shared_ptr<FNode> mid = minRoot->leftSibling;
 
@@ -333,7 +329,7 @@ void FHeap::Meld(std::shared_ptr<FHeap> heap) {
 		minRoot = heap->minRoot;
 	}
 
-	map.insert(std::make_pair(heap->minRoot->key, heap->minRoot));
+	return heap->minRoot;
 }
 
 

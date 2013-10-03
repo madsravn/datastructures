@@ -23,21 +23,9 @@ int main() {
     t.start();
     
     auto fheap = std::make_shared<FHeap>();
-    /*
-	for(int i = 0; i < 20; i++) {
-        fheap->Insert(i + 5, 120-i);
-    }
-	std::cout << fheap->toString("Start\n") << std::endl;
-	fheap->DeleteMin();
-	std::cout << fheap->toString("DeleteMin()") << std::endl;
-
-	fheap->DecreaseKey(8, 3);
-	std::cout << fheap->toString("DecreaseKey(8, 3)\n") << std::endl;
-
-	std::cout << "FindMin()" << std::endl << fheap->FindMin() << std::endl << std::endl ;
-	fheap->sayName();
+    
 	Dijkstra d1(fheap);
-    */
+    
     //d1.sayName();
     auto bheap = std::make_shared<BHeap>();
     /*for(int i = 0; i < 40; i++) {
