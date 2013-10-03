@@ -18,7 +18,10 @@ void
 Dijkstra::run() {
     std::map<int,int> dist;
 	dist.insert(std::make_pair(1,0));
-    pq->Insert(1,0);
+    std::shared_ptr<INode> n = pq->Insert(1,0);
+    std::cout << n->key << std::endl;
+    std::cout << n << std::endl;
+    std::shared_ptr<BNode> bnode = std::static_pointer_cast<BNode>(n);
     for(auto elem : edges) {
         if(dist.count(elem.second.v) == 0) {
             std::shared_ptr<INode> node = pq->Insert(elem.second.v, 10000);

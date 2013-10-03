@@ -40,7 +40,7 @@ int main() {
     */
     //d1.sayName();
     auto bheap = std::make_shared<BHeap>();
-    for(int i = 0; i < 40; i++) {
+    /*for(int i = 0; i < 40; i++) {
         bheap->Insert(2+i, 42-i);
     }
     for(int i = 0; i < 40; i++) {
@@ -49,12 +49,12 @@ int main() {
     for(int i = 0; i < 40; i++) {
         bheap->DeleteMin();
     }
-    
+    */ 
     //bheap->Swap();
     //std::cout << bheap->graph() << std::endl;
-    //Dijkstra d(bheap);
-    //d.load("test2.txt");
-    //d.run();
+    Dijkstra d(bheap);
+    d.load("test2.txt");
+    d.run();
     bheap->printInformation();
     t.stop();
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
