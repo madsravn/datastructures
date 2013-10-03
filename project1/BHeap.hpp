@@ -16,7 +16,7 @@ class BHeap : public IQueue {
         virtual std::shared_ptr<INode> Insert(int k, int priority);
         virtual int DeleteMin();
         //Decrease value of Node k with i.
-        virtual void DecreaseKey(int k, int i);
+        virtual void DecreaseKey(std::shared_ptr<INode> k, int i);
         virtual void sayName();
         virtual bool empty();
         std::string graph();
