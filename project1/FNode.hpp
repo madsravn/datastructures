@@ -10,12 +10,11 @@ public:
 	FNode();
 
 
-	int n;
+	int priority;
 	std::shared_ptr<FNode> parent, child, leftSibling, rightSibling;
 	int rank;
 	bool marked;	
 	int key;
-	bool null;
 
 };
 
