@@ -17,15 +17,16 @@ Dijkstra::sayName() {
 void
 Dijkstra::run() {
     std::map<int,int> dist;
+    std::map<int, std::shared_ptr<INode>> nodes;
 	dist.insert(std::make_pair(1,0));
     std::shared_ptr<INode> n = pq->Insert(1,0);
-    std::cout << n->key << std::endl;
-    std::cout << n << std::endl;
+    nodes.insert(std::make_pair(n->key, n));
     std::shared_ptr<BNode> bnode = std::static_pointer_cast<BNode>(n);
-    std::cout << bnode->left << " and " << bnode->right << " and " << bnode->prio << std::endl;
+
     for(auto elem : edges) {
         if(dist.count(elem.second.v) == 0) {
             std::shared_ptr<INode> node = pq->Insert(elem.second.v, 10000);
+            nodes.insert(std::make_pair(node->key,node));
 			dist.insert(std::make_pair(elem.second.v,10000));
         }
     }
@@ -39,6 +40,7 @@ Dijkstra::run() {
             int mindist = dist.at(u) + w;
             if(mindist < dist.at(v)) {
                 dist.at(v) = mindist;
+                pq->DecreaseKey(nodes.at(v),1000-mindist); 
                 //pq->DecreaseKey(v, 1000-mindist);
             }
 

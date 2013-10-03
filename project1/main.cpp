@@ -24,7 +24,7 @@ int main() {
     
     auto fheap = std::make_shared<FHeap>();
     
-	Dijkstra d1(fheap);
+	//Dijkstra d1(fheap);
     
     //d1.sayName();
     auto bheap = std::make_shared<BHeap>();
