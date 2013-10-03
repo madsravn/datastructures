@@ -4,7 +4,8 @@ FNode::FNode() {
 
 }
 
-FNode::FNode(int key, int priority) : n(priority), key(key) {
+FNode::FNode(int tkey, int tpriority) : priority(tpriority) {
+    key = tkey;
 }
 
 

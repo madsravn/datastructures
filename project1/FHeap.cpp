@@ -47,7 +47,7 @@ int
 		return minRoot->key;
 }
 
-void FHeap::Insert(int k, int priority) {
+std::shared_ptr<INode> FHeap::Insert(int k, int priority) {
 
 	if (minRoot != nullptr) {
 		std::shared_ptr<FHeap> heap = std::make_shared<FHeap>();

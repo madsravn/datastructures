@@ -4,6 +4,7 @@ BNode::BNode() {
 
 }
 
-BNode::BNode(int tkey, int priority) :key(tkey), prio(priority),right(nullptr), left(nullptr), parent(nullptr) {
+BNode::BNode(int tkey, int priority) : prio(priority),right(nullptr), left(nullptr), parent(nullptr) {
+    key = tkey;
 
 }

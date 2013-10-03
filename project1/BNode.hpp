@@ -1,9 +1,9 @@
 #ifndef BNODE_HPP_
 #define BNODE_HPP_
-
+#include "INode.hpp"
 #include <memory>
 
-class BNode : public Node {
+class BNode : public INode {
     public:
         BNode(int tkey, int priority);
         BNode();

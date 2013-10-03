@@ -12,7 +12,7 @@ class FHeap : public IQueue {
         FHeap();
         virtual void MakeHeap();
         virtual int FindMin();
-        virtual void Insert(int k, int priority);
+        virtual std::shared_ptr<INode> Insert(int k, int priority);
         virtual int DeleteMin();
         //Decrease value of Node k with i.
         virtual void DecreaseKey(int k, int i);
