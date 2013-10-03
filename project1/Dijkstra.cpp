@@ -22,6 +22,7 @@ Dijkstra::run() {
     std::cout << n->key << std::endl;
     std::cout << n << std::endl;
     std::shared_ptr<BNode> bnode = std::static_pointer_cast<BNode>(n);
+    std::cout << bnode->left << " and " << bnode->right << " and " << bnode->prio << std::endl;
     for(auto elem : edges) {
         if(dist.count(elem.second.v) == 0) {
             std::shared_ptr<INode> node = pq->Insert(elem.second.v, 10000);
@@ -38,7 +39,7 @@ Dijkstra::run() {
             int mindist = dist.at(u) + w;
             if(mindist < dist.at(v)) {
                 dist.at(v) = mindist;
-                pq->DecreaseKey(v, 1000-mindist);
+                //pq->DecreaseKey(v, 1000-mindist);
             }
 
         }
