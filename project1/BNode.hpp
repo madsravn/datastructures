@@ -3,12 +3,13 @@
 
 #include <memory>
 
-class BNode {
+class BNode : public Node {
     public:
         BNode(int tkey, int priority);
         BNode();
         std::shared_ptr<BNode> left, right, parent;
-        int key, prio;
+        //int key;
+        int prio;
 
 };
 
