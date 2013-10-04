@@ -19,7 +19,7 @@ class FHeap : public IQueue {
         virtual void sayName();
         virtual bool empty();
         std::shared_ptr<FNode> Meld(std::shared_ptr<FHeap>);
-		std::vector<std::vector<std::shared_ptr<FNode>>> bucketSort(std::shared_ptr<FNode> root);
+		std::vector<std::list<std::shared_ptr<FNode>>> bucketSort(std::shared_ptr<FNode> root);
 		std::string nodeInfo(std::shared_ptr<FNode> n, int rank);
 		std::string toString(std::string label);
 		void cascadingCuts(std::shared_ptr<FNode> child);

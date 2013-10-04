@@ -43,7 +43,6 @@ Dijkstra::run() {
                 pq->DecreaseKey(nodes.at(v),1000-mindist); 
                 //pq->DecreaseKey(v, 1000-mindist);
             }
-
         }
     }
 

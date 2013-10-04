@@ -23,6 +23,11 @@ int main() {
     t.start();
     
     auto fheap = std::make_shared<FHeap>();
+
+	Dijkstra f(fheap);
+    f.load("test2.txt");
+    f.run();
+    t.stop();
     
 	//Dijkstra d1(fheap);
     
