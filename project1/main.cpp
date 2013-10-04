@@ -18,6 +18,23 @@ int main() {
     std::cout << '\n';
     */
 
+    const unsigned int testsize = 1000000;
+    auto testbheap = std::make_shared<BHeap>();
+    Timer t1;
+    t1.start();
+    for(unsigned int i = 0; i < testsize; ++i) {
+        testbheap->Insert(2+i,2+i);
+    }
+    t1.stop();
+    std::cout << t1.duration().count() << std::endl;
+    t1.reset();
+    t1.start();
+    testbheap = std::make_shared<BHeap>();
+    for(unsigned int i = 0; i < testsize; ++i) {
+        testbheap->Insert(2+i, testsize-i+5);
+    }
+    t1.stop();
+    std::cout << t1.duration().count() << std::endl;
 
     Timer t;
     t.start();
@@ -45,11 +62,12 @@ int main() {
     */ 
     //bheap->Swap();
     //std::cout << bheap->graph() << std::endl;
-    Dijkstra d(bheap);
+    /*Dijkstra d(bheap);
     d.load("test2.txt");
     d.run();
     bheap->printInformation();
     t.stop();
+    */
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
 
     return 0;
