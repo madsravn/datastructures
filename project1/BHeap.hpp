@@ -1,5 +1,5 @@
 #ifndef BHEAP_HPP_
-#define BEAHP_HPP
+#define BHEAP_HPP_
 
 #include <iostream>
 #include "BNode.hpp"

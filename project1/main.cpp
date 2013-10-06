@@ -5,9 +5,12 @@
 #include "Timer.hpp"
 #include "Dijkstra.hpp"
 #include "BHeap.hpp"
+#include "Tester.hpp"
 
 int main() {
 
+    Tester t;
+    t.run(20);
     // Eksempel på tilfældige tal.
     /*unsigned int seed = 12345;
     std::default_random_engine dre(seed);
@@ -18,6 +21,7 @@ int main() {
     std::cout << '\n';
     */
 
+    /*
     const unsigned int testsize = 1000000;
     auto testbheap = std::make_shared<BHeap>();
     Timer t1;
@@ -45,11 +49,11 @@ int main() {
     f.load("test2.txt");
     f.run();
     t.stop();
-    
+   */ 
 	//Dijkstra d1(fheap);
     
     //d1.sayName();
-    auto bheap = std::make_shared<BHeap>();
+    //auto bheap = std::make_shared<BHeap>();
     /*for(int i = 0; i < 40; i++) {
         bheap->Insert(2+i, 42-i);
     }
