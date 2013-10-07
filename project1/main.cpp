@@ -9,8 +9,8 @@
 
 int main() {
 
-    Tester t;
-    t.run(20);
+    //Tester t;
+    //t.run(20);
     // Eksempel på tilfældige tal.
     /*unsigned int seed = 12345;
     std::default_random_engine dre(seed);
@@ -53,7 +53,7 @@ int main() {
 	//Dijkstra d1(fheap);
     
     //d1.sayName();
-    //auto bheap = std::make_shared<BHeap>();
+    auto bheap = std::make_shared<BHeap>();
     /*for(int i = 0; i < 40; i++) {
         bheap->Insert(2+i, 42-i);
     }
@@ -66,12 +66,11 @@ int main() {
     */ 
     //bheap->Swap();
     //std::cout << bheap->graph() << std::endl;
-    /*Dijkstra d(bheap);
-    d.load("test2.txt");
+    Dijkstra d(bheap);
+    d.load("test.txt");
     d.run();
     bheap->printInformation();
-    t.stop();
-    */
+    
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
 
     return 0;
