@@ -200,7 +200,7 @@ void Tester::FHeapDecreaseKey(const unsigned int times) {
     t.start();
 
 	for(unsigned i = times; i > 0; --i) {
-		fheap->DecreaseKey();
+		//fheap->DecreaseKey(i + 2, i + 2);
     }
 
     t.stop();
