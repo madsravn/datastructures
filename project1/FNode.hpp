@@ -9,7 +9,6 @@ public:
 	FNode(int key, int priority);
 	FNode();
 
-
 	int priority;
 	std::shared_ptr<FNode> parent, child, leftSibling, rightSibling;
 	int rank;

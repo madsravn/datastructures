@@ -69,7 +69,6 @@ std::shared_ptr<INode> FHeap::Insert(int k, int priority) {
 
 int	FHeap::DeleteMin() {
 
-	std::cout << toString("DeleteMin") << std::endl << std::endl;
 
 	int ret = 1;
 
@@ -128,6 +127,7 @@ int	FHeap::DeleteMin() {
 		for (int i = 0; i < roots.size(); i++) {
 			roots[i]->rightSibling = roots[(i + 1 + roots.size()) % roots.size()];
 			roots[i]->leftSibling  = roots[(i - 1 + roots.size()) % roots.size()];
+			roots[i]->parent = nullptr;
 			if (roots[i]->priority < minRoot->priority) {
 				minRoot = roots[i];
 			}
@@ -218,7 +218,7 @@ int	FHeap::DeleteMin() {
 		}
 	}
 
-	std::cout << toString("DeleteMin(" + std::to_string(ret) + ")") << std::endl << std::endl;
+	//std::cout << toString("DeleteMin(" + std::to_string(ret) + ")") << std::endl << std::endl;
 
 	return ret;
 }
@@ -310,10 +310,10 @@ void FHeap::cascadingCuts(std::shared_ptr<FNode> node) {
 std::vector<std::list<std::shared_ptr<FNode>>> FHeap::bucketSort(std::shared_ptr<FNode> root) {
 
 	std::vector<std::shared_ptr<FNode>> nodes;
-
-	int max = 0;
 	std::shared_ptr<FNode> sibling = root->rightSibling;
 	nodes.push_back(root);
+
+	int max = root->rank;
 
 	while(root != sibling) {
 		nodes.push_back(sibling);
@@ -329,7 +329,10 @@ std::vector<std::list<std::shared_ptr<FNode>>> FHeap::bucketSort(std::shared_ptr
 
 	// Add nodes to buckets
 	for (int i = 0; i < nodes.size(); i++) {
-		std::shared_ptr<FNode> currentNode = nodes.at(i);		
+		std::shared_ptr<FNode> currentNode = nodes.at(i);	
+		if (bucketList.size() <= currentNode->rank) {
+			bucketList.resize(bucketList.size() + 1);
+		}
 		bucketList.at(currentNode->rank).push_back(currentNode);
 	}
 
