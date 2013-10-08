@@ -357,11 +357,6 @@ BHeap::Find(int place) {
 void 
 BHeap::DecreaseKey(std::shared_ptr<INode> k, int i) {
     lookups++;
-    /*std::unordered_map<int, std::shared_ptr<BNode>>::const_iterator f = map.find(k);
-    assert(f != map.end());
-    std::shared_ptr<BNode> node = f->second;
-    //std::shared_ptr<BNode> node = Find(k);
-    */
     std::shared_ptr<BNode> node = std::static_pointer_cast<BNode>(k);
     node->prio = node->prio-i;
     BubbleUp(node);

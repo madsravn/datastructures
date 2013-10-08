@@ -174,7 +174,6 @@ void Tester::BHeapDecreaseKey(const unsigned int times) {
 	std::vector<std::shared_ptr<INode>> nodes;
     for(unsigned i = 0; i < times; ++i) {
 		std::shared_ptr<INode> inode = bheap->Insert(i+2,i+10000);
-		//std::shared_ptr<BNode> node = std::static_pointer_cast<BNode>(inode);
 		nodes.push_back(inode);
     }
 
