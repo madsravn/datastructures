@@ -295,6 +295,6 @@ void Tester::TestFHeap(const unsigned int highpower) {
 
 void
 Tester::run(const unsigned int highpower) {	
-	TestFHeap(highpower);
-	//TestBHeap(highpower);
+	//TestFHeap(highpower);
+	TestBHeap(highpower);
 }
