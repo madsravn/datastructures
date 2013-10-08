@@ -8,11 +8,14 @@ void
 Tester::BHeapInsertBig(const unsigned int times) {
     auto bheap = std::make_shared<BHeap>();
     Timer t;
-    t.start();
-    for(unsigned i = times; i > 0; --i) {
+    
+    for(unsigned i = REPS; i > 0; --i) {
+		t.start();
         bheap->Insert(i+2,i+2);
+		t.stop();
+		bheap->DeleteMin();
     }
-    t.stop();
+    
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;
 }
 
@@ -20,11 +23,14 @@ void
 Tester::BHeapInsertSmall(const unsigned int times) {
     auto bheap = std::make_shared<BHeap>();
     Timer t;
-    t.start();
-    for(unsigned i = 0; i < times; ++i) {
+    
+    for(unsigned i = 0; i < REPS; ++i) {
+		t.start();
         bheap->Insert(i+2,i+2);
+		t.stop();
+		bheap->DeleteMin();
     }
-    t.stop();
+    
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;
 }
 
@@ -159,11 +165,6 @@ void Tester::FHeapDecreaseKey(const unsigned int times) {
 		t.start();
 		fheap->DecreaseKey(nodes.at((rand() * times) % nodes.size()), i + 2);
 		t.stop();
-
-		/*std::shared_ptr<INode> inode = fheap->Insert(i+2,i+2);
-		std::shared_ptr<FNode> node = std::static_pointer_cast<FNode>(inode);
-		nodes.at(i % nodes.size()) = node;*/
-
     }
 	
 	std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;
@@ -265,7 +266,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
         i = pow(2,power);
     }
 
-	std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
+	/*std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
 	while(power <= highpower) {
@@ -290,7 +291,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
 		FHeapDecreaseKey(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 }
 
 void
