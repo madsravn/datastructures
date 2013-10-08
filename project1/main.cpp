@@ -66,10 +66,10 @@ int main() {
     */ 
     //bheap->Swap();
     //std::cout << bheap->graph() << std::endl;
-    Dijkstra d(bheap);
+    /*Dijkstra d(bheap);
     d.load("test.txt");
     d.run();
-    bheap->printInformation();
+    bheap->printInformation();*/
     
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
 
