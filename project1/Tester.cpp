@@ -6,23 +6,39 @@ Tester::Tester() {}
 
 void
 Tester::BHeapInsertBig(const unsigned int times) {
-    auto bheap = std::make_shared<BHeap>();
-    Timer t;
-    t.start();
-    for(unsigned i = times; i > 0; --i) {
+    auto bheap = std::make_shared<BHeap>();    
+    for(unsigned i = 0; i > times; ++i) {
         bheap->Insert(i+2,i+2);
     }
-    t.stop();
+
+	Timer t;
+    t.start();
+    for(unsigned i = times; i < REPS + times; ++i) {
+        t.start();
+		bheap->Insert(i+2,i+2);
+		t.stop();
+
+		bheap->DeleteMin();
+    }
+
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;
 }
 
 void
 Tester::BHeapInsertSmall(const unsigned int times) {
-    auto bheap = std::make_shared<BHeap>();
-    Timer t;
-    t.start();
-    for(unsigned i = 0; i < times; ++i) {
+    auto bheap = std::make_shared<BHeap>();    
+    for(unsigned i = times + REPS; i > REPS; --i) {
         bheap->Insert(i+2,i+2);
+    }
+	
+	Timer t;
+    t.start();
+    for(unsigned i = 0; i < REPS; ++i) {
+        t.start();
+		bheap->Insert(i+2,i+2);
+		t.stop();
+
+		bheap->DeleteMin();
     }
     t.stop();
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;
@@ -213,7 +229,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }
-
+	/*
 	std::cout << "\nTesting BHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
@@ -239,7 +255,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
 		BHeapDecreaseKey(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 }
 
 void Tester::TestFHeap(const unsigned int highpower) {
