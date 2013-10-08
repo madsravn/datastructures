@@ -20,7 +20,9 @@ class Tester {
         // Big = descending
         void BHeapInsertBig(const unsigned int times);
         // Small = ascending
-		void BHeapInsertSmall(const unsigned int times) ;
+		void BHeapInsertSmall(const unsigned int times);
+
+		void BHeapInsertRand(const unsigned int times);
 		void BHeapDeleteMinBig(const unsigned int times);
 		void BHeapDeleteMinSmall(const unsigned int times);
 		void BHeapDecreaseKey(const unsigned int times);        
