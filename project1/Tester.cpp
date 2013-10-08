@@ -9,38 +9,41 @@ Tester::Tester() {}
 
 void
 Tester::BHeapInsertBig(const unsigned int times) {
-    auto bheap = std::make_shared<BHeap>();
-	for(unsigned i = times; i > 0; --i) {
+    auto bheap = std::make_shared<BHeap>();    
+    for(unsigned i = 0; i > times; ++i) {
         bheap->Insert(i+2,i+2);
     }
-    Timer t;
-    
-    for(unsigned i = REPS; i > 0; --i) {
-		t.start();
-        bheap->Insert(i+2,i+2);
+
+	Timer t;
+    t.start();
+    for(unsigned i = times; i < REPS + times; ++i) {
+        t.start();
+		bheap->Insert(i+2,i+2);
 		t.stop();
+
 		bheap->DeleteMin();
     }
-    
+
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;
 }
 
 void
 Tester::BHeapInsertSmall(const unsigned int times) {
-    auto bheap = std::make_shared<BHeap>();
-	for(unsigned i = times; i > 0; --i) {
+    auto bheap = std::make_shared<BHeap>();    
+    for(unsigned i = times + REPS; i > REPS; --i) {
         bheap->Insert(i+2,i+2);
     }
-
-    Timer t;
-    
+	
+	Timer t;
+    t.start();
     for(unsigned i = 0; i < REPS; ++i) {
-		t.start();
-        bheap->Insert(i+2,i+2);
+        t.start();
+		bheap->Insert(i+2,i+2);
 		t.stop();
+
 		bheap->DeleteMin();
     }
-    
+    t.stop();
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;
 }
 
@@ -208,7 +211,6 @@ void Tester::BHeapDecreaseKey(const unsigned int times) {
 	std::vector<std::shared_ptr<INode>> nodes;
     for(unsigned i = 0; i < times; ++i) {
 		std::shared_ptr<INode> inode = bheap->Insert(i+2,i+10000);
-		//std::shared_ptr<BNode> node = std::static_pointer_cast<BNode>(inode);
 		nodes.push_back(inode);
     }
 
@@ -247,7 +249,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }
-
+	/*
 	std::cout << "\nTesting BHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
@@ -273,7 +275,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
 		BHeapDecreaseKey(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 }
 
 void Tester::TestFHeap(const unsigned int highpower) {
