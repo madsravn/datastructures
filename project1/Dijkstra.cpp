@@ -22,6 +22,7 @@ Dijkstra::run() {
     std::shared_ptr<INode> n = pq->Insert(1,0);
     nodes.insert(std::make_pair(n->key, n));
     std::shared_ptr<BNode> bnode = std::static_pointer_cast<BNode>(n);
+    std::cout << "Prio: " << bnode->prio << std::endl;
 
     for(auto elem : edges) {
         if(dist.count(elem.second.v) == 0) {

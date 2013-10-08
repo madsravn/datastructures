@@ -172,23 +172,23 @@ void Tester::FHeapDecreaseKey(const unsigned int times) {
 
 void Tester::BHeapDecreaseKey(const unsigned int times) {
 	auto bheap = std::make_shared<BHeap>();  
-	std::vector<std::shared_ptr<BNode>> nodes(times + 1);
-    for(unsigned i = times + 1; i > 0; --i) {
-		std::shared_ptr<INode> inode = bheap->Insert(i+2,i+2);
-		std::shared_ptr<BNode> node = std::static_pointer_cast<BNode>(inode);
-		nodes.at(i) = node;
+	std::vector<std::shared_ptr<INode>> nodes;
+    for(unsigned i = 0; i < times; ++i) {
+		std::shared_ptr<INode> inode = bheap->Insert(i+2,i+10000);
+		//std::shared_ptr<BNode> node = std::static_pointer_cast<BNode>(inode);
+		nodes.push_back(inode);
     }
 
 	Timer t;
 
 	for(unsigned i = REPS; i > 0; --i) {
 		t.start();
-		bheap->DecreaseKey(nodes.at(i + 2), i + 2);
+        std::shared_ptr<BNode> bnode = std::static_pointer_cast<BNode>(nodes.at(0));
+        int index = i % times;
+        std::shared_ptr<INode> inode = nodes.at(index);
+		bheap->DecreaseKey(inode, 1);
 		t.stop();
 
-		std::shared_ptr<INode> inode = bheap->Insert(i+2,i+2);
-		std::shared_ptr<BNode> node = std::static_pointer_cast<BNode>(inode);
-		nodes.at(i) = node;
     }
 
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;

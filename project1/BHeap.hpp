@@ -7,6 +7,7 @@
 #include <bitset>
 #include <cassert>
 #include <unordered_map>
+#include <memory>
 
 class BHeap : public IQueue {
     public:
