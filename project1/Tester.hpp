@@ -10,7 +10,8 @@ class Tester {
     public:
         Tester();
 
-		static const int REPS = 100000;
+		static const int REPS = 10000;
+		std::vector<int> RAN_NUMS;
 
 		void TestBHeap(const unsigned int highpower);
 		void TestFHeap(const unsigned int highpower);
@@ -28,6 +29,8 @@ class Tester {
         void FHeapInsertBig(const unsigned int times);
         // Small = ascending
         void FHeapInsertSmall(const unsigned int times);
+
+		void FHeapInsertRand(const unsigned int times);
 
         void FHeapDeleteMinBig(const unsigned int times);
         void FHeapDeleteMinSmall(const unsigned int times);

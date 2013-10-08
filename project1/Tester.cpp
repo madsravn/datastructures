@@ -1,12 +1,18 @@
 #include "Tester.hpp"
 #include "Timer.hpp"
 #include <cmath>
+#include <random>
 
 Tester::Tester() {}
+
+
 
 void
 Tester::BHeapInsertBig(const unsigned int times) {
     auto bheap = std::make_shared<BHeap>();
+	for(unsigned i = times; i > 0; --i) {
+        bheap->Insert(i+2,i+2);
+    }
     Timer t;
     
     for(unsigned i = REPS; i > 0; --i) {
@@ -22,6 +28,10 @@ Tester::BHeapInsertBig(const unsigned int times) {
 void
 Tester::BHeapInsertSmall(const unsigned int times) {
     auto bheap = std::make_shared<BHeap>();
+	for(unsigned i = times; i > 0; --i) {
+        bheap->Insert(i+2,i+2);
+    }
+
     Timer t;
     
     for(unsigned i = 0; i < REPS; ++i) {
@@ -80,7 +90,7 @@ Tester::FHeapInsertBig(const unsigned int times) {
 	fheap->DeleteMin(); // To get a more interesting tree
 
     Timer t;
-    for(unsigned i = REPS; i > 0; --i) {
+    for(unsigned i = REPS + times; i > times; --i) {
 		t.start();
         fheap->Insert(i+2,i+2);
 		t.stop();
@@ -95,7 +105,7 @@ void
 Tester::FHeapInsertSmall(const unsigned int times) {
     auto fheap = std::make_shared<FHeap>();
 
-	for(unsigned i = times + 1; i > 0; --i) {
+	for(unsigned i = times + times + 1; i > times; --i) {
         fheap->Insert(i+2,i+2);
     }
 	fheap->DeleteMin(); // To get a more interesting tree
@@ -104,6 +114,29 @@ Tester::FHeapInsertSmall(const unsigned int times) {
     for(unsigned i = 0; i < REPS; ++i) {
 		t.start();
         fheap->Insert(i+2,i+2);
+		t.stop();
+
+		fheap->DeleteMin(); // To preserve size N of heap
+    }
+    
+    std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;
+}
+
+void
+Tester::FHeapInsertRand(const unsigned int times) {
+    auto fheap = std::make_shared<FHeap>();
+
+	for(unsigned i = times + 1; i > 0; --i) {
+        fheap->Insert(i+2, rand()*times);
+    }
+	fheap->DeleteMin(); // To get a more interesting tree
+
+    Timer t;
+    for(unsigned i = REPS; i > 0; --i) {
+
+		int randomNumber = RAN_NUMS.at(i);
+		t.start();
+		fheap->Insert(i+2,randomNumber);
 		t.stop();
 
 		fheap->DeleteMin(); // To preserve size N of heap
@@ -266,6 +299,15 @@ void Tester::TestFHeap(const unsigned int highpower) {
         i = pow(2,power);
     }
 
+	std::cout << "\nTesting FHeapInsertRand\n" << std::endl;
+	i = 2;
+    power = 1;
+	while(power <= highpower) {
+		FHeapInsertRand(i);
+        power++;
+        i = pow(2,power);
+    }
+
 	/*std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
@@ -296,6 +338,17 @@ void Tester::TestFHeap(const unsigned int highpower) {
 
 void
 Tester::run(const unsigned int highpower) {	
-	//TestFHeap(highpower);
-	TestBHeap(highpower);
+
+	unsigned int seed = 12345;
+    std::default_random_engine dre(seed);
+    std::uniform_int_distribution<> dis(1, 1000);
+ 
+    for (int n = 0; n < 131072; ++n) {
+		
+		RAN_NUMS.push_back(dis(dre));
+	}
+
+
+	TestFHeap(highpower);
+	//TestBHeap(highpower);
 }
