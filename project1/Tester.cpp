@@ -281,7 +281,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }
-	/*
+	
 	std::cout << "\nTesting BHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
@@ -307,7 +307,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
 		BHeapDecreaseKey(i);
         power++;
         i = pow(2,power);
-    }*/
+    }
 }
 
 void Tester::TestFHeap(const unsigned int highpower) {
@@ -383,6 +383,6 @@ Tester::run(const unsigned int highpower) {
 	}
 
 
-	TestFHeap(highpower);
-	//TestBHeap(highpower);
+	//TestFHeap(highpower);
+	TestBHeap(highpower);
 }
