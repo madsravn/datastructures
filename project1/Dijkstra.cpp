@@ -32,18 +32,22 @@ Dijkstra::run() {
 			dist.insert(std::make_pair(elem.second.v,INF));
         }
     }
+
     while(pq->empty() != true) {
         int u = pq->DeleteMin();
-        for(auto pos = edges.lower_bound(u); pos != edges.upper_bound(u); ++pos) {
+        //for(auto pos = edges.lower_bound(u); pos != edges.upper_bound(u); ++pos) {
+        std::pair<std::multimap<int,vw>::iterator, std::multimap<int, vw>::iterator> ret;
+        ret = edges.equal_range(u);
+        for(auto pos = ret.first; pos != ret.second; ++pos) {
             vw weights = pos->second;
             int v = weights.v;
             int w = weights.w;
             std::cout << u << ", " << v << ", " << w << std::endl;
             int mindist = dist.at(u) + w;
+            //std::cout << "V: " << v << std::endl;
             if(mindist < dist.at(v)) {
                 dist.at(v) = mindist;
                 pq->DecreaseKey(nodes.at(v),1000-mindist); 
-                //pq->DecreaseKey(v, 1000-mindist);
             }
         }
     }

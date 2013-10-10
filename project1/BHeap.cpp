@@ -41,16 +41,16 @@ nodeInfo(std::shared_ptr<BNode> n) {
         temp = temp + ""; 
     }
     if(n->left != nullptr) {
-        temp = temp + std::to_string(n->prio) + "-" +std::to_string(n->key) + " -> " + std::to_string( n->left->prio) + "-" + std::to_string(n->left->key) + "\n";
+        temp = temp + std::to_string(n->key) + " -> " + std::to_string(n->left->key) + "\n";
         temp = temp + nodeInfo(n->left);
     }
     if(n->right != nullptr) {
-        temp = temp + std::to_string(n->prio) + "-" + std::to_string(n->key) + " -> " + std::to_string( n->right->prio) + "-" + std::to_string(n->right->key) + "\n";
+        temp = temp + std::to_string(n->key) + " -> " + std::to_string(n->right->key) + "\n";
 
         temp = temp + nodeInfo(n->right);
     }
     if(n->parent != nullptr) {
-        temp = temp + std::to_string(n->prio) + "-" + std::to_string(n->key) + " -> " + std::to_string(n->parent->prio) + "-" + std::to_string(n->parent->key) + "\n";
+        temp = temp + std::to_string(n->key) + " -> " + std::to_string(n->parent->key) + "\n";
     }
     return temp;
 }
@@ -191,6 +191,7 @@ BHeap::Insert(int k, int priority) {
     }
 }
 
+//TODO: Delete maps
 int
 BHeap::DeleteMin() {
 	int retVal = root->key;
@@ -216,9 +217,15 @@ BHeap::DeleteMin() {
         }
         root->parent = nullptr;
 
-    } else if(size == 2 || size == 3) {
+    } else if(size == 2) {
         Switch(node,root);
-    } else if(size == 1) {
+        root->left->parent = nullptr;
+        root->left = nullptr;
+    }else if(size == 3) {
+        Switch(node,root);
+        root->right->parent = nullptr;
+        root->right = nullptr;
+    }else if(size == 1) {
         root = nullptr;
     }
     size--;

@@ -9,8 +9,8 @@
 
 int main() {
 
-    Tester t;
-    t.run(16);
+    //Tester t;
+    //t.run(16);
     // Eksempel på tilfældige tal.
     /*unsigned int seed = 12345;
     std::default_random_engine dre(seed);
@@ -66,10 +66,10 @@ int main() {
     */ 
     //bheap->Swap();
     //std::cout << bheap->graph() << std::endl;
-    /*Dijkstra d(bheap);
-    d.load("test.txt");
+    Dijkstra d(bheap);
+    d.load("lineargraph.txt");
     d.run();
-    bheap->printInformation();*/
+    bheap->printInformation();
     
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
 
