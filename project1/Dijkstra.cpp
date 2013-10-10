@@ -16,6 +16,7 @@ Dijkstra::sayName() {
 
 void
 Dijkstra::run() {
+    int INF = 1000000;
     std::map<int,int> dist;
     std::map<int, std::shared_ptr<INode>> nodes;
 	dist.insert(std::make_pair(1,0));
@@ -26,9 +27,9 @@ Dijkstra::run() {
 
     for(auto elem : edges) {
         if(dist.count(elem.second.v) == 0) {
-            std::shared_ptr<INode> node = pq->Insert(elem.second.v, 10000);
+            std::shared_ptr<INode> node = pq->Insert(elem.second.v, INF);
             nodes.insert(std::make_pair(node->key,node));
-			dist.insert(std::make_pair(elem.second.v,10000));
+			dist.insert(std::make_pair(elem.second.v,INF));
         }
     }
     while(pq->empty() != true) {
