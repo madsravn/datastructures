@@ -88,7 +88,7 @@ Tester::BHeapInsertRand(const unsigned int times) {
     auto bheap = std::make_shared<BHeap>();
 
 	for(unsigned i = times + 1; i > 0; --i) {
-        bheap->Insert(i+2, rand()*times);
+        bheap->Insert(i+2, rand()*1000000);
     }
 	bheap->DeleteMin(); // To get a more interesting tree
 
@@ -153,7 +153,7 @@ Tester::FHeapInsertRand(const unsigned int times) {
     auto fheap = std::make_shared<FHeap>();
 
 	for(unsigned i = times + 1; i > 0; --i) {
-        fheap->Insert(i+2, rand()*times);
+        fheap->Insert(i+2, rand()*1000000);
     }
 	fheap->DeleteMin(); // To get a more interesting tree
 
@@ -185,7 +185,6 @@ void Tester::FHeapDeleteMinBig(const unsigned int times) {
 		t.start();
 		fheap->DeleteMin();
 		t.stop();
-
 		fheap->Insert(i+2, i+2);
     }
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms" << std::endl;
@@ -196,8 +195,8 @@ void Tester::FHeapDeleteMinSmall(const unsigned int times) {
     for(unsigned i = times + 1; i > 0; --i) {
         fheap->Insert(i+2,i+2);
     }
-	fheap->DeleteMin(); // To get a more interesting tree
-	
+	fheap->DeleteMin(); // To get a more interesting tree	
+
 	Timer t;
 
 	for(unsigned i = 0; i > REPS; ++i) {
@@ -255,9 +254,11 @@ void Tester::BHeapDecreaseKey(const unsigned int times) {
 void Tester::TestBHeap(const unsigned int highpower) {
 	std::cout << "\n *** >>> Testing BHeap <<< ***\n" << std::endl;
 
-	std::cout << "\nTesting BHeapInsertBig\n" << std::endl;
 	unsigned int i = 2;
     int power = 1;
+
+	std::cout << "\nTesting BHeapInsertBig\n" << std::endl;
+	/*
 	while(power <= highpower) {
         BHeapInsertBig(i);
         power++;
@@ -271,7 +272,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
         BHeapInsertSmall(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 
 	std::cout << "\nTesting BHeapInsertRand\n" << std::endl;
 	i = 2;
@@ -282,7 +283,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
         i = pow(2,power);
     }
 	
-	std::cout << "\nTesting BHeapDeleteMinBig\n" << std::endl;
+	/*std::cout << "\nTesting BHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
 	while(power <= highpower) {
@@ -307,7 +308,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
 		BHeapDecreaseKey(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 }
 
 void Tester::TestFHeap(const unsigned int highpower) {
@@ -315,7 +316,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
 	unsigned int i = 2;
     int power = 1;
 	
-	std::cout << "\nTesting FHeapInsertBig\n" << std::endl;
+	/*std::cout << "\nTesting FHeapInsertBig\n" << std::endl;
 	i = 2;
     power = 1;
 	while(power <= highpower) {
@@ -331,7 +332,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
         FHeapInsertSmall(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 
 	std::cout << "\nTesting FHeapInsertRand\n" << std::endl;
 	i = 2;
@@ -342,7 +343,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
         i = pow(2,power);
     }
 
-	std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
+	/*std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
 	while(power <= highpower) {
@@ -367,7 +368,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
 		FHeapDecreaseKey(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 }
 
 void
@@ -375,9 +376,9 @@ Tester::run(const unsigned int highpower) {
 
 	unsigned int seed = 12345;
     std::default_random_engine dre(seed);
-    std::uniform_int_distribution<> dis(1, 1000);
+    std::uniform_int_distribution<> dis(1, 1000000);
  
-    for (int n = 0; n < 131072; ++n) {
+    for (int n = 0; n < REPS * 2; ++n) {
 		
 		RAN_NUMS.push_back(dis(dre));
 	}
