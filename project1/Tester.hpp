@@ -9,7 +9,7 @@ class Tester {
 
     public:
         Tester();
-		static const int REPS = 1000;
+		static const int REPS = 10000;
 		std::vector<int> RAN_NUMS;
 
 		void TestBHeap(const unsigned int highpower);

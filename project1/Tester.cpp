@@ -10,13 +10,13 @@ Tester::Tester() {}
 void
 Tester::BHeapInsertBig(const unsigned int times) {
     auto bheap = std::make_shared<BHeap>();    
-    for(unsigned i = 0; i > times; ++i) {
+    for(unsigned i = 0; i < times; ++i) {
         bheap->Insert(i+2,i+2);
     }
 
 	Timer t;
     unsigned int comparisons = 0;
-    for(unsigned i = times; i < REPS + times; ++i) {
+    for(unsigned i = times + 1; i < REPS + times + 1; ++i) {
 		bheap->comparisons = 0;
         t.start();
 		bheap->Insert(i+2,i+2);
@@ -153,20 +153,18 @@ void Tester::FHeapDeleteMinBig(const unsigned int times) {
 
 	unsigned int comparisons = 0;
 	Timer t;
-	for(unsigned i = REPS; i > 0; --i) {
+	for(unsigned i = times + 1; i < REPS + times + 1; ++i) {
 		fheap->comparisons = 0;
 		t.start();
 		fheap->DeleteMin();
 		t.stop();
 		comparisons += fheap->comparisons;
-
+		
 		fheap->Insert(i+2, i+2);
     }
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms\t" << fheap->comparisons << " comparisons" << std::endl;
 }
 
-
-// Bør køre i O(1)
 void Tester::FHeapDeleteMinSmall(const unsigned int times) {
 	auto fheap = std::make_shared<FHeap>();    
     for(unsigned i = REPS + times + 1; i > REPS; --i) {
@@ -190,21 +188,25 @@ void Tester::FHeapDeleteMinSmall(const unsigned int times) {
 
 void Tester::FHeapDecreaseKeyBig(const unsigned int times) {
 	auto fheap = std::make_shared<FHeap>();    
-    for(unsigned i = 0; i < times; ++i) {
+    for(unsigned i = 0; i < times + 1; ++i) {
         fheap->Insert(i+2,i+2);
     }
+	fheap->DeleteMin();
 
 	Timer t;
 	unsigned int comparisons = 0;
     for(unsigned i = times + 1; i < REPS + times + 1; ++i) {
         
 		std::shared_ptr<INode> node = fheap->Insert(i+2,i+2);
+		fheap->DeleteMin();
+
 		fheap->comparisons = 0;
 		
 		t.start();
 		fheap->DecreaseKey(node, i + 1);
 		t.stop();
 		comparisons += fheap->comparisons;
+
 		fheap->DeleteMin();
     }
 
@@ -213,16 +215,19 @@ void Tester::FHeapDecreaseKeyBig(const unsigned int times) {
 
 void Tester::FHeapDecreaseKeySmall(const unsigned int times) {
 	auto fheap = std::make_shared<BHeap>();    
-    for(unsigned i = times + REPS; i > REPS; --i) {
+    for(unsigned i = times + REPS + 1; i > REPS + 1; --i) {
         fheap->Insert(i+2,i+2);
     }
+	fheap->DeleteMin();
 
 	Timer t;
 	std::shared_ptr<INode> node;
 	unsigned int comparisons = 0;
 
-    for(unsigned i = times + 1; i < REPS + times + 1; ++i) {
-		node = fheap->Insert(i+2, i+2);
+    for(unsigned i = REPS; i > 0; --i) {
+		node = fheap->Insert(i, i);
+		node = fheap->Insert(i+1, RAN_NUMS.at(i));
+		fheap->DeleteMin();
 
 		fheap->comparisons = 0;
       
@@ -232,6 +237,7 @@ void Tester::FHeapDecreaseKeySmall(const unsigned int times) {
 
 		comparisons += fheap->comparisons;
 		fheap->DeleteMin();
+		
 		
 	}
 
@@ -356,7 +362,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
 	unsigned int i = 2;
     int power = 1;
 	
-	std::cout << "\nTesting FHeapInsertBig\n" << std::endl;
+	/*std::cout << "\nTesting FHeapInsertBig\n" << std::endl;
 	i = 2;
     power = 1;
 	while(power <= highpower) {
@@ -373,7 +379,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }
-
+	*/
 	/*std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
@@ -381,7 +387,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
         FHeapDeleteMinBig(i);
         power++;
         i = pow(2,power);
-    }*/
+    }
 
 	std::cout << "\nTesting FHeapDeleteMinSmall\n" << std::endl;
 	i = 2;
@@ -390,7 +396,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
         FHeapDeleteMinSmall(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 	
 	std::cout << "\nTesting FHeapDecreaseKeyBig\n" << std::endl;
 	i = 2;
@@ -423,6 +429,6 @@ Tester::run(const unsigned int highpower) {
 		RAN_NUMS.push_back(dis(dre));
 	}
 
-	//TestFHeap(highpower);
-	TestBHeap(highpower);
+	TestFHeap(highpower);
+	//TestBHeap(highpower);
 }
