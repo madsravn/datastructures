@@ -2,9 +2,112 @@
 #include "Timer.hpp"
 #include <cmath>
 #include <random>
+#include <vector>
+#include <fstream>
 
 Tester::Tester() {}
 
+void
+Tester::DijkstraBHeapLinear(const unsigned int times) {
+    auto bheap = std::make_shared<BHeap>();
+    Dijkstra d(bheap);
+    // Generate test file
+    std::vector<int> nodes;
+    for(int i = 1; i < times; ++i) {
+        nodes.push_back(i);
+    }
+    std::ofstream ofs("testfile.txt");
+    if(ofs.good()) {
+        for(int i : nodes) {
+            ofs << i << " " <<  i+1 << " " << RAN_NUMS.at(i) << std::endl;
+        }
+        ofs.close();
+    }
+    d.load("testfile.txt");
+    Timer t;
+    t.start();
+    d.run();
+    t.stop();
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << std::endl;
+}
+
+void
+Tester::DijkstraBHeapComplete(const unsigned int times) {
+    auto bheap = std::make_shared<BHeap>();
+    Dijkstra d(bheap);
+
+    std::vector<int> nodes;
+    for(int i = 1; i < times; ++i) {
+        nodes.push_back(i);
+    }
+    std::ofstream ofs("testfile.txt");
+    if(ofs.good()) {
+        for(int i : nodes) {
+            for(int j : nodes) {
+                if(i != j) {
+                    ofs << i << " " << j << " " << RAN_NUMS.at(i) << std::endl;
+                }
+            }
+        }
+        ofs.close();
+    }
+    d.load("testfile.txt");
+    Timer t;
+    t.start();
+    d.run();
+    t.stop();
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << std::endl;
+}
+
+void
+Tester::DijkstraFHeapLinear(const unsigned int times) {
+    auto fheap = std::make_shared<FHeap>();
+    Dijkstra d(fheap);
+
+    std::vector<int> nodes;
+    for(int i = 1; i < times; ++i) {
+        nodes.push_back(i);
+    }
+    std::ofstream ofs("testfile.txt");
+    if(ofs.good()) {
+        for(int i : nodes) {
+            ofs << i << " " << i+1 << " " << RAN_NUMS.at(i) << std::endl;
+        }
+        ofs.close();
+    }
+    d.load("testfile.txt");
+    Timer t;
+    t.start();
+    d.run();
+    t.stop();
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << std::endl;
+}
+
+void
+Tester::DijkstraFHeapComplete(const unsigned int times) {
+    auto fheap = std::make_shared<FHeap>();
+    Dijkstra d(fheap);
+
+    std::vector<int>nodes;
+    for(int i = 1; i < times; ++i) {
+        nodes.push_back(i);
+    }
+    std::ofstream ofs("testfile.txt");
+    if(ofs.good()) {
+        for(int i : nodes) {
+            for(int j : nodes) {
+                ofs << i << " " << j << " " << 2 << std::endl;
+            }
+        }
+        ofs.close();
+    }
+    d.load("testfile.txt");
+    Timer t;
+    t.start();
+    d.run();
+    t.stop();
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << std::endl;
+}
 
 
 void
@@ -357,6 +460,50 @@ void Tester::TestBHeap(const unsigned int highpower) {
     }
 }
 
+void
+Tester::TestDijkstra(const unsigned int highpower) {
+    std::cout << "\n *** >>> Testing Dijkstra <<< ***\n" << std::endl;
+    unsigned int i = 2;
+    int power = 1;
+
+    std::cout << "\nTesting DijkstraBHeapLinear\n" << std::endl;
+    i = 2;
+    power = 1;
+    while(power <= highpower) {
+        DijkstraBHeapLinear(i);
+        power++;
+        i = pow(2,power);
+    }
+
+    std::cout << "\nTesting DijkstraBHeapComplete\n" << std::endl;
+    i = 2;
+    power = 1;
+    while(power <= highpower) {
+        DijkstraBHeapComplete(i);
+        power++;
+        i = pow(2,power);
+    }
+
+    std::cout << "\nTesting DijkstraFHeapLinear\n" << std::endl;
+    i = 2;
+    power = 1;
+    while(power <= highpower) {
+        DijkstraFHeapLinear(i);
+        power++;
+        i = pow(2,power);
+    }
+
+    std::cout << "\nTesting DijkstraFHeapComplete\n" << std::endl;
+    i = 2;
+    power = 1;
+    while(power <= highpower) {
+        DijkstraFHeapComplete(i);
+        power++;
+        i = pow(2,power);
+    }
+
+}
+
 void Tester::TestFHeap(const unsigned int highpower) {
 	std::cout << "\n *** >>> Testing FHeap <<< ***\n" << std::endl;
 	unsigned int i = 2;
@@ -422,7 +569,7 @@ Tester::run(const unsigned int highpower) {
 
 	unsigned int seed = 12345;
     std::default_random_engine dre(seed);
-    std::uniform_int_distribution<> dis(1, 1000000);
+    std::uniform_int_distribution<> dis(1, 10000);
  
 	for (int n = 0; n < (REPS * 2) + pow(2, highpower); ++n) {
 		
@@ -431,4 +578,5 @@ Tester::run(const unsigned int highpower) {
 
 	TestFHeap(highpower);
 	//TestBHeap(highpower);
+    TestDijkstra(highpower);
 }

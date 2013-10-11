@@ -277,6 +277,12 @@ void FHeap::DecreaseKey(std::shared_ptr<INode> keyNode, int i) {
 	}
 }
 
+void
+FHeap::DecreaseKeyTo(std::shared_ptr<INode> k, int i) {
+    std::shared_ptr<FNode> node = std::static_pointer_cast<FNode>(k);
+    DecreaseKey(k, node->priority-i);
+}
+
 void FHeap::cascadingCuts(std::shared_ptr<FNode> node) {
 
 	if (node->parent == nullptr) return;

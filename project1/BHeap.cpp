@@ -139,8 +139,14 @@ BHeap::DeleteMin() {
         }
         root->parent = nullptr;
 
-    } else if(size == 2 || size == 3) {
+    } else if(size == 2) {
         Switch(node,root);
+        root->left->parent = nullptr;
+        root->left = nullptr;
+    } else if(size == 3) {
+        Switch(node,root);
+        root->right->parent = nullptr;
+        root->right = nullptr;
     } else if(size == 1) {
         root = nullptr;
     }
@@ -282,4 +288,10 @@ BHeap::DecreaseKey(std::shared_ptr<INode> k, int i) {
     node->prio = node->prio-i;
     BubbleUp(node);
 
+}
+
+void
+BHeap::DecreaseKeyTo(std::shared_ptr<INode> k, int i) {
+    std::shared_ptr<BNode> node = std::static_pointer_cast<BNode>(k);
+    DecreaseKey(k, node->prio-i);
 }
