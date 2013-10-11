@@ -41,16 +41,16 @@ nodeInfo(std::shared_ptr<BNode> n) {
         temp = temp + ""; 
     }
     if(n->left != nullptr) {
-        temp = temp + std::to_string(n->key) + " -> " + std::to_string(n->left->key) + "\n";
+        temp = temp + std::to_string(n->prio) + "-" +std::to_string(n->key) + " -> " + std::to_string( n->left->prio) + "-" + std::to_string(n->left->key) + "\n";
         temp = temp + nodeInfo(n->left);
     }
     if(n->right != nullptr) {
-        temp = temp + std::to_string(n->key) + " -> " + std::to_string(n->right->key) + "\n";
+        temp = temp + std::to_string(n->prio) + "-" + std::to_string(n->key) + " -> " + std::to_string( n->right->prio) + "-" + std::to_string(n->right->key) + "\n";
 
         temp = temp + nodeInfo(n->right);
     }
     if(n->parent != nullptr) {
-        temp = temp + std::to_string(n->key) + " -> " + std::to_string(n->parent->key) + "\n";
+        temp = temp + std::to_string(n->prio) + "-" + std::to_string(n->key) + " -> " + std::to_string(n->parent->prio) + "-" + std::to_string(n->parent->key) + "\n";
     }
     return temp;
 }
@@ -152,6 +152,7 @@ BHeap::Insert(int k, int priority) {
         std::shared_ptr<BNode> node = std::make_shared<BNode>(k, priority);
         root = node;
         inserts++;
+		map.insert(std::make_pair(k,node));
         size++;
         return node;
     } else {
@@ -184,6 +185,7 @@ BHeap::Insert(int k, int priority) {
 
         inserts++;
 
+		map.insert(std::make_pair(k, newnode));
         size++;
         return newnode;
     }
@@ -196,6 +198,7 @@ BHeap::DeleteMin() {
     std::shared_ptr<BNode> node = Find(size);
 
     deletions++;
+    map.erase(retVal);
     if(size>3) {
         swaps++;
         node->left = root->left;
@@ -213,15 +216,9 @@ BHeap::DeleteMin() {
         }
         root->parent = nullptr;
 
-    } else if(size == 2) {
+    } else if(size == 2 || size == 3) {
         Switch(node,root);
-        root->left->parent = nullptr;
-        root->left = nullptr;
-    }else if(size == 3) {
-        Switch(node,root);
-        root->right->parent = nullptr;
-        root->right = nullptr;
-    }else if(size == 1) {
+    } else if(size == 1) {
         root = nullptr;
     }
     size--;

@@ -26,6 +26,7 @@ class Tester {
 		void BHeapDeleteMinBig(const unsigned int times);
 		void BHeapDeleteMinSmall(const unsigned int times);
 		void BHeapDecreaseKey(const unsigned int times);        
+		void BHeapDecreaseKeyWorst(const unsigned int times);
 
 		// Big = descending
         void FHeapInsertBig(const unsigned int times);

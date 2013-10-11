@@ -16,7 +16,6 @@ Dijkstra::sayName() {
 
 void
 Dijkstra::run() {
-    int INF = 1000000;
     std::map<int,int> dist;
     std::map<int, std::shared_ptr<INode>> nodes;
 	dist.insert(std::make_pair(1,0));
@@ -27,27 +26,23 @@ Dijkstra::run() {
 
     for(auto elem : edges) {
         if(dist.count(elem.second.v) == 0) {
-            std::shared_ptr<INode> node = pq->Insert(elem.second.v, INF);
+            std::shared_ptr<INode> node = pq->Insert(elem.second.v, 10000);
             nodes.insert(std::make_pair(node->key,node));
-			dist.insert(std::make_pair(elem.second.v,INF));
+			dist.insert(std::make_pair(elem.second.v,10000));
         }
     }
-
     while(pq->empty() != true) {
         int u = pq->DeleteMin();
-        //for(auto pos = edges.lower_bound(u); pos != edges.upper_bound(u); ++pos) {
-        std::pair<std::multimap<int,vw>::iterator, std::multimap<int, vw>::iterator> ret;
-        ret = edges.equal_range(u);
-        for(auto pos = ret.first; pos != ret.second; ++pos) {
+        for(auto pos = edges.lower_bound(u); pos != edges.upper_bound(u); ++pos) {
             vw weights = pos->second;
             int v = weights.v;
             int w = weights.w;
             std::cout << u << ", " << v << ", " << w << std::endl;
             int mindist = dist.at(u) + w;
-            //std::cout << "V: " << v << std::endl;
             if(mindist < dist.at(v)) {
                 dist.at(v) = mindist;
                 pq->DecreaseKey(nodes.at(v),1000-mindist); 
+                //pq->DecreaseKey(v, 1000-mindist);
             }
         }
     }
