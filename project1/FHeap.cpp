@@ -1,6 +1,5 @@
 #include "FHeap.hpp"
 #include "FNode.hpp"
-#include <cassert>
 #include <string>
 
 FHeap::FHeap() {
@@ -118,8 +117,6 @@ int	FHeap::DeleteMin() {
 			rootSibling->parent = nullptr;
 
 			rootSibling = sibling;
-
-
 		}
 
 		// Add deleted node's children to list

@@ -192,16 +192,18 @@ void Tester::FHeapDeleteMinBig(const unsigned int times) {
     std::cout << "N: \t" << times << "\t" << t.duration().count() << " ms\t" << fheap->comparisons << " comparisons" << std::endl;
 }
 
+
+// Bør køre i O(1)
 void Tester::FHeapDeleteMinSmall(const unsigned int times) {
 	auto fheap = std::make_shared<FHeap>();    
-    for(unsigned i = times + 1; i > 0; --i) {
+    for(unsigned i = REPS + times + 1; i > REPS; --i) {
         fheap->Insert(i+2,i+2);
     }
 	fheap->DeleteMin(); // To get a more interesting tree	
 
 	unsigned int comparisons = 0;
 	Timer t;
-	for(unsigned i = 0; i < REPS; ++i) {
+	for(unsigned i = REPS; i > 0; --i) {
 		fheap->comparisons = 0;
 		t.start();
 		fheap->DeleteMin();
@@ -381,14 +383,14 @@ void Tester::TestFHeap(const unsigned int highpower) {
         i = pow(2,power);
     }*/
 
-	std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
+	/*std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
 	while(power <= highpower) {
         FHeapDeleteMinBig(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 
 	std::cout << "\nTesting FHeapDeleteMinSmall\n" << std::endl;
 	i = 2;
