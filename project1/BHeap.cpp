@@ -152,7 +152,6 @@ BHeap::Insert(int k, int priority) {
         std::shared_ptr<BNode> node = std::make_shared<BNode>(k, priority);
         root = node;
         inserts++;
-		map.insert(std::make_pair(k,node));
         size++;
         return node;
     } else {
@@ -185,13 +184,11 @@ BHeap::Insert(int k, int priority) {
 
         inserts++;
 
-		map.insert(std::make_pair(k, newnode));
         size++;
         return newnode;
     }
 }
 
-//TODO: Delete maps
 int
 BHeap::DeleteMin() {
 	int retVal = root->key;
@@ -199,7 +196,6 @@ BHeap::DeleteMin() {
     std::shared_ptr<BNode> node = Find(size);
 
     deletions++;
-    map.erase(retVal);
     if(size>3) {
         swaps++;
         node->left = root->left;
