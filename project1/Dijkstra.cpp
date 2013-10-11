@@ -32,6 +32,8 @@ Dijkstra::run() {
     }
     while(pq->empty() != true) {
         int u = pq->DeleteMin();
+
+        //std::cout << "Lortet bliver ved med at køre" << std::endl;
         //for(auto pos = edges.lower_bound(u); pos != edges.upper_bound(u); ++pos) {
         std::pair<std::multimap<int,vw>::iterator, std::multimap<int,vw>::iterator> ret;
         ret = edges.equal_range(u);

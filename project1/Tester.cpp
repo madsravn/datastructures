@@ -77,6 +77,7 @@ Tester::DijkstraFHeapLinear(const unsigned int times) {
     }
     d.load("testfile.txt");
     Timer t;
+    std::cout << "Starting timer" << std::endl;
     t.start();
     d.run();
     t.stop();
@@ -459,7 +460,7 @@ Tester::TestDijkstra(const unsigned int highpower) {
     std::cout << "\n *** >>> Testing Dijkstra <<< ***\n" << std::endl;
     unsigned int i = 2;
     int power = 1;
-
+    /* 
     std::cout << "\nTesting DijkstraBHeapLinear\n" << std::endl;
     i = 2;
     power = 1;
@@ -477,7 +478,7 @@ Tester::TestDijkstra(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }
-
+    */
     std::cout << "\nTesting DijkstraFHeapLinear\n" << std::endl;
     i = 2;
     power = 1;
