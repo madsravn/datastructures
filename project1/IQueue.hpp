@@ -11,6 +11,7 @@ class IQueue {
 		virtual void DecreaseKey(std::shared_ptr<INode> k, int i) = 0;
         virtual void sayName() = 0;
         virtual bool empty() = 0;
+        virtual void DecreaseKeyTo(std::shared_ptr<INode> k, int i) = 0;
     protected:
         IQueue() {}
 

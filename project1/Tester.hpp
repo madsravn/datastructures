@@ -12,8 +12,14 @@ class Tester {
 		static const int REPS = 1000;
 		std::vector<int> RAN_NUMS;
 
+        void DijkstraBHeapLinear(const unsigned int times);
+        void DijkstraBHeapComplete(const unsigned int times);
+        void DijkstraFHeapLinear(const unsigned int times);
+        void DijkstraFHeapComplete(const unsigned int times);
+
 		void TestBHeap(const unsigned int highpower);
 		void TestFHeap(const unsigned int highpower);
+        void TestDijkstra(const unsigned int highpower);
 
         void BHeapInsertBig(const unsigned int times);
 		void BHeapInsertSmall(const unsigned int times);

@@ -67,7 +67,7 @@ int main() {
     //bheap->Swap();
     //std::cout << bheap->graph() << std::endl;
     /*Dijkstra d(bheap);
-    d.load("test.txt");
+    d.load("test2.txt");
     d.run();
     bheap->printInformation();*/
     
