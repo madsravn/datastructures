@@ -30,7 +30,6 @@ class BHeap : public IQueue {
     private:
         std::shared_ptr<BNode> root;
         unsigned int size;
-        std::unordered_map<int, std::shared_ptr<BNode>> map;
         int ups,downs,inserts,lookups,deletions,swaps;
 };
 

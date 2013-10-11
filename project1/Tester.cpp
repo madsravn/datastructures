@@ -274,7 +274,7 @@ void Tester::BHeapDecreaseKeyWorst(const unsigned int times) {
 	std::cout << "Start n: " << times << std::endl;
 	auto bheap = std::make_shared<BHeap>();    
 	for(unsigned i = 1; i < times + 1; ++i) {
-        bheap->Insert(i+2,i+2);
+        auto bnode = bheap->Insert(i+2,i+2);
     }
 
 	Timer t;
@@ -283,7 +283,7 @@ void Tester::BHeapDecreaseKeyWorst(const unsigned int times) {
     for(unsigned i = times + 1; i < REPS + times + 1; ++i) {
 		node = bheap->Insert(i+2, i+2);
 
-		if(!(times == 2)) std::cout << i << std::endl;
+		//if(!(times == 2)) std::cout << i << std::endl;
 
 		t.start();
 		bheap->DecreaseKey(node, i+1);
@@ -440,6 +440,6 @@ Tester::run(const unsigned int highpower) {
 		RAN_NUMS.push_back(dis(dre));
 	}
 
-	TestFHeap(highpower);
-	//TestBHeap(highpower);
+	//TestFHeap(highpower);
+	TestBHeap(highpower);
 }
