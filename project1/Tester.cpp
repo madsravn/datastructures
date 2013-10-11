@@ -205,21 +205,21 @@ void Tester::FHeapDeleteMinBig(const unsigned int times) {
 
 void Tester::FHeapDeleteMinSmall(const unsigned int times) {
 	auto fheap = std::make_shared<FHeap>();    
-    for(unsigned i = times + 1; i > 0; --i) {
+    for(unsigned i = REPS + times + 1; i > REPS; --i) {
         fheap->Insert(i+2,i+2);
     }
 	fheap->DeleteMin(); // To get a more interesting tree	
 
 	unsigned int comparisons = 0;
 	Timer t;
-	for(unsigned i = 0; i < REPS; ++i) {
+	for(unsigned i = REPS; i > 0; --i) {
 		fheap->comparisons = 0;
 		t.start();
 		fheap->DeleteMin();
 		t.stop();
 		comparisons += fheap->comparisons;
 
-		fheap->Insert(i+2, i+2);
+		fheap->Insert(i+2, i);
     }
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
 }
@@ -228,7 +228,8 @@ void Tester::FHeapDecreaseKey(const unsigned int times) {
 	auto fheap = std::make_shared<FHeap>();  
 	std::vector<std::shared_ptr<FNode>> nodes(times + 1);
     for(unsigned i = 0; i < times + 1; i++) {
-		std::shared_ptr<INode> inode = fheap->Insert(i+2,i+2);
+
+		std::shared_ptr<INode> inode = fheap->Insert(i+2,RAN_NUMS.at(i));
 		std::shared_ptr<FNode> node = std::static_pointer_cast<FNode>(inode);
 		nodes.at(i) = node;
     }
@@ -239,7 +240,7 @@ void Tester::FHeapDecreaseKey(const unsigned int times) {
 	for(unsigned i = REPS; i > 0; --i) {
 		fheap->comparisons = 0;
 		t.start();
-		fheap->DecreaseKey(nodes.at((rand() * times) % nodes.size()), i + 2);
+		fheap->DecreaseKey(nodes.at((rand() * times) % nodes.size()), RAN_NUMS.at(i)/1000);
 		t.stop();
 		comparisons += fheap->comparisons;
     }
