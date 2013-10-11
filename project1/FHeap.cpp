@@ -75,6 +75,13 @@ int	FHeap::DeleteMin() {
 
 		ret = minRoot->key;
 
+
+		// If last node, return ret
+		if (minRoot->child == nullptr && minRoot->parent == nullptr && minRoot->leftSibling == minRoot && minRoot->rightSibling == minRoot) {
+			minRoot = nullptr;
+			return ret;
+		}
+
 		// If minRoot is a node without children, simply remove this node
 		if (minRoot->child == nullptr && minRoot->rightSibling == minRoot->leftSibling) {
 		
@@ -87,11 +94,7 @@ int	FHeap::DeleteMin() {
 			return ret;
 		}
 
-		// If last node, return ret
-		if (minRoot->child == nullptr && minRoot->parent == nullptr && minRoot->leftSibling == minRoot && minRoot->rightSibling == minRoot) {
-			minRoot = nullptr;
-			return ret;
-		}
+	
 
 		std::shared_ptr<FNode> root = minRoot;
 
