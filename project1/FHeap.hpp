@@ -24,6 +24,7 @@ class FHeap : public IQueue {
 		std::string toString(std::string label);
 		void cascadingCuts(std::shared_ptr<FNode> child);
 		std::unordered_map<int, std::shared_ptr<FNode>> map;
+		int comparisons;
     private:
 		std::shared_ptr<FNode> minRoot;
 };

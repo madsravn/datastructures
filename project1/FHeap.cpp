@@ -4,7 +4,7 @@
 #include <string>
 
 FHeap::FHeap() {
-
+	comparisons = 0;
 }
 
 std::string FHeap::toString(std::string label) {
@@ -128,9 +128,10 @@ int	FHeap::DeleteMin() {
 			roots[i]->rightSibling = roots[(i + 1 + roots.size()) % roots.size()];
 			roots[i]->leftSibling  = roots[(i - 1 + roots.size()) % roots.size()];
 			roots[i]->parent = nullptr;
-			if (roots[i]->priority < minRoot->priority) {
+			if (roots[i]->priority < minRoot->priority) {				
 				minRoot = roots[i];
 			}
+			comparisons++;
 		}
 
 		// Checkpoint: Rigtige Nodes i roots, med pointers til siblings, og korrekt minRoot.
@@ -160,7 +161,7 @@ int	FHeap::DeleteMin() {
 					}
 					std::shared_ptr<FNode> secondElement = *bucketi;
 
-					if(firstElement->priority <= secondElement->priority) {
+					if(firstElement->priority <= secondElement->priority) {						
 						// make bucketi parent of bucketi + 1
 						parentNode = firstElement;
 						childNode = secondElement;
@@ -169,6 +170,7 @@ int	FHeap::DeleteMin() {
 						parentNode = secondElement;
 						childNode = firstElement;
 					}
+					comparisons++;
 
 					// Remove childNode from siblings
 					if (childNode->rightSibling != childNode) {
@@ -193,6 +195,7 @@ int	FHeap::DeleteMin() {
 						if(parentNode->child->priority > childNode->priority) {
 							parentNode->child = childNode;
 						}
+						comparisons++;
 
 					} else {
 						parentNode->child = childNode;
@@ -258,6 +261,7 @@ void FHeap::DecreaseKey(std::shared_ptr<INode> keyNode, int i) {
 		if (key->priority < minRoot->priority) {
 			minRoot = key;
 		}
+		comparisons++;
 
 		cascadingCuts(parent);
 	}
@@ -298,6 +302,7 @@ void FHeap::cascadingCuts(std::shared_ptr<FNode> node) {
 		if (node->priority < minRoot->priority) {
 			minRoot = node;
 		}
+		comparisons++;
 
 		// Decrease rank
 		parent->rank--;
@@ -352,6 +357,7 @@ std::shared_ptr<FNode> FHeap::Meld(std::shared_ptr<FHeap> heap) {
 	if (heap->minRoot->priority < minRoot->priority) {
 		minRoot = heap->minRoot;
 	}
+	comparisons++;
 
 	return heap->minRoot;
 }
