@@ -41,7 +41,7 @@ Dijkstra::run() {
             vw weights = pos->second;
             int v = weights.v;
             int w = weights.w;
-            //std::cout << u << ", " << v << ", " << w << std::endl;
+            std::cout << u << ", " << v << ", " << w << std::endl;
             int mindist = dist.at(u) + w;
             if(mindist < dist.at(v)) {
                 dist.at(v) = mindist;

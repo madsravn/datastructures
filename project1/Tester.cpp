@@ -577,7 +577,7 @@ Tester::run(const unsigned int highpower) {
 		RAN_NUMS.push_back(dis(dre));
 	}
 
-	TestFHeap(highpower);
+	//TestFHeap(highpower);
 	//TestBHeap(highpower);
     TestDijkstra(highpower);
 }

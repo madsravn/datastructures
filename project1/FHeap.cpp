@@ -78,7 +78,8 @@ int	FHeap::DeleteMin() {
 
 		// If last node, return ret
 		if (minRoot->child == nullptr && minRoot->parent == nullptr && minRoot->leftSibling == minRoot && minRoot->rightSibling == minRoot) {
-			minRoot = nullptr;
+			ret = minRoot->key;
+			minRoot = nullptr;			
 			return ret;
 		}
 
@@ -90,6 +91,7 @@ int	FHeap::DeleteMin() {
 			minRoot->rightSibling->leftSibling = minRoot->leftSibling;
 			minRoot->leftSibling->rightSibling = minRoot->rightSibling;
 			minRoot = rootSibling;
+			ret = minRoot->key;
 
 			return ret;
 		}
