@@ -321,7 +321,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }*/
-
+	/*
 	std::cout << "\nTesting BHeapInsertRand\n" << std::endl;
 	i = 2;
     power = 1;
@@ -329,7 +329,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
         BHeapInsertRand(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 	/*
 	std::cout << "\nTesting BHeapDeleteMinBig\n" << std::endl;
 	i = 2;
@@ -373,7 +373,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
 	unsigned int i = 2;
     int power = 1;
 	
-	std::cout << "\nTesting FHeapInsertBig\n" << std::endl;
+	/*std::cout << "\nTesting FHeapInsertBig\n" << std::endl;
 	i = 2;
     power = 1;
 	while(power <= highpower) {
@@ -398,7 +398,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
 		FHeapInsertRand(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 
 	std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
 	i = 2;
