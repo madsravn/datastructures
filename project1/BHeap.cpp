@@ -2,6 +2,7 @@
 
 BHeap::BHeap() : size(0), root(nullptr) {
     ups = downs = inserts = lookups = deletions = swaps = 0;
+    comparisons = 0;
 }
 
 void 
@@ -156,23 +157,28 @@ BHeap::BubbleDown(std::shared_ptr<BNode> node) {
     downs++;
     if(node->left != nullptr && node->right != nullptr) {
         if(node->left->prio < node->right->prio) {
+            comparisons++;
             if(node->left->prio < node->prio) {
+                comparisons++;
                 Switch(node->left,node);
                 BubbleDown(node); //node->left
             }
         } else {
             if(node->right->prio < node->prio) {
+                comparisons++;
                 Switch(node->right,node);
                 BubbleDown(node); //node->right
             }
         }
     } else if(node->left != nullptr) {
         if(node->left->prio < node->prio) {
+            comparisons++;
             Switch(node->left,node);
             BubbleDown(node); //node->left
         }
     } else if(node->right != nullptr) {
         if(node->right->prio < node->prio) {
+            comparisons++;
             Switch(node->right,node);
             BubbleDown(node); //node->right
         }
@@ -188,6 +194,7 @@ BHeap::BubbleUp(std::shared_ptr<BNode> node) {
 
     if(node->parent != nullptr) {
         if(node->parent->prio > node->prio) {
+            comparisons++;
             Switch(node,node->parent);
             // Since node and node->parent has switched, node=node->parent
             BubbleUp(node);

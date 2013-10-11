@@ -274,7 +274,7 @@ void Tester::BHeapDecreaseKeyWorst(const unsigned int times) {
 	std::cout << "Start n: " << times << std::endl;
 	auto bheap = std::make_shared<BHeap>();    
 	for(unsigned i = 1; i < times + 1; ++i) {
-        auto bnode = bheap->Insert(i+2,i+2);
+        bheap->Insert(i+2,i+2);
     }
 
 	Timer t;
