@@ -71,81 +71,6 @@ BHeap::FindMin() {
     return -1;
 }
 
-void internalNodeInfo(std::shared_ptr<BNode> node) {
-    if(node == nullptr) {
-        std::cout << "something's fishy" << std::endl;
-    } else {
-        if(node->parent == nullptr) {
-            std::cout << "parent: null" << std::endl;
-        } else {
-            std::cout << "parent -> " << node->parent << std::endl;
-        }
-        if(node->right == nullptr) {
-            std::cout << "right: null" << std::endl;
-        } else {
-            std::cout << "right -> " << node->right << std::endl;
-        }
-        if(node->left == nullptr) {
-            std::cout << "left: null" << std::endl;
-        } else {
-            std::cout << "left -> " << node->left << std::endl;
-        }
-    }
-    std::cout << " = = = " << std::endl;
-}
-/*
-void 
-BHeap::Swap() {
-    int i = size;
-    std::shared_ptr<BNode> n1 = Find(size-2);
-    std::shared_ptr<BNode> n2 = Find(size-3);
-    std::shared_ptr<BNode> t1left = n1->left;
-    std::shared_ptr<BNode> t1right = n1->right;
-    std::shared_ptr<BNode> t1parent = n1->parent;
-    std::shared_ptr<BNode> t2left = n2->left;
-    std::shared_ptr<BNode> t2right = n2->right;
-    std::shared_ptr<BNode> t2parent = n2->parent;
-    if(n2->parent != nullptr) {
-        if(n2->parent->left == n2) {
-            n2->parent->left = n1;
-        } else if(n2->parent->right == n2) {
-            n2->parent->right = n1;
-        }
-    } else {
-        root = n2;
-    }
-    if(n1->parent != nullptr) {
-        if(n1->parent->left == n1) {
-            n1->parent->left = n2;
-        } else if(n1->parent->right == n1) {
-            n1->parent->right = n2;
-        }
-    } else {
-        root = n1;
-    }
-    if(n1->left != nullptr) {
-        n1->left->parent = n2;
-    }
-    if(n1->right != nullptr) {
-        n1->right->parent = n2;
-    }
-    if(n2->left != nullptr) {
-        n2->left->parent = n1;
-    }
-    if(n2->right != nullptr) {
-        n2->right->parent = n1;
-    }
-    n1->left = n2->left;
-    n1->right = n2->right;
-    n1->parent = n2->parent;
-    n2->left = t1left;
-    n2->right = t1right;
-    n2->parent = t1parent;
-
-}
-*/
-
-
 std::shared_ptr<INode>
 BHeap::Insert(int k, int priority) {
     if(size == 0) {
@@ -156,7 +81,7 @@ BHeap::Insert(int k, int priority) {
         size++;
         return node;
     } else {
-        std::string s = std::bitset<64> (size+1).to_string();
+        std::string s = std::bitset<74> (size+1).to_string();
         size_t pos = 0;
         while(pos < s.size() && s.at(pos) == '0') {
             pos++;
@@ -194,7 +119,7 @@ BHeap::Insert(int k, int priority) {
 int
 BHeap::DeleteMin() {
 	int retVal = root->key;
-    // Tag den sidste node
+    // grab the last key
     std::shared_ptr<BNode> node = Find(size);
 
     deletions++;
@@ -226,11 +151,9 @@ BHeap::DeleteMin() {
         BubbleDown(root);
     }
 
-    //std::cout << graph() << std::endl;
 	return retVal;
 }
 
-//TODO: Refactor
 void
 BHeap::BubbleDown(std::shared_ptr<BNode> node) {
     downs++;
@@ -319,12 +242,6 @@ BHeap::Switch(std::shared_ptr<BNode> n1, std::shared_ptr<BNode> n2) {
     if(n2->right != nullptr) {
         n2->right->parent = n2;
     }
-    /*int tkey = n1->key;
-    int tprio = n1->prio;
-    n1->key = n2->key;
-    n1->prio = n2->prio;
-    n2->key = tkey;
-    n2->prio = tprio;*/
 
      
 }
@@ -333,7 +250,7 @@ std::shared_ptr<BNode>
 BHeap::Find(int place) {
 
     // assert place > 0 and place < size+1
-    std::string s = std::bitset<64> (place).to_string();
+    std::string s = std::bitset<74> (place).to_string();
     size_t pos = 0;
     while(pos < s.size() && s.at(pos) == '0') {
         pos++;
