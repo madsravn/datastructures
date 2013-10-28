@@ -30,6 +30,7 @@ Dijkstra::run() {
 			dist.insert(std::make_pair(elem.second.v,INF));
         }
     }
+	int comps = 0;
     while(pq->empty() != true) {
         int u = pq->DeleteMin();
 
@@ -41,16 +42,17 @@ Dijkstra::run() {
             vw weights = pos->second;
             int v = weights.v;
             int w = weights.w;
-            std::cout << u << ", " << v << ", " << w << std::endl;
+            //std::cout << u << ", " << v << ", " << w << std::endl;
             int mindist = dist.at(u) + w;
             if(mindist < dist.at(v)) {
                 dist.at(v) = mindist;
                 //pq->DecreaseKey(nodes.at(v),140000-mindist); 
                 pq->DecreaseKeyTo(nodes.at(v), mindist);
+				comps++;
             }
         }
     }
-
+	//std::cout << "Comparison " << comps << std::endl;
     // Print resultater:
     /*for(auto pos = dist.begin(); pos != dist.end(); ++pos) {
         std::cout << pos->first << " - " << pos->second << std::endl;

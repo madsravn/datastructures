@@ -1,0 +1,5 @@
+This project requires a C++11 compatible compiler.
+
+Compling under linux can be done with the makefile included.
+
+Compiling under Windows can be done with Visual Studio. The stack size needs to be configured to 8 MB instead of the standard 1MB due to the recursion depth of the bubbling.
