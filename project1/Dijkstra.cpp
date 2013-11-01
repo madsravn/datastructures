@@ -30,7 +30,11 @@ Dijkstra::run() {
 			dist.insert(std::make_pair(elem.second.v,INF));
         }
     }
+<<<<<<< HEAD
     int comps = 0;
+=======
+	int comps = 0;
+>>>>>>> 0a3c2c015173df49290aab8b3fa8aaa03e8060b6
     while(pq->empty() != true) {
         int u = pq->DeleteMin();
 
@@ -48,12 +52,20 @@ Dijkstra::run() {
                 dist.at(v) = mindist;
                 //pq->DecreaseKey(nodes.at(v),140000-mindist); 
                 pq->DecreaseKeyTo(nodes.at(v), mindist);
+<<<<<<< HEAD
                 comps++;
             }
         }
     }
     std::cout << "Comparisons" << 
 
+=======
+				comps++;
+            }
+        }
+    }
+	//std::cout << "Comparison " << comps << std::endl;
+>>>>>>> 0a3c2c015173df49290aab8b3fa8aaa03e8060b6
     // Print resultater:
     /*for(auto pos = dist.begin(); pos != dist.end(); ++pos) {
         std::cout << pos->first << " - " << pos->second << std::endl;

@@ -66,14 +66,17 @@ int main() {
     */ 
     //bheap->Swap();
     //std::cout << bheap->graph() << std::endl;
+
+    /*auto fheap = std::make_shared<FHeap>();
+
     auto fheap = std::make_shared<FHeap>();
     /*
+>>>>>>> 573401cdcaae6c06f1473019f7d180e817486547
     Dijkstra d(fheap);
     d.load("test2.txt");
     d.run();
     bheap->printInformation();
     */
-    
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
 
     return 0;
