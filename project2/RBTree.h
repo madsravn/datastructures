@@ -18,4 +18,3 @@ public:
 	void leftRotate(std::shared_ptr<RBNode> node);
 	void rightRotate(std::shared_ptr<RBNode> node);
 };
-

@@ -3,7 +3,6 @@
 #include <memory>
 #include <list>
 #include <cassert>
-#include "RBTree.h"
 
 class RBNode
 {
