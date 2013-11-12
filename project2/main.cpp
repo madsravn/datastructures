@@ -1,6 +1,6 @@
-#include <iostream>;
-#include "BinaryTree.h";
-#include "VEBTree.h";
+#include <iostream>
+#include "BinaryTree.h"
+#include "VEBTree.h"
 
 int main() {
 	VEBTree tree = VEBTree();

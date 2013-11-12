@@ -1,4 +1,4 @@
-#include "VEBTree.h";
+#include "VEBTree.h"
 
 VEBTree::VEBTree()
 {

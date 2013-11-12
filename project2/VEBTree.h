@@ -4,6 +4,7 @@
 #include <list>
 #include <cassert>
 #include <map>
+#include <cmath>
 #include "BinaryNode.h"
 #include "BinaryTree.h"
 
