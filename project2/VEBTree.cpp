@@ -47,6 +47,8 @@ std::shared_ptr<BinaryNode> VEBTree::insert(int key)
 
 		size++;
 
+        comparisons += top->getComparisons();
+        comparisons += bottom[a]->getComparisons();
 		return node;
 	}
 }

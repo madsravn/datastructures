@@ -6,10 +6,18 @@ BinaryTree::BinaryTree(void)
 	root = nullptr;
 	min = nullptr;
 	max = nullptr;
+    comparisons = 0;
 }
 
 BinaryTree::~BinaryTree(void)
 {
+}
+
+int
+BinaryTree::getComparisons() {
+    int temp = comparisons;
+    comparisons = 0;
+    return temp;
 }
 
 std::shared_ptr<BinaryNode> BinaryTree::insert(std::shared_ptr<BinaryNode> newNode)
@@ -30,6 +38,7 @@ std::shared_ptr<BinaryNode> BinaryTree::insert(std::shared_ptr<BinaryNode> newNo
 	if(max->key < newNode->key)
 		max = newNode;
 
+    comparisons += 2;
 	// Insert the node
 	insertRecursive(root, newNode);
 	
@@ -145,11 +154,14 @@ std::shared_ptr<BinaryNode> BinaryTree::predecessor(int key)
 	std::shared_ptr<BinaryNode> bestMatch, node = root;
 
 	while(node != nullptr) {
-		if(node == nullptr || node->key == key)
+		if(node == nullptr || node->key == key) {
+            comparisons++;
 			return node;
+        }
 		else if(node->key < key) {
 			bestMatch = node;
 			node = node->right;
+            comparisons++;
 		}
 		else {
 			node = node->left;
@@ -211,6 +223,7 @@ void BinaryTree::print(std::shared_ptr<BinaryNode> node)
 void BinaryTree::insertRecursive(std::shared_ptr<BinaryNode> start, std::shared_ptr<BinaryNode> node)
 {
 	if(node->key < start->key) {
+        comparisons++;
 		if(start->left == nullptr) {
 			start->left = node;
 			node->parent = start;

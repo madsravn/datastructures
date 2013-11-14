@@ -19,8 +19,10 @@ public:
 	std::shared_ptr<BinaryNode> predecessor(int key);
 	
 	void print();
+    int getComparisons();
 
 private:
+    int comparisons;
 	std::shared_ptr<BinaryNode> searchMin(std::shared_ptr<BinaryNode> node);
 	std::shared_ptr<BinaryNode> searchMax(std::shared_ptr<BinaryNode> node);
 	void insertRecursive(std::shared_ptr<BinaryNode> start, std::shared_ptr<BinaryNode> node);
