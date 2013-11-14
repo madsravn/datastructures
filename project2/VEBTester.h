@@ -14,6 +14,9 @@ class VEBTester {
 		void VEBTreeInsertSmall(const unsigned int times);
 		void VEBTreeDeleteMinBig(const unsigned int times);
 		void VEBTreeDeleteMinSmall(const unsigned int times);
+        void VEBTreeFindSuccBig(const unsigned int times);
+		void VEBTreeFindSuccSmall(const unsigned int times);
+
 
 		void TestVEBTree(const unsigned int highpower);
 

@@ -59,7 +59,7 @@ void VEBTester::VEBTreeDeleteMinBig(const unsigned int times) {
     for(unsigned i = times; i > 0; --i) {
         tree->insert(i+2);
     }
-
+    
 	Timer t;
 	unsigned int comparisons = 0;
 	for(unsigned i = REPS; i > 0; --i) {
@@ -68,7 +68,6 @@ void VEBTester::VEBTreeDeleteMinBig(const unsigned int times) {
 		tree->delMin();
 		t.stop();
 		comparisons += tree->comparisons;
-
 		tree->insert(i+2);
     }
 
@@ -96,6 +95,44 @@ void VEBTester::VEBTreeDeleteMinSmall(const unsigned int times) {
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
 }
 
+void VEBTester::VEBTreeFindSuccSmall(const unsigned int times) {
+	auto tree = std::make_shared<VEBTree>();    
+    for(unsigned i = times; i > 0; --i) {
+        tree->insert(i+2);
+    }
+
+	Timer t;
+	unsigned int comparisons = 0;
+	for(unsigned i = 0; i < REPS; ++i) {
+		tree->comparisons = 0;
+		t.start();
+		//tree->findSucc(i);
+		t.stop();
+		comparisons += tree->comparisons;
+    }
+
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+}
+
+void VEBTester::VEBTreeFindSuccBig(const unsigned int times) {
+	auto tree = std::make_shared<VEBTree>();    
+    for(unsigned i = times; i > 0; --i) {
+        tree->insert(i+2);
+    }
+
+	Timer t;
+	unsigned int comparisons = 0;
+	for(unsigned i = REPS; i > 0 ; --i) {
+		tree->comparisons = 0;
+		t.start();
+		//tree->findSucc(i);
+		t.stop();
+		comparisons += tree->comparisons;
+    }
+
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+}
+
 
 void VEBTester::TestVEBTree(const unsigned int highpower) {
 	std::cout << "\n *** >>> Testing VEBTree <<< ***\n" << std::endl;
@@ -103,8 +140,8 @@ void VEBTester::TestVEBTree(const unsigned int highpower) {
 	int power;
 
 	
-	i = 2;
-    power = 1;
+	i = 4;
+    power = 2;
 
 	std::cout << "\nTesting VEBTreeInsertBig\n" << std::endl;
 	
@@ -115,8 +152,8 @@ void VEBTester::TestVEBTree(const unsigned int highpower) {
     }
 
 	std::cout << "\nTesting VEBTreeInsertSmall\n" << std::endl;
-	i = 2;
-    power = 1;
+	i = 4;
+    power = 2;
 	while(power <= highpower) {
         VEBTreeInsertSmall(i);
         power++;
@@ -124,8 +161,8 @@ void VEBTester::TestVEBTree(const unsigned int highpower) {
     }
 	
 	std::cout << "\nTesting VEBTreeDeleteMinBig\n" << std::endl;
-	i = 2;
-    power = 1;
+	i = 4;
+    power = 2;
 	while(power <= highpower) {
         VEBTreeDeleteMinBig(i);
         power++;
@@ -133,13 +170,32 @@ void VEBTester::TestVEBTree(const unsigned int highpower) {
     }
 
 	std::cout << "\nTesting VEBTreeDeleteMinSmall\n" << std::endl;
-	i = 2;
-    power = 1;
+	i = 4;
+    power = 2;
 	while(power <= highpower) {
         VEBTreeDeleteMinSmall(i);
         power++;
         i = pow(2,power);
     }
+
+    std::cout << "\nTesting VEBTreeFindSuccBig\n" << std::endl;
+    i = 4;
+    power = 2;
+	while(power <= highpower) {
+        VEBTreeFindSuccBig(i);
+        power++;
+        i = pow(2,power);
+    }
+
+    std::cout << "\nTesting VEBTreeFindSuccSmall\n" << std::endl;
+    i = 4;
+    power = 2;
+	while(power <= highpower) {
+        VEBTreeFindSuccSmall(i);
+        power++;
+        i = pow(2,power);
+    }
+
 }
 
 void

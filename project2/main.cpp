@@ -32,7 +32,6 @@ int main() {
 	*/
 
 	VEBTester tester = VEBTester();
-	tester.run(10);
+	tester.run(5);
 
-	system("pause");
 }
