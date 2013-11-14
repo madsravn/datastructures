@@ -441,7 +441,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }
-	
+	/*
 	std::cout << "\nTesting BHeapDecreaseKeyBig\n" << std::endl;
 	i = 2;
     power = 1;
@@ -458,7 +458,7 @@ void Tester::TestBHeap(const unsigned int highpower) {
 		BHeapDecreaseKeySmall(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 }
 
 void
@@ -510,7 +510,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
 	unsigned int i = 2;
     int power = 1;
 	
-	/*std::cout << "\nTesting FHeapInsertBig\n" << std::endl;
+	std::cout << "\nTesting FHeapInsertBig\n" << std::endl;
 	i = 2;
     power = 1;
 	while(power <= highpower) {
@@ -527,8 +527,8 @@ void Tester::TestFHeap(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }
-	*/
-	/*std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
+	
+	std::cout << "\nTesting FHeapDeleteMinBig\n" << std::endl;
 	i = 2;
     power = 1;
 	while(power <= highpower) {
@@ -544,8 +544,8 @@ void Tester::TestFHeap(const unsigned int highpower) {
         FHeapDeleteMinSmall(i);
         power++;
         i = pow(2,power);
-    }*/
-	
+    }
+	/*
 	std::cout << "\nTesting FHeapDecreaseKeyBig\n" << std::endl;
 	i = 2;
     power = 1;
@@ -562,7 +562,7 @@ void Tester::TestFHeap(const unsigned int highpower) {
 		FHeapDecreaseKeySmall(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 }
 
 void
@@ -577,7 +577,7 @@ Tester::run(const unsigned int highpower) {
 		RAN_NUMS.push_back(dis(dre));
 	}
 
-	//TestFHeap(highpower);
-	//TestBHeap(highpower);
-    TestDijkstra(highpower);
+	TestFHeap(highpower);
+	TestBHeap(highpower);
+    //TestDijkstra(highpower);
 }

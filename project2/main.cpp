@@ -1,10 +1,11 @@
 #include <iostream>
 #include "BinaryTree.h"
 #include "VEBTree.h"
+#include "VEBTester.h"
 
 int main() {
 	VEBTree tree = VEBTree();
-	
+	/*
 	tree.insert(71);
 	tree.insert(211);
 	tree.insert(614);
@@ -28,6 +29,10 @@ int main() {
 	std::cout << tree.predecessor(2135843)->key << std::endl;
 	std::cout << tree.predecessor(843)->key << std::endl;
 	std::cout << tree.predecessor(35843)->key << std::endl;
+	*/
+
+	VEBTester tester = VEBTester();
+	tester.run(10);
 
 	system("pause");
 }

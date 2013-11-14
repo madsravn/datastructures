@@ -14,6 +14,8 @@ public:
 	VEBTree(void);
 	~VEBTree(void);
 
+	int comparisons;
+
 	std::shared_ptr<BinaryNode> insert(int key);
 	void del(std::shared_ptr<BinaryNode> node);
 	void delMin();
