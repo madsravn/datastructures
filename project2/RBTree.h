@@ -12,6 +12,7 @@ public:
 	~RBTree(void);
 
 	std::shared_ptr<RBNode> root;
+	int comparisons;
 	
 	void insert(std::shared_ptr<RBNode> node);
 	void insertFixup(std::shared_ptr<RBNode> node);
@@ -21,4 +22,7 @@ public:
 	void delFixup(std::shared_ptr<RBNode> node);
 	void transplant(std::shared_ptr<RBNode> u, std::shared_ptr<RBNode> v);
 	std::shared_ptr<RBNode> minimum(std::shared_ptr<RBNode> node);
+	std::shared_ptr<RBNode> maximum(std::shared_ptr<RBNode> node);
+	std::shared_ptr<RBNode> successor(std::shared_ptr<RBNode> node);
+	std::shared_ptr<RBNode> predecessor(std::shared_ptr<RBNode> node);
 };

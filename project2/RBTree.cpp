@@ -3,6 +3,8 @@
 
 RBTree::RBTree(void)
 {
+	root = nullptr;
+	comparisons = 0;
 }
 
 
@@ -17,6 +19,7 @@ void RBTree::insert(std::shared_ptr<RBNode> node) {
 	while(x != nullptr ) {
 		y = x;
 		if (node->key < x->key) {
+			comparisons++;
 			x = x->left;
 		} else {
 			x = x->right;
@@ -26,6 +29,7 @@ void RBTree::insert(std::shared_ptr<RBNode> node) {
 	if(y == nullptr) {
 		root = node;
 	} else if (node->key < y->key) {
+		comparisons++;
 		y->left = node;
 	} else {
 		y->right = node;
@@ -134,7 +138,7 @@ void RBTree::del(std::shared_ptr<RBNode> node) {
 		transplant(node, node->right);
 	} else {
 		y = minimum(node->right);
-		 x = y->right;
+		x = y->right;
 		if (y->parent == node) {
 			x->parent = y;
 		} else {
@@ -219,4 +223,35 @@ std::shared_ptr<RBNode> RBTree::minimum(std::shared_ptr<RBNode> node) {
 		node = node->left;
 	}
 	return node;
+}
+
+std::shared_ptr<RBNode> RBTree::maximum(std::shared_ptr<RBNode> node) {
+	while(node->right != nullptr) {
+		node = node->right;
+	}
+	return node;
+}
+
+std::shared_ptr<RBNode> RBTree::successor(std::shared_ptr<RBNode> node) {
+	if (node->right != nullptr) {
+		return minimum(node->right);
+	}
+	std::shared_ptr<RBNode> y = node->parent;
+	while (y != nullptr && node == y->right) {
+		node = y;
+		y = y->parent;
+	}
+	return y;
+}
+
+std::shared_ptr<RBNode> RBTree::predecessor(std::shared_ptr<RBNode> node) {
+	if (node->left != nullptr) {
+		return maximum(node->left);
+	}
+	std::shared_ptr<RBNode> y = node->parent;
+	while (y != nullptr && node == y->left) {
+		node = y;
+		y = y->parent;
+	}
+	return y;
 }
