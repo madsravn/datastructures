@@ -1,5 +1,5 @@
-#ifndef TESTER_HPP_
-#define TESTER_HPP_
+#ifndef VEBTESTER_HPP_
+#define VEBTESTER_HPP_
 
 #include <vector>
 
