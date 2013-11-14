@@ -255,3 +255,7 @@ std::shared_ptr<RBNode> RBTree::predecessor(std::shared_ptr<RBNode> node) {
 	}
 	return y;
 }
+
+void RBTree::deleteMin() {
+	del(minimum(root));
+}
