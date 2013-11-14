@@ -5,6 +5,7 @@ VEBTree::VEBTree()
 	this->universe = pow(2, 24);
 	this->size = 0;
 	this->top = std::shared_ptr<BinaryTree>(new BinaryTree());
+    comparisons = 0;
 }
 
 VEBTree::~VEBTree(void)
@@ -31,6 +32,7 @@ std::shared_ptr<BinaryNode> VEBTree::insert(int key)
 			std::shared_ptr<BinaryNode> temp = min;
 			min = node;
 			node = temp;
+            comparisons++;
 		}
 
 		short a = node->key >> 12;
@@ -60,7 +62,7 @@ void VEBTree::del(std::shared_ptr<BinaryNode> node)
 	}
 	
 	// If we are deleting the minimum node, we replace with a new minimum and delete the new min from its tree
-	if(min = node){
+	if(min = node){ //TODO: Er det rigtigt her kun skal være et lighedstegn?
 		node = (min = bottom[top->min->key]->min);
 	}
 
@@ -72,6 +74,7 @@ void VEBTree::del(std::shared_ptr<BinaryNode> node)
 		std::shared_ptr<BinaryNode> topNode = top->predecessor(a);
 		if(topNode->key == a)
 			top->del(topNode);
+        comparisons++;
 	}
 
 	size--;
@@ -92,9 +95,11 @@ std::shared_ptr<BinaryNode> VEBTree::predecessor(int key)
 		result = bottom[a]->predecessor(key);
 	else
 		result = bottom[top->predecessor(a)->key]->max;
+    comparisons++;
 
 	if(min->key <= key && min->key > result->key)
 		result = min;
+    comparisons++;
 
 	return result;
 }
