@@ -25,7 +25,7 @@ RBTester::RBTreeInsertBig(const unsigned int times) {
 		t.stop();
 		comparisons += tree->comparisons;
 
-		tree->delMin();
+		tree->deleteMin();
     }
 
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
@@ -48,7 +48,7 @@ RBTester::RBTreeInsertSmall(const unsigned int times) {
 		t.stop();
 		comparisons += tree->comparisons;
 
-		tree->delMin();
+		tree->deleteMin();
     }
     t.stop();
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
@@ -65,7 +65,7 @@ void RBTester::RBTreeDeleteMinBig(const unsigned int times) {
 	for(unsigned i = REPS; i > 0; --i) {
 		tree->comparisons = 0;
 		t.start();
-		tree->delMin();
+		tree->deleteMin();
 		t.stop();
 		comparisons += tree->comparisons;
 
@@ -86,7 +86,7 @@ void RBTester::RBTreeDeleteMinSmall(const unsigned int times) {
 	for(unsigned i = 0; i < REPS; ++i) {
 		tree->comparisons = 0;
 		t.start();
-		tree->delMin();
+		tree->deleteMin();
 		t.stop();
 		comparisons += tree->comparisons;
 
