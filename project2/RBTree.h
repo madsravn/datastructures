@@ -14,7 +14,7 @@ public:
 	std::shared_ptr<RBNode> root;
 	int comparisons;
 	
-	void insert(std::shared_ptr<RBNode> node);
+	void insert(int i);
 	void insertFixup(std::shared_ptr<RBNode> node);
 	void leftRotate(std::shared_ptr<RBNode> node);
 	void rightRotate(std::shared_ptr<RBNode> node);

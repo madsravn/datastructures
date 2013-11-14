@@ -1,8 +1,9 @@
 #include "RBNode.h"
 
 
-RBNode::RBNode(void)
+RBNode::RBNode(int i)
 {
+	key = i;
 }
 
 

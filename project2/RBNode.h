@@ -7,7 +7,7 @@
 class RBNode
 {
 public:
-	RBNode(void);
+	RBNode(int);
 	~RBNode(void);
 
 	bool isRed();

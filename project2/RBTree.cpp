@@ -12,7 +12,10 @@ RBTree::~RBTree(void)
 {
 }
 
-void RBTree::insert(std::shared_ptr<RBNode> node) {
+void RBTree::insert(int i) {
+
+	std::shared_ptr<RBNode> node = std::make_shared<RBNode>(i);
+
 	std::shared_ptr<RBNode> y = nullptr;
 	std::shared_ptr<RBNode> x = root;
 
