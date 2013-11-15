@@ -2,6 +2,7 @@
 #include "BinaryTree.h"
 #include "VEBTree.h"
 #include "VEBTester.h"
+#include "RBTester.h"
 
 int main() {
 	VEBTree tree = VEBTree();
@@ -31,7 +32,9 @@ int main() {
 	std::cout << tree.predecessor(35843)->key << std::endl;
 	*/
 
-	VEBTester tester = VEBTester();
+	VEBTester tester;
 	tester.run(5);
+    RBTester rbtester;
+    rbtester.run(5);
 
 }

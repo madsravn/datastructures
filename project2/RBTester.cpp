@@ -107,7 +107,7 @@ void RBTester::RBTreeFindSuccSmall(const unsigned int times) {
 	for(unsigned i = 0; i < REPS; ++i) {
 		tree->comparisons = 0;
 		t.start();
-		tree->predecessor(i);
+		tree->search(i);
 		t.stop();
 		comparisons += tree->comparisons;
     }
@@ -126,7 +126,7 @@ void RBTester::RBTreeFindSuccBig(const unsigned int times) {
 	for(unsigned i = REPS; i > 0 ; --i) {
 		tree->comparisons = 0;
 		t.start();
-		tree->predecessor(i);
+		tree->search(i);
 		t.stop();
 		comparisons += tree->comparisons;
     }
@@ -180,20 +180,20 @@ void RBTester::TestRBTree(const unsigned int highpower) {
         i = pow(2,power);
     }
 
-    std::cout << "\nTesting VEBTreeFindSuccBig\n" << std::endl;
+    std::cout << "\nTesting RBTreeFindSuccBig\n" << std::endl;
     i = 4;
     power = 2;
 	while(power <= highpower) {
-        VEBTreeFindSuccBig(i);
+        RBTreeFindSuccBig(i);
         power++;
         i = pow(2,power);
     }
 
-    std::cout << "\nTesting VEBTreeFindSuccSmall\n" << std::endl;
+    std::cout << "\nTesting RBTreeFindSuccSmall\n" << std::endl;
     i = 4;
     power = 2;
 	while(power <= highpower) {
-        VEBTreeFindSuccSmall(i);
+        RBTreeFindSuccSmall(i);
         power++;
         i = pow(2,power);
     }
