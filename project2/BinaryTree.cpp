@@ -154,14 +154,13 @@ std::shared_ptr<BinaryNode> BinaryTree::predecessor(int key)
 	std::shared_ptr<BinaryNode> bestMatch, node = root;
 
 	while(node != nullptr) {
+        comparisons++;
 		if(node == nullptr || node->key == key) {
-            comparisons++;
 			return node;
         }
 		else if(node->key < key) {
 			bestMatch = node;
 			node = node->right;
-            comparisons++;
 		}
 		else {
 			node = node->left;
