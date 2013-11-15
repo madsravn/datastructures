@@ -106,7 +106,7 @@ void VEBTester::VEBTreeFindSuccSmall(const unsigned int times) {
 	for(unsigned i = 0; i < REPS; ++i) {
 		tree->comparisons = 0;
 		t.start();
-		//tree->findSucc(i);
+		tree->predecessor(i);
 		t.stop();
 		comparisons += tree->comparisons;
     }
@@ -125,7 +125,7 @@ void VEBTester::VEBTreeFindSuccBig(const unsigned int times) {
 	for(unsigned i = REPS; i > 0 ; --i) {
 		tree->comparisons = 0;
 		t.start();
-		//tree->findSucc(i);
+		tree->predecessor(i);
 		t.stop();
 		comparisons += tree->comparisons;
     }

@@ -27,12 +27,12 @@ std::shared_ptr<BinaryNode> VEBTree::insert(int key)
 	}
 	else
 	{
+        comparisons++;
 		if(min->key > node->key)
 		{
 			std::shared_ptr<BinaryNode> temp = min;
 			min = node;
 			node = temp;
-            comparisons++;
 		}
 
 		short a = node->key >> 12;
@@ -93,10 +93,14 @@ std::shared_ptr<BinaryNode> VEBTree::predecessor(int key)
 
 	short a = key >> 12;
 
-	if(bottom[a] != nullptr && bottom[a]->min->key <= key)
+	if(bottom[a] != nullptr && bottom[a]->min->key <= key) {
 		result = bottom[a]->predecessor(key);
-	else
-		result = bottom[top->predecessor(a)->key]->max;
+        comparisons += bottom[a]->getComparisons();
+    } else {
+        int tkey = top->predecessor(a)->key;
+		result = bottom[tkey]->max;
+        comparisons += bottom[tkey]->getComparisons();
+    }
     comparisons++;
 
 	if(min->key <= key && min->key > result->key)
