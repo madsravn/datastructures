@@ -96,6 +96,45 @@ void RBTester::RBTreeDeleteMinSmall(const unsigned int times) {
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
 }
 
+void RBTester::RBTreeFindSuccSmall(const unsigned int times) {
+	auto tree = std::make_shared<RBTree>();    
+    for(unsigned i = times; i > 0; --i) {
+        tree->insert(i+2);
+    }
+
+	Timer t;
+	unsigned int comparisons = 0;
+	for(unsigned i = 0; i < REPS; ++i) {
+		tree->comparisons = 0;
+		t.start();
+		tree->predecessor(i);
+		t.stop();
+		comparisons += tree->comparisons;
+    }
+
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+}
+
+void RBTester::RBTreeFindSuccBig(const unsigned int times) {
+	auto tree = std::make_shared<RBTree>();    
+    for(unsigned i = times; i > 0; --i) {
+        tree->insert(i+2);
+    }
+
+	Timer t;
+	unsigned int comparisons = 0;
+	for(unsigned i = REPS; i > 0 ; --i) {
+		tree->comparisons = 0;
+		t.start();
+		tree->predecessor(i);
+		t.stop();
+		comparisons += tree->comparisons;
+    }
+
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+}
+
+
 
 void RBTester::TestRBTree(const unsigned int highpower) {
 	std::cout << "\n *** >>> Testing RBTree <<< ***\n" << std::endl;
@@ -103,8 +142,8 @@ void RBTester::TestRBTree(const unsigned int highpower) {
 	int power;
 
 	
-	i = 2;
-    power = 1;
+	i = 4;
+    power = 2;
 
 	std::cout << "\nTesting RBTreeInsertBig\n" << std::endl;
 	
@@ -115,8 +154,8 @@ void RBTester::TestRBTree(const unsigned int highpower) {
     }
 
 	std::cout << "\nTesting RBTreeInsertSmall\n" << std::endl;
-	i = 2;
-    power = 1;
+	i = 4;
+    power = 2;
 	while(power <= highpower) {
         RBTreeInsertSmall(i);
         power++;
@@ -124,8 +163,8 @@ void RBTester::TestRBTree(const unsigned int highpower) {
     }
 	
 	std::cout << "\nTesting RBTreeDeleteMinBig\n" << std::endl;
-	i = 2;
-    power = 1;
+	i = 4;
+    power = 2;
 	while(power <= highpower) {
         RBTreeDeleteMinBig(i);
         power++;
@@ -133,13 +172,33 @@ void RBTester::TestRBTree(const unsigned int highpower) {
     }
 
 	std::cout << "\nTesting RBTreeDeleteMinSmall\n" << std::endl;
-	i = 2;
-    power = 1;
+	i = 4;
+    power = 2;
 	while(power <= highpower) {
         RBTreeDeleteMinSmall(i);
         power++;
         i = pow(2,power);
     }
+
+    std::cout << "\nTesting VEBTreeFindSuccBig\n" << std::endl;
+    i = 4;
+    power = 2;
+	while(power <= highpower) {
+        VEBTreeFindSuccBig(i);
+        power++;
+        i = pow(2,power);
+    }
+
+    std::cout << "\nTesting VEBTreeFindSuccSmall\n" << std::endl;
+    i = 4;
+    power = 2;
+	while(power <= highpower) {
+        VEBTreeFindSuccSmall(i);
+        power++;
+        i = pow(2,power);
+    }
+
+
 }
 
 void
