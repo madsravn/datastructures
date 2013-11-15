@@ -21,18 +21,19 @@ void RBTree::insert(int i) {
 
 	while(x != nullptr ) {
 		y = x;
-		if (node->key < x->key) {
-			comparisons++;
+		comparisons++;
+		if (node->key < x->key) {			
 			x = x->left;
 		} else {
 			x = x->right;
 		}	
 	}
 	node->parent = y;
+
+	comparisons++;
 	if(y == nullptr) {
 		root = node;
-	} else if (node->key < y->key) {
-		comparisons++;
+	} else if (node->key < y->key) {		
 		y->left = node;
 	} else {
 		y->right = node;
@@ -127,6 +128,23 @@ void RBTree::rightRotate(std::shared_ptr<RBNode> node) {
 	}
 	y->right = node;
 	node->parent = y;
+}
+
+std::shared_ptr<RBNode> RBTree::search(std::shared_ptr<RBNode> node, int k) {
+	if (node == nullptr || k == node->key) {
+		return node;
+	}
+
+	comparisons++;
+	if (k < node->key) {		
+		return search(node->left, k);
+	} else {
+		return search(node->right, k);
+	}
+}
+
+std::shared_ptr<RBNode> RBTree::search(int k) {
+	return search(root, k);
 }
 
 void RBTree::del(std::shared_ptr<RBNode> node) {

@@ -16,6 +16,8 @@ public:
 	
 	void insert(int i);
 	void insertFixup(std::shared_ptr<RBNode> node);
+	std::shared_ptr<RBNode> search(std::shared_ptr<RBNode> node, int k);
+	std::shared_ptr<RBNode> search(int k);
 	void leftRotate(std::shared_ptr<RBNode> node);
 	void rightRotate(std::shared_ptr<RBNode> node);
 	void del(std::shared_ptr<RBNode> node);
