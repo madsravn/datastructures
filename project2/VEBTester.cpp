@@ -6,6 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 VEBTester::VEBTester() {}
 
@@ -201,14 +202,20 @@ void VEBTester::TestVEBTree(const unsigned int highpower) {
 void
 VEBTester::run(const unsigned int highpower) {	
 
+    //TODO: Skal vi bruge random_engine eller random shuffles indbyggede?
+    // fra: en.cppreference.com/w/cpp/algorithm/random_shuffle
 	unsigned int seed = 12345;
     std::default_random_engine dre(seed);
     std::uniform_int_distribution<> dis(1, 10000);
  
 	for (int n = 0; n < (REPS * 2) + pow(2, highpower); ++n) {
 		
-		RAN_NUMS.push_back(dis(dre));
+		RAN_NUMS.push_back(n);
 	}
+    std::random_shuffle(RAN_NUMS.begin(), RAN_NUMS.end());
+    for(int q = 0; q < 10; ++q) {
+        std::cout << RAN_NUMS.at(q) << std::endl;
+    }
 
 	TestVEBTree(highpower);
 }

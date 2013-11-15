@@ -64,7 +64,7 @@ void VEBTree::del(std::shared_ptr<BinaryNode> node)
 	}
 	
 	// If we are deleting the minimum node, we replace with a new minimum and delete the new min from its tree
-	if(min == node){ //TODO: Er det rigtigt her kun skal være et lighedstegn?
+	if(min == node){ 
 		node = (min = bottom[top->min->key]->min);
 	}
 
