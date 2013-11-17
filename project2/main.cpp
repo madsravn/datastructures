@@ -33,7 +33,9 @@ int main() {
 	std::cout << tree.predecessor(35843)->key << std::endl;
 	*/
 
-	RBTester tester = RBTester();
-	tester.run(16);
+	RBTester tester;
+	tester.run(16);	
+	VEBTester vebtester;
+	vebtester.run(5);
 	std::cout << "Press any key" << std::endl;
 }

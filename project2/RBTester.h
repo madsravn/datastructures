@@ -14,6 +14,8 @@ class RBTester {
 		void RBTreeInsertSmall(const unsigned int times);
 		void RBTreeDeleteMinBig(const unsigned int times);
 		void RBTreeDeleteMinSmall(const unsigned int times);
+        void RBTreeFindSuccSmall(const unsigned int times);
+        void RBTreeFindSuccBig(const unsigned int times);
 
 		void TestRBTree(const unsigned int highpower);
 
