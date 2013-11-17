@@ -7,7 +7,7 @@ class RBTester {
 
     public:
         RBTester();
-		static const int REPS = 10000;
+		static const int REPS = 100000;
 		std::vector<int> RAN_NUMS;
 
         void RBTreeInsertBig(const unsigned int times);

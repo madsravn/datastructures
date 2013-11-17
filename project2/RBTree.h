@@ -12,6 +12,7 @@ public:
 	~RBTree(void);
 
 	std::shared_ptr<RBNode> root;
+	std::shared_ptr<RBNode> null;
 	int comparisons;
 	
 	void insert(int i);
@@ -28,4 +29,7 @@ public:
 	std::shared_ptr<RBNode> successor(std::shared_ptr<RBNode> node);
 	std::shared_ptr<RBNode> predecessor(std::shared_ptr<RBNode> node);
 	void deleteMin();
+
+	std::string toString(std::string label);
+	std::string toString(std::shared_ptr<RBNode> node);
 };

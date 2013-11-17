@@ -6,6 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <string>
 
 RBTester::RBTester() {}
 
@@ -16,6 +17,8 @@ RBTester::RBTreeInsertBig(const unsigned int times) {
         tree->insert(i+2);
     }
 
+	//std::cout << tree->toString("tree");
+
 	Timer t;
     unsigned int comparisons = 0;
     for(unsigned i = times + 1; i < REPS + times + 1; ++i) {
@@ -24,11 +27,13 @@ RBTester::RBTreeInsertBig(const unsigned int times) {
 		tree->insert(i+2);
 		t.stop();
 		comparisons += tree->comparisons;
+		//std::cout << tree->toString("after insert");
 
 		tree->deleteMin();
+		//std::cout << tree->toString("after deleteMin");
     }
 
-    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons/REPS << " comparisons" << std::endl;
 }
 
 void
@@ -51,7 +56,7 @@ RBTester::RBTreeInsertSmall(const unsigned int times) {
 		tree->deleteMin();
     }
     t.stop();
-    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons/REPS << " comparisons" << std::endl;
 }
 
 void RBTester::RBTreeDeleteMinBig(const unsigned int times) {
@@ -72,7 +77,7 @@ void RBTester::RBTreeDeleteMinBig(const unsigned int times) {
 		tree->insert(i+2);
     }
 
-   std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+   std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons/REPS << " comparisons" << std::endl;
 }
 
 void RBTester::RBTreeDeleteMinSmall(const unsigned int times) {
@@ -93,7 +98,7 @@ void RBTester::RBTreeDeleteMinSmall(const unsigned int times) {
 		tree->insert(i+2);
     }
 
-    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons/REPS << " comparisons" << std::endl;
 }
 
 

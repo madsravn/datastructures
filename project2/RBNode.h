@@ -7,7 +7,7 @@
 class RBNode
 {
 public:
-	RBNode(int);
+	RBNode(int i, std::shared_ptr<RBNode> null);
 	~RBNode(void);
 
 	bool isRed();

@@ -2,6 +2,8 @@
 #include "BinaryTree.h"
 #include "VEBTree.h"
 #include "VEBTester.h"
+#include "RBTester.h"
+#include "RBTree.h"
 
 int main() {
 	VEBTree tree = VEBTree();
@@ -31,7 +33,7 @@ int main() {
 	std::cout << tree.predecessor(35843)->key << std::endl;
 	*/
 
-	VEBTester tester = VEBTester();
-	tester.run(5);
-
+	RBTester tester = RBTester();
+	tester.run(16);
+	std::cout << "Press any key" << std::endl;
 }
