@@ -3,13 +3,15 @@
 #include <memory>
 #include <list>
 #include <cassert>
+#include "INode.hpp"
 
-class BinaryNode
+class BinaryNode : public INode
 {
 public:
-	BinaryNode(int key);
+	BinaryNode(int tkey, int tvalue);
 	~BinaryNode(void);
 
-	int key;
+	//int key;
+    int value;
 	std::shared_ptr<BinaryNode> parent, left, right;
 };

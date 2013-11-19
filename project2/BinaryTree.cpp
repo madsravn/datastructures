@@ -45,9 +45,9 @@ std::shared_ptr<BinaryNode> BinaryTree::insert(std::shared_ptr<BinaryNode> newNo
 	return newNode;
 }
 
-std::shared_ptr<BinaryNode> BinaryTree::insert(int key)
+std::shared_ptr<BinaryNode> BinaryTree::insert(int key, int value)
 {
-	std::shared_ptr<BinaryNode> newNode = std::shared_ptr<BinaryNode>(new BinaryNode(key));
+	std::shared_ptr<BinaryNode> newNode = std::shared_ptr<BinaryNode>(new BinaryNode(key, value));
 
 	return insert(newNode);
 }

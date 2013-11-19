@@ -12,12 +12,17 @@ VEBTree::~VEBTree(void)
 {
 }
 
-std::shared_ptr<BinaryNode> VEBTree::insert(int key)
+void
+VEBTree::MakeHeap() {
+}
+
+
+std::shared_ptr<INode> VEBTree::Insert(int key, int value)
 {
 	// Ensure only keys in the universe
 	if(key > universe) return nullptr;
 
-	std::shared_ptr<BinaryNode> node = std::shared_ptr<BinaryNode>(new BinaryNode(key));
+	std::shared_ptr<BinaryNode> node = std::shared_ptr<BinaryNode>(new BinaryNode(key, value));
 
 	if(size == 0) {
 		size++;
@@ -41,7 +46,7 @@ std::shared_ptr<BinaryNode> VEBTree::insert(int key)
 			bottom[a] = std::shared_ptr<BinaryTree>(new BinaryTree());
 
 		if(bottom[a]->root == nullptr)
-			top->insert(a);
+			top->insert(a, value); //TODO: Korrekt?
 
 		bottom[a]->insert(node);
 
@@ -82,12 +87,34 @@ void VEBTree::del(std::shared_ptr<BinaryNode> node)
 	size--;
 }
 
-void VEBTree::delMin()
+int VEBTree::DeleteMin()
 {
 	this->del(min);
 }
 
-std::shared_ptr<BinaryNode> VEBTree::predecessor(int key)
+void
+VEBTree::DecreaseKey(std::shared_ptr<INode> k, int i) {
+    std::shared_ptr<BinaryNode> node = std::static_pointer_cast<BinaryNode>(k);
+
+}
+
+void 
+VEBTree::sayName() {
+}
+
+bool
+VEBTree::empty() {
+
+}
+
+void
+VEBTree::DecreaseKeyTo(std::shared_ptr<INode> k, int i) {
+    std::shared_ptr<BinaryNode> node = std::static_pointer_cast<BinaryNode>(k);
+
+}
+
+
+std::shared_ptr<INode> VEBTree::predecessor(int key)
 {
 	std::shared_ptr<BinaryNode> result;
 
@@ -110,7 +137,7 @@ std::shared_ptr<BinaryNode> VEBTree::predecessor(int key)
 	return result;
 }
 
-std::shared_ptr<BinaryNode> VEBTree::FindMin()
+int VEBTree::FindMin()
 {
-	return min;
+	return min->value;
 }

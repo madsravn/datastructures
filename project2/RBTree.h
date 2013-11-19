@@ -4,8 +4,9 @@
 #include <list>
 #include <cassert>
 #include "RBNode.h"
+#include "ISearch.hpp"
 
-class RBTree
+class RBTree : public ISearch
 {
 public:
 	RBTree(void);
@@ -28,6 +29,7 @@ public:
 	std::shared_ptr<RBNode> maximum(std::shared_ptr<RBNode> node);
 	std::shared_ptr<RBNode> successor(std::shared_ptr<RBNode> node);
 	std::shared_ptr<RBNode> predecessor(std::shared_ptr<RBNode> node);
+    virtual std::shared_ptr<INode> predecessor(int i);
 	void deleteMin();
 
 	std::string toString(std::string label);
