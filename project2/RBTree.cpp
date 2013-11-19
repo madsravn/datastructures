@@ -301,7 +301,7 @@ std::shared_ptr<RBNode> RBTree::predecessor(std::shared_ptr<RBNode> node) {
 	return y;
 }
 
-std::shared_ptr<RBNode> RBTree::predecessor(int key)
+std::shared_ptr<INode> RBTree::predecessor(int key)
 {
 	std::shared_ptr<RBNode> bestMatch, node = root;
 

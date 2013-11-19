@@ -13,7 +13,7 @@ public:
 
 	std::shared_ptr<BinaryNode> min, max, root;
 
-	std::shared_ptr<BinaryNode> insert(int key);
+	std::shared_ptr<BinaryNode> insert(int key, int value);
 	std::shared_ptr<BinaryNode> insert(std::shared_ptr<BinaryNode> newNode);
 	void del(std::shared_ptr<BinaryNode> node);
 	std::shared_ptr<BinaryNode> predecessor(int key);

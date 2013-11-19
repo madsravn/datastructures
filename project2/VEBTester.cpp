@@ -14,7 +14,7 @@ void
 VEBTester::VEBTreeInsertBig(const unsigned int times) {
     auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = 0; i < times; ++i) {
-        tree->insert(i+2);
+        tree->Insert(i+2, i);
     }
 
 	Timer t;
@@ -22,11 +22,11 @@ VEBTester::VEBTreeInsertBig(const unsigned int times) {
     for(unsigned i = times + 1; i < REPS + times + 1; ++i) {
 		tree->comparisons = 0;
         t.start();
-		tree->insert(i+2);
+		tree->Insert(i+2, i);
 		t.stop();
 		comparisons += tree->comparisons;
 
-		tree->delMin();
+		tree->DeleteMin();
     }
 
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
@@ -36,7 +36,7 @@ void
 VEBTester::VEBTreeInsertSmall(const unsigned int times) {
     auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = times + REPS; i > REPS; --i) {
-        tree->insert(i+2);
+        tree->Insert(i+2, i);
     }
 	
 	Timer t;
@@ -45,11 +45,11 @@ VEBTester::VEBTreeInsertSmall(const unsigned int times) {
     for(unsigned i = 0; i < REPS; ++i) {
 		tree->comparisons = 0;
         t.start();
-		tree->insert(i+2);
+		tree->Insert(i+2, i);
 		t.stop();
 		comparisons += tree->comparisons;
 
-		tree->delMin();
+		tree->DeleteMin();
     }
     t.stop();
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
@@ -58,7 +58,7 @@ VEBTester::VEBTreeInsertSmall(const unsigned int times) {
 void VEBTester::VEBTreeDeleteMinBig(const unsigned int times) {
 	auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = times; i > 0; --i) {
-        tree->insert(i+2);
+        tree->Insert(i+2, i);
     }
     
 	Timer t;
@@ -66,10 +66,10 @@ void VEBTester::VEBTreeDeleteMinBig(const unsigned int times) {
 	for(unsigned i = REPS; i > 0; --i) {
 		tree->comparisons = 0;
 		t.start();
-		tree->delMin();
+		tree->DeleteMin();
 		t.stop();
 		comparisons += tree->comparisons;
-		tree->insert(i+2);
+		tree->Insert(i+2, i);
     }
 
    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
@@ -78,7 +78,7 @@ void VEBTester::VEBTreeDeleteMinBig(const unsigned int times) {
 void VEBTester::VEBTreeDeleteMinSmall(const unsigned int times) {
 	auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = times; i > 0; --i) {
-        tree->insert(i+2);
+        tree->Insert(i+2, i);
     }
 
 	Timer t;
@@ -86,11 +86,11 @@ void VEBTester::VEBTreeDeleteMinSmall(const unsigned int times) {
 	for(unsigned i = 0; i < REPS; ++i) {
 		tree->comparisons = 0;
 		t.start();
-		tree->delMin();
+		tree->DeleteMin();
 		t.stop();
 		comparisons += tree->comparisons;
 
-		tree->insert(i+2);
+		tree->Insert(i+2, i);
     }
 
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
@@ -99,7 +99,7 @@ void VEBTester::VEBTreeDeleteMinSmall(const unsigned int times) {
 void VEBTester::VEBTreeFindSuccSmall(const unsigned int times) {
 	auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = times; i > 0; --i) {
-        tree->insert(i+2);
+        tree->Insert(i+2, i);
     }
 
 	Timer t;
@@ -118,7 +118,7 @@ void VEBTester::VEBTreeFindSuccSmall(const unsigned int times) {
 void VEBTester::VEBTreeFindSuccBig(const unsigned int times) {
 	auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = times; i > 0; --i) {
-        tree->insert(i+2);
+        tree->Insert(i+2, i);
     }
 
 	Timer t;
@@ -137,7 +137,7 @@ void VEBTester::VEBTreeFindSuccBig(const unsigned int times) {
 void VEBTester::VEBTreeFindSuccRandom(const unsigned int times) {
 	auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = times; i > 0; --i) {
-        tree->insert(RAN_NUMS.at(i));
+        tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
     }
 
 	Timer t;
@@ -156,7 +156,7 @@ void VEBTester::VEBTreeFindSuccRandom(const unsigned int times) {
 void VEBTester::VEBTreeDeleteMinRandom(const unsigned int times) {
 	auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = times; i > 0; --i) {
-        tree->insert(RAN_NUMS.at(i));
+        tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
     }
     
 	Timer t;
@@ -164,10 +164,10 @@ void VEBTester::VEBTreeDeleteMinRandom(const unsigned int times) {
 	for(unsigned i = REPS + times + 1; i > times + 1; --i) {
 		tree->comparisons = 0;
 		t.start();
-		tree->delMin();
+		tree->DeleteMin();
 		t.stop();
 		comparisons += tree->comparisons;
-		tree->insert(RAN_NUMS.at(i));
+		tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
     }
 
    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
@@ -177,7 +177,7 @@ void
 VEBTester::VEBTreeInsertRandom(const unsigned int times) {
     auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = times + REPS; i > REPS; --i) {
-        tree->insert(RAN_NUMS.at(i));
+        tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
     }
 	
 	Timer t;
@@ -186,11 +186,11 @@ VEBTester::VEBTreeInsertRandom(const unsigned int times) {
     for(unsigned i = 0; i < REPS; ++i) {
 		tree->comparisons = 0;
         t.start();
-		tree->insert(RAN_NUMS.at(i));
+		tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
 		t.stop();
 		comparisons += tree->comparisons;
 
-		tree->delMin();
+		tree->DeleteMin();
     }
     t.stop();
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
@@ -298,7 +298,7 @@ VEBTester::run(const unsigned int highpower) {
     std::default_random_engine dre(seed);
     std::uniform_int_distribution<> dis(1, 10000);
  
-	for (int n = 0; n < (REPS * 2) + pow(2, highpower); ++n) {
+	for (int n = 0; n < (REPS * 2) + pow(2, highpower) + 1; ++n) {
 		
 		RAN_NUMS.push_back(n);
 	}

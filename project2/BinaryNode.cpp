@@ -1,8 +1,10 @@
 #include "BinaryNode.h"
 
-BinaryNode::BinaryNode(int key)
+BinaryNode::BinaryNode(int tkey, int tvalue)
 {
-	this->key = key;
+	key = tkey;
+    value = tvalue;
+
 }
 
 BinaryNode::~BinaryNode(void)
