@@ -97,6 +97,8 @@ std::shared_ptr<BinaryNode> VEBTree::predecessor(int key)
 		result = bottom[a]->predecessor(key);
         comparisons += bottom[a]->getComparisons();
     } else {
+		if(top->min->key > a)
+			return nullptr;
         int tkey = top->predecessor(a)->key;
 		result = bottom[tkey]->max;
         comparisons += bottom[tkey]->getComparisons();

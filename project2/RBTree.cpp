@@ -301,6 +301,27 @@ std::shared_ptr<RBNode> RBTree::predecessor(std::shared_ptr<RBNode> node) {
 	return y;
 }
 
+std::shared_ptr<RBNode> RBTree::predecessor(int key)
+{
+	std::shared_ptr<RBNode> bestMatch, node = root;
+
+	while(node != nullptr) {
+        comparisons++;
+		if(node == nullptr || node->key == key) {
+			return node;
+        }
+		else if(node->key < key) {
+			bestMatch = node;
+			node = node->right;
+		}
+		else {
+			node = node->left;
+		}
+	}
+
+	return bestMatch;
+}
+
 void RBTree::deleteMin() {
 	del(minimum(root));
 }

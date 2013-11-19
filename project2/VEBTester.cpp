@@ -161,7 +161,7 @@ void VEBTester::VEBTreeDeleteMinRandom(const unsigned int times) {
     
 	Timer t;
 	unsigned int comparisons = 0;
-	for(unsigned i = REPS; i > 0; --i) {
+	for(unsigned i = REPS + times + 1; i > times + 1; --i) {
 		tree->comparisons = 0;
 		t.start();
 		tree->delMin();
