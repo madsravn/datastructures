@@ -67,7 +67,7 @@ void RBTester::RBTreeDeleteMinBig(const unsigned int times) {
 
 	Timer t;
 	unsigned int comparisons = 0;
-	for(unsigned i = REPS; i > 0; --i) {
+	for(unsigned i = times + 1; i < times + REPS + 1; ++i) {
 		tree->comparisons = 0;
 		t.start();
 		tree->deleteMin();
@@ -82,7 +82,7 @@ void RBTester::RBTreeDeleteMinBig(const unsigned int times) {
 
 void RBTester::RBTreeDeleteMinSmall(const unsigned int times) {
 	auto tree = std::make_shared<RBTree>();    
-    for(unsigned i = times; i > 0; --i) {
+    for(unsigned i = times + REPS + 1; i > REPS + 1; --i) {
         tree->insert(i+2);
     }
 
@@ -202,8 +202,6 @@ void RBTester::TestRBTree(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }
-
-
 }
 
 void

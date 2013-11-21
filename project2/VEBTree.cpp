@@ -90,6 +90,7 @@ void VEBTree::del(std::shared_ptr<BinaryNode> node)
 int VEBTree::DeleteMin()
 {
 	this->del(min);
+	return 0; // TODO: Return correct value
 }
 
 void
@@ -104,7 +105,7 @@ VEBTree::sayName() {
 
 bool
 VEBTree::empty() {
-
+	return 0; //TODO: Return correct value
 }
 
 void
@@ -124,6 +125,8 @@ std::shared_ptr<INode> VEBTree::predecessor(int key)
 		result = bottom[a]->predecessor(key);
         comparisons += bottom[a]->getComparisons();
     } else {
+		if(top->min->key > a)
+			return nullptr;
         int tkey = top->predecessor(a)->key;
 		result = bottom[tkey]->max;
         comparisons += bottom[tkey]->getComparisons();

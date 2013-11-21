@@ -29,6 +29,7 @@ public:
 	std::shared_ptr<RBNode> maximum(std::shared_ptr<RBNode> node);
 	std::shared_ptr<RBNode> successor(std::shared_ptr<RBNode> node);
 	std::shared_ptr<RBNode> predecessor(std::shared_ptr<RBNode> node);
+	//std::shared_ptr<RBNode> predecessor(int key);
     virtual std::shared_ptr<INode> predecessor(int i);
 	void deleteMin();
 
