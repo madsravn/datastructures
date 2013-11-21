@@ -42,6 +42,7 @@ VEBTester::VEBTreeInsertSmall(const unsigned int times) {
 	Timer t;
     t.start();
 	unsigned int comparisons = 0;
+    // This can be made into a vector as well
     for(unsigned i = 0; i < REPS; ++i) {
 		tree->comparisons = 0;
         t.start();
@@ -301,11 +302,12 @@ VEBTester::run(const unsigned int highpower) {
 	for (int n = 0; n < (REPS * 2) + pow(2, highpower) + 1; ++n) {
 		
 		RAN_NUMS.push_back(n);
+        UPS.push_back(n);
+        DOWNS.push_back(n);
 	}
-    std::random_shuffle(RAN_NUMS.begin(), RAN_NUMS.end());
-    for(int q = 0; q < 10; ++q) {
-        std::cout << RAN_NUMS.at(q) << std::endl;
-    }
+
+    std::random_shuffle(RAN_NUMS.begin(), RAN_NUMS.end()); // Shuffle the data
+    std::reverse(DOWNS.begin(), DOWNS.end()); // Reverse the data
 
 	TestVEBTree(highpower);
 }

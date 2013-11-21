@@ -8,7 +8,8 @@ class VEBTester {
     public:
         VEBTester();
 		static const int REPS = 10000;
-		std::vector<int> RAN_NUMS;
+		std::vector<int> RAN_NUMS, UPS, DOWNS;
+
 
         void VEBTreeInsertBig(const unsigned int times);
 		void VEBTreeInsertSmall(const unsigned int times);
