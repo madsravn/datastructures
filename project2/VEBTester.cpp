@@ -33,6 +33,29 @@ VEBTester::VEBTreeInsertBig(const unsigned int times) {
 }
 
 void
+VEBTester::VEBTreeInsert(const unsigned int times, std::vector<int> build_range, std::vector<int> update_range) {
+    // Sæt tree til at være en IQueue pointer - og vælg hvad den skal pege på baseret på input
+    auto tree = std::make_shared<VEBTree>();
+    for(int i : build_range) {
+        tree->Insert(i+2,i+2);
+    }
+
+    Timer t;
+    unsigned int comparisons = 0;
+    for(unsigned int i : update_range) {
+        tree->comparisons = 0;
+        t.start();
+        tree->Insert(i+2,i+2);
+        t.stop();
+        comparisons += tree->comparisons;
+
+        tree->DeleteMin();
+    }
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+}
+
+
+void
 VEBTester::VEBTreeInsertSmall(const unsigned int times) {
     auto tree = std::make_shared<VEBTree>();    
     for(unsigned i = times + REPS; i > REPS; --i) {
