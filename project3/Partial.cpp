@@ -47,15 +47,19 @@ Partial::deleteElement(int x) {
 }
 
 void
-Partial::applyAction(ActionTimeElement ate) {
+Partial::applyAction(ActionTimeElement ate, int t) {
     if(ate.action == "insert") {
         insertElement(ate.item);
-        latest = ate.time;
+        if(t) {
+            latest = ate.time;
+        }
         repository.push_back(ate);
 
     } else {
         if(deleteElement(ate.item)) {
-            latest = ate.time;
+            if(t) {
+                latest = ate.time;
+            }
             repository.push_back(ate);
 
         }
@@ -67,7 +71,7 @@ Partial::doThis(int x, int time, std::string action) {
      
     if(time > latest) {
         ActionTimeElement ate = {action,time, x};
-        applyAction(ate);
+        applyAction(ate,1);
         
     } else {
         std::vector<ActionTimeElement> temp;
@@ -80,7 +84,7 @@ Partial::doThis(int x, int time, std::string action) {
 
         }
         ActionTimeElement ate = {action,time, x};
-        applyAction(ate);
+        applyAction(ate,0);
     
         for(int i = temp.size()-1; i >= 0; --i) {
             repository.push_back(temp.at(i));
@@ -91,43 +95,16 @@ Partial::doThis(int x, int time, std::string action) {
 }
 
 
-//TODO: Refactor Insert og Delete functionality into one. Less overhead
 void
 Partial::Insert(int x, int time) {
     if(time == 0) {
         time = latest+2;
     }
+    std::cout << "Insert latest " << latest << std::endl;
+    std::cout << "Insert time " << time << std::endl;
     std::string action = "insert";
     doThis(x,time,action);
 
-    /*std::cout << "Insert " << x << " at " << time << std::endl; 
-    if(time > latest) {
-        ActionTimeElement ate = {"insert",time, x};
-        repository.push_back(ate);
-        bt.insert(x,x);
-        latest = time;
-    } else {
-        std::vector<ActionTimeElement> temp;
-        for(int i = repository.size()-1; i >= 0; --i) {
-            if(repository.at(i).time > time) {
-                temp.push_back(repository.at(i));
-                Undo(repository.at(i));
-                repository.pop_back();
-            }
-
-        }
-        ActionTimeElement ate = {"insert", time, x};
-        bt.insert(x,x);
-        repository.push_back(ate);
-        //latest = time;
-    
-        for(int i = temp.size()-1; i >= 0; --i) {
-            repository.push_back(temp.at(i));
-            Redo(temp.at(i));
-        }
-
-    }
-    */
 }
 
 void
@@ -136,44 +113,10 @@ Partial::Delete(int x, int time) {
     if(time == 0) {
         time = latest+2;
     }
+    std::cout << "Delete latest " << latest << std::endl;
+    std::cout << "Delete time " << time << std::endl;
     std::string action = "delete";
     doThis(x,time,action);
-    /*
-    if(time > latest) {
-        ActionTimeElement ate = {"delete",time, x};
-        std::shared_ptr<BinaryNode> node = bt.predecessor(x);
-        if(node->key == x) {
-            repository.push_back(ate);
-            bt.del(node);
-            latest = time;
-        } else {
-            std::cout << "error" << std::endl;
-        }
-    } else {
-        std::vector<ActionTimeElement> temp;
-        for(int i = repository.size()-1; i >= 0; --i) {
-            if(repository.at(i).time > time) {
-                temp.push_back(repository.at(i));
-                Undo(repository.at(i));
-                repository.pop_back();
-            }
-
-        }
-        ActionTimeElement ate = {"delete", time, x};
-        std::shared_ptr<BinaryNode> node = bt.predecessor(x);
-        if(node->key == x) {
-            bt.del(node);
-            repository.push_back(ate);
-            //latest = time;
-        } else {
-            std::cout << "error" << std::endl;
-        }
-        for(int i = temp.size()-1; i >= 0; --i) {
-            repository.push_back(temp.at(i));
-            Redo(temp.at(i));
-        }
-
-    }*/
 
 
 }
@@ -184,6 +127,8 @@ Partial::Test() {
         bt.insert(i,i);
     }
     std::cout << bt.predecessor(7)->key << " found." << std::endl;
+    bt.del(bt.predecessor(7));
+    bt.insert(7,7);
 }
 
 void

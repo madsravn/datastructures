@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 #include <iostream>
-#include "BinaryTree.h"
+#include <map>
 
 struct ActionTimeElement {
     std::string action;
@@ -24,14 +24,14 @@ class Partial {
     private:
         int latest;
         std::vector<ActionTimeElement> repository;
-        BinaryTree bt;
+        std::map<int,int> bt;
 
         int Undo(ActionTimeElement ate);
         int Redo(ActionTimeElement ate);
         void insertElement(int x);
         int deleteElement(int x);
         void doThis(int x, int time, std::string action);
-        void applyAction(ActionTimeElement ate);
+        void applyAction(ActionTimeElement ate, int t);
 
 };
 
