@@ -9,11 +9,12 @@ Partial::Partial() {
 int
 Partial::Redo(ActionTimeElement ate) {
     if(ate.action == "insert") {
-        bt.insert(ate.item, ate.item);
+        bt.insert(std::make_pair(ate.item, ate.item));
     }
     if(ate.action == "delete") {
         // We know the element exist because it is in our repo
-        bt.del(bt.predecessor(ate.item));
+        auto it = bt.find(ate.item);
+        bt.erase(it);
     }
     return ate.time;
 
@@ -22,10 +23,11 @@ Partial::Redo(ActionTimeElement ate) {
 int
 Partial::Undo(ActionTimeElement ate) {
     if(ate.action == "insert") {
-        bt.del(bt.predecessor(ate.item));
+        auto it = bt.find(ate.item);
+        bt.erase(it);
     }
     if(ate.action == "delete") {
-        bt.insert(ate.item, ate.item);
+        bt.insert(std::make_pair(ate.item,ate.item));
     }
     return ate.time;
 
@@ -33,14 +35,14 @@ Partial::Undo(ActionTimeElement ate) {
 
 void
 Partial::insertElement(int x) {
-    bt.insert(x,x);
+    bt.insert(std::make_pair(x,x));
 }
 
 int
 Partial::deleteElement(int x) {
-    std::shared_ptr<BinaryNode> node = bt.predecessor(x);
-    if(node->key == x) {
-        bt.del(node);
+    auto it = bt.find(x);
+    if(it != bt.end()) {
+        bt.erase(x);
         return 1;
     }
     return 0;
@@ -123,12 +125,6 @@ Partial::Delete(int x, int time) {
 
 void
 Partial::Test() {
-    for(int i = 1; i < 10; i++) {
-        bt.insert(i,i);
-    }
-    std::cout << bt.predecessor(7)->key << " found." << std::endl;
-    bt.del(bt.predecessor(7));
-    bt.insert(7,7);
 }
 
 void

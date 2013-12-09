@@ -7,14 +7,13 @@
 int main() {
 
     Partial p;
-   /* p.Insert(5);
+    p.Insert(5);
     p.Insert(6);
     p.Insert(7);
     p.Insert(8);
     p.Insert(4,3);
     p.Delete(5,5);
-    p.printInfo();*/
-    p.Test();
+    p.printInfo();
 
     // Eksempel på tilfældige tal.
     /*unsigned int seed = 12345;
