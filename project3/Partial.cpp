@@ -102,8 +102,6 @@ Partial::Insert(int x, int time) {
     if(time == 0) {
         time = latest+2;
     }
-    std::cout << "Insert latest " << latest << std::endl;
-    std::cout << "Insert time " << time << std::endl;
     std::string action = "insert";
     doThis(x,time,action);
 
@@ -115,8 +113,6 @@ Partial::Delete(int x, int time) {
     if(time == 0) {
         time = latest+2;
     }
-    std::cout << "Delete latest " << latest << std::endl;
-    std::cout << "Delete time " << time << std::endl;
     std::string action = "delete";
     doThis(x,time,action);
 
