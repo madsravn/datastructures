@@ -74,6 +74,10 @@ void BinaryTree::del(std::shared_ptr<BinaryNode> node)
 		if(min == node)
 			min = switchNode;
 
+		node->left = nullptr;
+		node->right = nullptr;
+		node->parent = nullptr;
+
 		return;
 	}
 
@@ -94,6 +98,10 @@ void BinaryTree::del(std::shared_ptr<BinaryNode> node)
 		if(max == node)
 			max = searchMax(node->left);
 
+		node->left = nullptr;
+		node->right = nullptr;
+		node->parent = nullptr;
+
 		return;
 	}
 
@@ -103,6 +111,7 @@ void BinaryTree::del(std::shared_ptr<BinaryNode> node)
 
 		if(node == root) {
 			root = node->right;
+			root->parent = nullptr;
 		}
 		else {
 			if(node->parent->right == node)
@@ -113,6 +122,10 @@ void BinaryTree::del(std::shared_ptr<BinaryNode> node)
 
 		if(min == node)
 			min = searchMin(node->right);
+
+		node->left = nullptr;
+		node->right = nullptr;
+		node->parent = nullptr;
 
 		return;
 	}
@@ -144,6 +157,10 @@ void BinaryTree::del(std::shared_ptr<BinaryNode> node)
 			if(node->parent->left == node)
 				node->parent->left = rNode;
 		}
+
+		node->left = nullptr;
+		node->right = nullptr;
+		node->parent = nullptr;
 
 		return;
 	}
