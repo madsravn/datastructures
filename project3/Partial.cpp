@@ -6,6 +6,8 @@ Partial::Partial() {
     latest=0;
 }
 
+// Redo a given action.
+// "insert 5" becomes "insert 5"
 int
 Partial::Redo(ActionTimeElement ate) {
     if(ate.action == "insert") {
@@ -20,6 +22,8 @@ Partial::Redo(ActionTimeElement ate) {
 
 }
 
+// Undo or "reverse" a given action. 
+// "insert 5" becomes "delete 5"
 int
 Partial::Undo(ActionTimeElement ate) {
     if(ate.action == "insert") {
@@ -33,11 +37,13 @@ Partial::Undo(ActionTimeElement ate) {
 
 }
 
+// Insert the specified element into the tree structure
 void
 Partial::insertElement(int x) {
     bt.insert(std::make_pair(x,x));
 }
 
+// Delete the specified element from the tree structure
 int
 Partial::deleteElement(int x) {
     auto it = bt.find(x);
@@ -48,8 +54,11 @@ Partial::deleteElement(int x) {
     return 0;
 }
 
+// t determines whether or not this is the latest action
+// So we will not set `latest` if t is 0
 void
 Partial::applyAction(ActionTimeElement ate, int t) {
+    // Actions are "insert" or "delete"
     if(ate.action == "insert") {
         insertElement(ate.item);
         if(t) {
@@ -68,12 +77,17 @@ Partial::applyAction(ActionTimeElement ate, int t) {
     }
 }
 
+// Inserts or deletes an element at a given time.
+// If time is before the latest action, the elements
+// from the tree will be removed and then inserted again
+
 void 
 Partial::doThis(int x, int time, std::string action) {
      
     if(time > latest) {
         ActionTimeElement ate = {action,time, x};
         applyAction(ate,1);
+        sizem++;
         
     } else {
         std::vector<ActionTimeElement> temp;
@@ -96,7 +110,8 @@ Partial::doThis(int x, int time, std::string action) {
     }
 }
 
-
+// Public access to insert a given element at a given
+// time
 void
 Partial::Insert(int x, int time) {
     if(time == 0) {
@@ -107,6 +122,8 @@ Partial::Insert(int x, int time) {
 
 }
 
+// Public access to delete a given element at a given
+// time
 void
 Partial::Delete(int x, int time) {
     
@@ -115,18 +132,18 @@ Partial::Delete(int x, int time) {
     }
     std::string action = "delete";
     doThis(x,time,action);
-
-
 }
 
 void
 Partial::Test() {
 }
 
+
+// So let us get some information about our datastructure
 void
 Partial::printInfo() {
     for(int i = 0; i < repository.size(); ++i) {
         std::cout << repository.at(i).time << ": " << repository.at(i).action << " - " << repository.at(i).item << std::endl;
     }
-    // Information regarding the actual tree
+    //TODO: Information regarding the actual tree
 }
