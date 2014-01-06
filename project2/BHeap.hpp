@@ -11,8 +11,6 @@
 
 class BHeap : public IQueue {
     public:
-		int comparisons;
-
         BHeap();
         virtual void MakeHeap();
         virtual int FindMin();

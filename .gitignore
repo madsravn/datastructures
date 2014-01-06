@@ -27,6 +27,10 @@ cpp.txt
 *.exe
 *.o
 *.so
+*.obj
+*.tlog
+*.lastbuildstate
+*.pdb
 
 # Packages #
 ############

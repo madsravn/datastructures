@@ -4,6 +4,7 @@
 #include "FNode.hpp"
 class IQueue {
     public:
+		int comparisons;
         virtual void MakeHeap() = 0;
         virtual int FindMin() = 0;
         virtual std::shared_ptr<INode> Insert(int keyNode, int priority) = 0;

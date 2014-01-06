@@ -8,7 +8,7 @@ class RBTester {
     public:
         RBTester();
 		static const int REPS = 100000;
-		std::vector<int> RAN_NUMS;
+		std::vector<int> RAN_NUMS, UPS, DOWNS;
 
         void RBTreeInsertBig(const unsigned int times);
 		void RBTreeInsertSmall(const unsigned int times);
@@ -16,6 +16,9 @@ class RBTester {
 		void RBTreeDeleteMinSmall(const unsigned int times);
         void RBTreeFindSuccSmall(const unsigned int times);
         void RBTreeFindSuccBig(const unsigned int times);
+		void RBTreeFindSuccRandom(const unsigned int times);
+        void RBTreeDeleteMinRandom(const unsigned int times);
+        void RBTreeInsertRandom(const unsigned int times);
 
 		void TestRBTree(const unsigned int highpower);
 

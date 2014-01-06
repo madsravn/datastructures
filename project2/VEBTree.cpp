@@ -96,7 +96,8 @@ int VEBTree::DeleteMin()
 void
 VEBTree::DecreaseKey(std::shared_ptr<INode> k, int i) {
     std::shared_ptr<BinaryNode> node = std::static_pointer_cast<BinaryNode>(k);
-
+	del(node);
+	Insert(node->key - i, node->value); 
 }
 
 void 

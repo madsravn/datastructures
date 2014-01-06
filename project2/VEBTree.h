@@ -17,8 +17,6 @@ public:
 	~VEBTree(void);
 
     virtual void MakeHeap();
-    
-	int comparisons;
 
 	std::shared_ptr<INode> Insert(int key, int value);
 	void del(std::shared_ptr<BinaryNode> node);
