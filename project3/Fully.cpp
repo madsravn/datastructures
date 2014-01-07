@@ -18,7 +18,7 @@ Fully::Insert(int x, int time) {
         time = latest+2;
     }
     std::string action = "insert";
-    doThis(x,time,action);
+    //doThis(x,time,action);
 }
 
 void
@@ -27,5 +27,5 @@ Fully::Delete(int x, int time) {
         time = latest+2;
     }
     std::string action = "delete";
-    doThis(x,time,action);
+    //doThis(x,time,action);
 }
