@@ -7,10 +7,10 @@
 class QueueTester {
 
     public:
-        QueueTester(std::shared_ptr<IQueue>);
-		static const int REPS = 10000;
+        QueueTester(int t);
+		static const int REPS = 100000;
 		std::vector<int> RAN_NUMS, UPS, DOWNS;
-		std::shared_ptr<IQueue> queue;
+		int type;
 
 		void QueueInsertBig(const unsigned int times);
 		void QueueInsertSmall(const unsigned int times);
@@ -25,6 +25,8 @@ class QueueTester {
         void QueueDecreaseKeyRandom(const unsigned int times);
 
 		void TestQueue(const unsigned int highpower);
+		std::shared_ptr<IQueue> MakeQueue();
+
 
         void run(const unsigned int highpower);
 };
