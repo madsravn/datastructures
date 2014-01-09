@@ -4,6 +4,7 @@
 Partial::Partial() {
     // Nothing yet
     latest=0;
+    sizem = 0;
 }
 
 // Redo a given action.
@@ -26,6 +27,7 @@ Partial::Redo(ActionTimeElement ate) {
 // "insert 5" becomes "delete 5"
 int
 Partial::Undo(ActionTimeElement ate) {
+    std::cout << "Entering undo" << std::endl;
     if(ate.action == "insert") {
         auto it = bt.find(ate.item);
         bt.erase(it);
@@ -83,11 +85,12 @@ Partial::applyAction(ActionTimeElement ate, int t) {
 
 void 
 Partial::doThis(int x, int time, std::string action) {
+    std::cout << "You asked me to " << action << " element " << x << " at time " << time << ". My latest is " << latest << std::endl;
      
     if(time > latest) {
         ActionTimeElement ate = {action,time, x};
+        // apply the action as the newest action
         applyAction(ate,1);
-        sizem++;
         
     } else {
         std::vector<ActionTimeElement> temp;
@@ -100,6 +103,7 @@ Partial::doThis(int x, int time, std::string action) {
 
         }
         ActionTimeElement ate = {action,time, x};
+        // apply the action as something in the past
         applyAction(ate,0);
     
         for(int i = temp.size()-1; i >= 0; --i) {
@@ -108,6 +112,7 @@ Partial::doThis(int x, int time, std::string action) {
         }
 
     }
+    sizem++;
 }
 
 // Public access to insert a given element at a given

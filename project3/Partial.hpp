@@ -21,18 +21,20 @@ class Partial {
         void Test();
         void printInfo();
         int size() { return sizem; }
+        std::vector<ActionTimeElement> repository;
+        void doThis(int x, int time, std::string action);
+        void applyAction(ActionTimeElement ate, int t);
+        int late() { return latest; }
+
 
     private:
         int latest;
-        std::vector<ActionTimeElement> repository;
         std::map<int,int> bt;
 
         int Undo(ActionTimeElement ate);
         int Redo(ActionTimeElement ate);
         void insertElement(int x);
         int deleteElement(int x);
-        void doThis(int x, int time, std::string action);
-        void applyAction(ActionTimeElement ate, int t);
         int sizem; //m is described as the amount of updates performed
 
 };

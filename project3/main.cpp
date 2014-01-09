@@ -3,17 +3,24 @@
 #include <thread>
 #include "Timer.hpp"
 #include "Partial.hpp"
+#include "Fully.hpp"
 
 int main() {
 
-    Partial p;
+    /*Partial p;
     p.Insert(5);
     p.Insert(6);
     p.Insert(7);
     p.Insert(8);
     p.Insert(4,3);
     p.Delete(5,5);
-    p.printInfo();
+    p.printInfo();*/
+
+    Fully f;
+    for(int i = 0; i < 1024; ++i) {
+        f.Insert(i+1);
+    }
+    f.printInfo();
 
     // Eksempel på tilfældige tal.
     /*unsigned int seed = 12345;

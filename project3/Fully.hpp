@@ -2,6 +2,7 @@
 #define FULLY_HPP_
 
 #include <vector>
+#include <cmath>
 #include "Partial.hpp"
 
 class Fully {
@@ -17,14 +18,19 @@ class Fully {
     private:
         int latest;
         int m;
+        int sqrtm;
         std::vector<Partial> repo;
         int current;
+        int position;
         int Undo(ActionTimeElement ate);
         int Redo(ActionTimeElement ate);
         void insertElement(int x);
         void deleteElement(int x);
         void doThis(int x, int time, std::string action);
-        void applyAction(ActionTimeElement ate, int t);
+        void applyAction(ActionTimeElement ate);
+        void Rebalance();
+        int FindPosition(int time);
+
 };
 
 
