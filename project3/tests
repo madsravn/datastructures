@@ -1,0 +1,8 @@
+Partial:
+Indsæt test-data, mere og mere
+* Test ved update helt i toppen, midtvejs og i bunden. Se det skalerer som det skal
+
+Fully:
+Indsæt test-data, mere og mere
+* Test ved update helt i toppen, midtvejs og i bunden. Se det skalerer som det skal.
+* Test ved queries helt i toppen, midtvejs, i bunden og tilfældig. Se det skalerer som det skal.

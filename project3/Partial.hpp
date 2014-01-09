@@ -6,7 +6,7 @@
 #include <utility>
 #include <iostream>
 #include <map>
-//#include "BinaryTree.h"
+#include "IRetro.hpp"
 
 struct ActionTimeElement {
     std::string action;
@@ -14,11 +14,11 @@ struct ActionTimeElement {
     int item;
 };
 
-class Partial {
+class Partial : public IRetro {
     public:
         Partial();
-        void Insert(int x, int time=0);
-        void Delete(int x, int time=0);
+        virtual void Insert(int x, int time=0);
+        virtual void Delete(int x, int time=0);
         void Test();
         void printInfo();
         int size() { return sizem; }
