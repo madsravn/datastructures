@@ -13,6 +13,7 @@ class Fully {
         void Delete(int x, int time=0);
         void Test();
         void printInfo();
+        int Query(int x, int time=0);
 
 
     private:

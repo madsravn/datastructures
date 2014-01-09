@@ -20,6 +20,8 @@ int main() {
     for(int i = 0; i < 3000; ++i) {
         f.Insert(i+1);
     }
+    f.Insert(3501, 5);
+    f.Insert(3503, 7);
     f.printInfo();
 
     // Eksempel på tilfældige tal.

@@ -23,7 +23,15 @@ Fully::Fully(size_t tm) {
         Partial p;
         repo.push_back(p);
     }
+}
 
+int
+Fully::Query(int x, int time) {
+    if(time == 0) {
+        time = latest+1;
+    }
+    int i = FindPosition(i);
+    return repo.at(i).Query(x);
 }
 
 void

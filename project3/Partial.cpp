@@ -20,14 +20,52 @@ Partial::Redo(ActionTimeElement ate) {
         bt.erase(it);
     }
     return ate.time;
-
 }
+
+int 
+Partial::FindElement(int x) {
+    auto it = bt.lower_bound(x);
+    if(it != bt.begin()) {
+        --it;
+        return it->second;
+    }
+    //if(it != bt.end()) {
+    //    return it->second;
+    //}
+    return -1;
+}
+
+
+int
+Partial::Query(int x, int time) {
+    if(time > latest) {
+       return FindElement(x); 
+    } else {
+        std::vector<ActionTimeElement> temp;
+        for(int i = repository.size()-1; i >= 0; --i) {
+            if(repository.at(i).time > time) {
+                temp.push_back(repository.at(i));
+                Undo(repository.at(i));
+                repository.pop_back();
+            }
+
+        }
+        return FindElement(x); 
+
+        for(int i = temp.size()-1; i >= 0; --i) {
+            repository.push_back(temp.at(i));
+            Redo(temp.at(i));
+        }
+    }
+    return -1;
+} 
+
 
 // Undo or "reverse" a given action. 
 // "insert 5" becomes "delete 5"
 int
 Partial::Undo(ActionTimeElement ate) {
-    std::cout << "Entering undo" << std::endl;
+    //std::cout << "Entering undo" << std::endl;
     if(ate.action == "insert") {
         auto it = bt.find(ate.item);
         bt.erase(it);
