@@ -1,6 +1,9 @@
 #include "QueueTester.h"
 #include "IQueue.hpp"
 #include "Timer.hpp"
+#include "VEBTree.h"
+#include "BHeap.hpp"
+#include "FHeap.hpp"
 #include <cmath>
 #include <random>
 #include <vector>
@@ -8,9 +11,24 @@
 #include <iostream>
 #include <algorithm>
 
-QueueTester::QueueTester(std::shared_ptr<IQueue> q)
+QueueTester::QueueTester(int t)
 {
-	queue = q;
+	type = t;
+}
+
+std::shared_ptr<IQueue> QueueTester::MakeQueue()
+{
+	switch (type)
+	{
+	case 1:
+		return std::make_shared<BHeap>();
+	case 2:
+		return std::make_shared<FHeap>();
+	case 3:
+		return std::make_shared<VEBTree>();
+	default:
+		break;
+	}
 }
 
 /*
@@ -18,7 +36,7 @@ QueueTester::QueueTester(std::shared_ptr<IQueue> q)
  */
 void QueueTester::QueueInsertBig(const unsigned int times)
 {
-	auto tree = queue;    
+	auto tree = MakeQueue();    
     for(unsigned i = 0; i <= times; i++) {
         tree->Insert(i+1, i);
     }
@@ -41,7 +59,7 @@ void QueueTester::QueueInsertBig(const unsigned int times)
 
 void QueueTester::QueueInsertSmall(const unsigned int times)
 {
-	auto tree = queue;    
+	auto tree = MakeQueue();    
     for(unsigned i = times + REPS + 1; i > REPS; i--) {
         tree->Insert(i+1, i);
     }
@@ -66,7 +84,7 @@ void QueueTester::QueueInsertSmall(const unsigned int times)
 
 void QueueTester::QueueInsertRandom(const unsigned int times)
 {
-	auto tree = queue;    
+	auto tree = MakeQueue();    
     for(unsigned i = times + REPS; i >= REPS; --i) {
         tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
     }
@@ -93,7 +111,7 @@ void QueueTester::QueueInsertRandom(const unsigned int times)
  */
 void QueueTester::QueueDeleteMinBig(const unsigned int times)
 {
-	auto tree = queue;  
+	auto tree = MakeQueue();  
     for(unsigned i = 0; i < times; i++) {
         tree->Insert(i+1, i);
     }
@@ -115,7 +133,7 @@ void QueueTester::QueueDeleteMinBig(const unsigned int times)
 
 void QueueTester::QueueDeleteMinSmall(const unsigned int times)
 {
-	auto tree = queue;  
+	auto tree = MakeQueue();  
     for(unsigned i = times + REPS + 1; i > REPS; i--) {
         tree->Insert(i+1, i);
     }
@@ -138,7 +156,7 @@ void QueueTester::QueueDeleteMinSmall(const unsigned int times)
 
 void QueueTester::QueueDeleteMinRandom(const unsigned int times)
 {
-	auto tree = queue;   
+	auto tree = MakeQueue();   
     for(unsigned i = times; i > 0; i--) {
         tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
     }
@@ -163,7 +181,7 @@ void QueueTester::QueueDeleteMinRandom(const unsigned int times)
  */
 void QueueTester::QueueDecreaseKeySmall(const unsigned int times)       
 {
-	auto fheap = queue; 
+	auto fheap = MakeQueue(); 
     for(unsigned i = times + REPS + 1; i > REPS; i--) {
         fheap->Insert(i+1,i);
     }
@@ -190,7 +208,7 @@ void QueueTester::QueueDecreaseKeySmall(const unsigned int times)
 
 void QueueTester::QueueDecreaseKeyBig(const unsigned int times)
 {
-	auto fheap = queue; 
+	auto fheap = MakeQueue(); 
     for(unsigned i = 0; i < times + 1; i++) {
         fheap->Insert(i+1,i);
     }
@@ -216,7 +234,7 @@ void QueueTester::QueueDecreaseKeyBig(const unsigned int times)
 
 void QueueTester::QueueDecreaseKeyRandom(const unsigned int times)
 {
-	auto tree = queue;  
+	auto tree = MakeQueue();  
     for(unsigned i = times; i > 0; i--) {
         tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
     }
@@ -241,14 +259,13 @@ void QueueTester::QueueDecreaseKeyRandom(const unsigned int times)
 
 void QueueTester::TestQueue(const unsigned int highpower) {
 	std::cout << "\n *** >>> Testing Queue <<< ***\n" << std::endl;
-	queue->sayName();
 	unsigned int i;
 	int power;
 
 	
 	i = 4;
     power = 2;
-
+	
 	std::cout << "\nTesting InsertBig\n" << std::endl;
 	
 	while(power <= highpower) {
@@ -256,7 +273,7 @@ void QueueTester::TestQueue(const unsigned int highpower) {
         power++;
         i = pow(2,power);
     }
-
+	
 	std::cout << "\nTesting InsertSmall\n" << std::endl;
 	i = 4;
     power = 2;
