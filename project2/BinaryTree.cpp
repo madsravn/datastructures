@@ -238,8 +238,8 @@ void BinaryTree::print(std::shared_ptr<BinaryNode> node)
 
 void BinaryTree::insertRecursive(std::shared_ptr<BinaryNode> start, std::shared_ptr<BinaryNode> node)
 {
+	comparisons++;
 	if(node->key < start->key) {
-        comparisons++;
 		if(start->left == nullptr) {
 			start->left = node;
 			node->parent = start;
