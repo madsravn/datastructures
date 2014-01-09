@@ -85,7 +85,7 @@ Partial::applyAction(ActionTimeElement ate, int t) {
 
 void 
 Partial::doThis(int x, int time, std::string action) {
-    std::cout << "You asked me to " << action << " element " << x << " at time " << time << ". My latest is " << latest << std::endl;
+    //std::cout << "You asked me to " << action << " element " << x << " at time " << time << ". My latest is " << latest << std::endl;
      
     if(time > latest) {
         ActionTimeElement ate = {action,time, x};

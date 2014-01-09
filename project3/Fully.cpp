@@ -1,4 +1,5 @@
 #include "Fully.hpp"
+#include <cassert>
 
 Fully::Fully() {
     latest = 0;
@@ -61,9 +62,9 @@ Fully::doThis(int x, int time, std::string action) {
 int
 Fully::FindPosition(int time) {
     for(int i = 0; i < repo.size(); ++i) {
-        std::cout << "checking " << i << std::endl;
+        //std::cout << "checking " << i << std::endl;
         // Do we even have any elements?
-        if(repo.at(i).size() == 0) {
+        if(size(i) == 0) {
             return i;
         }
 
@@ -72,14 +73,22 @@ Fully::FindPosition(int time) {
             return i;
         }
         // We know the container has elements and the time is after the latest time stamp
-        if(repo.at(i).size() < sqrtm) {
+        if(size(i) < sqrtm) {
             return i;
         }
     }
 
     // If the time isn't lower than anything else, return the latest partial
-    std::cout << "Returning default value" << std::endl;
+    //std::cout << "Returning default value" << std::endl;
     return repo.size()-1;
+}
+
+int
+Fully::size(int position) {
+    if(position == 0) {
+        return repo.at(0).size();
+    }
+    return repo.at(position).size()-repo.at(position-1).size();
 }
 
 void
@@ -90,19 +99,20 @@ Fully::applyAction(ActionTimeElement ate) {
     repo.at(i).doThis(ate.item, ate.time, ate.action);
 
     // Update all partials after P_i
-    // TODO: UDEN DEN HER VIRKER KODEN FINT - FIND FEJLEN
-    /*
+    
     for(int a = i+1; a < repo.size(); ++a) {
         Partial p = repo.at(a);
         repo.at(a) = repo.at(a-1);
+        int tlatest = repo.at(a-1).late();
         for(auto& ate : p.repository) {
-            repo.at(a).doThis(ate.item, ate.time, ate.action);
+            if(ate.time > tlatest) {
+                repo.at(a).doThis(ate.item, ate.time, ate.action);
+            }
         }
-    }*/
+    }
 
     // Do we need a rebalance?
-    // TODO: THE SIZE PER PARTIAL NEEDS TO BE RETHOUGHT!
-    if(repo.at(i).repository.size() > 2*sqrtm-1) {
+    if(size(i) > 2*sqrtm-1) {
         Rebalance();
     }
 
@@ -111,17 +121,18 @@ Fully::applyAction(ActionTimeElement ate) {
 
 void
 Fully::Rebalance() {
+    std::cout << "Rebalancing" << std::endl;
     int newm = 0;
     int rsize = repo.size() - 1;
     std::vector<ActionTimeElement> tempRepo;
     // The last partial container most both contain all the updates and collected size of updates
-    std::copy(repo.at(rsize).repository.begin(), repo.at(rsize).repository.end(), tempRepo.begin());
+    std::copy(repo.at(rsize).repository.begin(), repo.at(rsize).repository.end(), std::back_inserter(tempRepo));
     newm = tempRepo.size();
+    std::cout << "New size is " << newm << std::endl;
     m = newm;
     // TODO: Skal det være ceil, floor eller noget andet? 
     sqrtm = ceil(sqrt(m));
-    // TODO: assertions
-    //assert( sqrtm*sqrtm >= m )
+    assert( sqrtm*sqrtm >= m );
     current = 0;
     position = 0;
     repo.clear();
@@ -149,6 +160,7 @@ Fully::printInfo() {
     std::cout << "sqrtm: " << sqrtm << std::endl;
     for(int i = 0; i < repo.size(); ++i) {
         std::cout << "<<< === >>>" << std::endl;
-        repo.at(i).printInfo();
+        //repo.at(i).printInfo();
+        std::cout << repo.at(i).size() << std::endl;
     }
 }

@@ -17,7 +17,7 @@ int main() {
     p.printInfo();*/
 
     Fully f;
-    for(int i = 0; i < 1024; ++i) {
+    for(int i = 0; i < 3000; ++i) {
         f.Insert(i+1);
     }
     f.printInfo();

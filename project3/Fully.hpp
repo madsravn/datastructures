@@ -30,6 +30,7 @@ class Fully {
         void applyAction(ActionTimeElement ate);
         void Rebalance();
         int FindPosition(int time);
+        int size(int position);
 
 };
 
