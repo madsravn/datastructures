@@ -38,6 +38,7 @@ Partial::FindElement(int x) {
 
 int
 Partial::Query(int x, int time) {
+    int element = -1;
     if(time > latest) {
        return FindElement(x); 
     } else {
@@ -52,18 +53,19 @@ Partial::Query(int x, int time) {
             }
 
         }
-        return FindElement(x); 
+        element = FindElement(x); 
 
         for(int i = temp.size()-1; i >= 0; --i) {
             repository.push_back(temp.at(i));
             Redo(temp.at(i));
         }
     }
-    return -1;
+    return element;
 } 
 
 std::map<int, int>
 Partial::GetTree(int time) {
+
     if(time > latest) {
        return bt;
     } else {
