@@ -129,14 +129,13 @@ Fully::applyAction(ActionTimeElement ate) {
 
 void
 Fully::Rebalance() {
-    std::cout << "Rebalancing" << std::endl;
     int newm = 0;
     int rsize = repo.size() - 1;
     std::vector<ActionTimeElement> tempRepo;
     // The last partial container most both contain all the updates and collected size of updates
     std::copy(repo.at(rsize).repository.begin(), repo.at(rsize).repository.end(), std::back_inserter(tempRepo));
     newm = tempRepo.size();
-    std::cout << "New size is " << newm << std::endl;
+    //std::cout << "New size is " << newm << std::endl;
     m = newm;
     // TODO: Skal det være ceil, floor eller noget andet? 
     sqrtm = ceil(sqrt(m));

@@ -10,7 +10,7 @@ int main() {
 
 
     Tester t;
-    t.run(5);
+    t.run(7);
     // Eksempel på tilfældige tal.
     /*unsigned int seed = 12345;
     std::default_random_engine dre(seed);

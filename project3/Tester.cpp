@@ -93,7 +93,7 @@ void Tester::FullyUpdateTop(const unsigned int times)
     for(unsigned i = 0; i <= times; i++) {
         f.Insert(i+1);
     }
-
+    f.Rebalance();
 	Timer t;
     unsigned int comparisons = 0;
     for(unsigned i = times + 1; i < REPS + times + 1; i++) {
@@ -114,7 +114,7 @@ void Tester::FullyUpdateMid(const unsigned int times)
     for(unsigned i = 0; i <= times; i++) {
         f.Insert(i+1);
     }
-
+    f.Rebalance();
 	Timer t;
     unsigned int comparisons = 0;
     for(unsigned i = times + 1; i < REPS + times + 1; i++) {
@@ -142,6 +142,7 @@ void Tester::FullyUpdateBottom(const unsigned int times)
     for(unsigned i = 0; i <= times; i++) {
         f.Insert(i+1);
     }
+    f.Rebalance();
 
 	Timer t;
     unsigned int comparisons = 0;
@@ -238,6 +239,7 @@ void Tester::FullyQueryTop(const unsigned int times)
     for(unsigned i = 0; i <= times; i++) {
         f.Insert(i+1);
     }
+    f.Rebalance();
 
 	Timer t;
     unsigned int comparisons = 0;
@@ -261,6 +263,7 @@ void Tester::FullyQueryMid(const unsigned int times)
     for(unsigned i = 0; i <= times; i++) {
         f.Insert(i+1);
     }
+    f.Rebalance();
 
 	Timer t;
     unsigned int comparisons = 0;
@@ -289,6 +292,7 @@ void Tester::FullyQueryBottom(const unsigned int times)
     for(unsigned i = 0; i <= times; i++) {
         f.Insert(i+1);
     }
+    f.Rebalance();
 
 	Timer t;
     unsigned int comparisons = 0;

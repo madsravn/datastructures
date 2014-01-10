@@ -17,6 +17,7 @@ class Fully : public IRetro {
         int Query(int x, int time=0);
         // Return the time of the latest action performed
         int late() { return repo.at(repo.size()-1).late(); }
+        void Rebalance();
 
 
     private:
@@ -32,7 +33,6 @@ class Fully : public IRetro {
         void deleteElement(int x);
         void doThis(int x, int time, std::string action);
         void applyAction(ActionTimeElement ate);
-        void Rebalance();
         int FindPosition(int time);
         int size(int position);
 
