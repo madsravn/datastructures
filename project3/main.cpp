@@ -4,26 +4,13 @@
 #include "Timer.hpp"
 #include "Partial.hpp"
 #include "Fully.hpp"
+#include "Tester.hpp"
 
 int main() {
 
-    /*Partial p;
-    p.Insert(5);
-    p.Insert(6);
-    p.Insert(7);
-    p.Insert(8);
-    p.Insert(4,3);
-    p.Delete(5,5);
-    p.printInfo();*/
 
-    Fully f;
-    for(int i = 0; i < 3000; ++i) {
-        f.Insert(i+1);
-    }
-    f.Insert(3501, 5);
-    f.Insert(3503, 7);
-    f.printInfo();
-
+    Tester t;
+    t.run(5);
     // Eksempel på tilfældige tal.
     /*unsigned int seed = 12345;
     std::default_random_engine dre(seed);

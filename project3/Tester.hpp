@@ -1,32 +1,32 @@
-#ifndef QUEUETESTER_HPP_
-#define QUEUETESTER_HPP_
+#ifndef TESTER_HPP_
+#define TESTER_HPP_
 
 #include <vector>
-#include "IQueue.hpp"
 
-class QueueTester {
+class Tester {
 
     public:
-        QueueTester(int t);
+        Tester();
 		static const int REPS = 100000;
 		std::vector<int> RAN_NUMS, UPS, DOWNS;
-		int type;
 
-		void QueueInsertBig(const unsigned int times);
-		void QueueInsertSmall(const unsigned int times);
-        void QueueInsertRandom(const unsigned int times);
+		void PartialUpdateTop(const unsigned int times);
+		void PartialUpdateMid(const unsigned int times);
+        void PartialUpdateBottom(const unsigned int times);
 
-		void QueueDeleteMinBig(const unsigned int times);
-		void QueueDeleteMinSmall(const unsigned int times);
-        void QueueDeleteMinRandom(const unsigned int times);
+		void FullyUpdateTop(const unsigned int times);
+		void FullyUpdateMid(const unsigned int times);
+        void FullyUpdateBottom(const unsigned int times);
 
-		void QueueDecreaseKeySmall(const unsigned int times);        
-		void QueueDecreaseKeyBig(const unsigned int times);
-        void QueueDecreaseKeyRandom(const unsigned int times);
+		void PartialQueryTop(const unsigned int times);        
+		void PartialQueryMid(const unsigned int times);
+        void PartialQueryBottom(const unsigned int times);
 
-		void TestQueue(const unsigned int highpower);
-		std::shared_ptr<IQueue> MakeQueue();
+		void FullyQueryTop(const unsigned int times);        
+		void FullyQueryMid(const unsigned int times);
+        void FullyQueryBottom(const unsigned int times);
 
+		void TestRetro(const unsigned int highpower);
 
         void run(const unsigned int highpower);
 };

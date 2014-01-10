@@ -6,8 +6,10 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include "Fully.hpp"
+#include "Partial.hpp"
 
-Tester::Tester(int t)
+Tester::Tester()
 {
 }
 
@@ -36,204 +38,273 @@ void Tester::PartialUpdateTop(const unsigned int times)
 
 void Tester::PartialUpdateMid(const unsigned int times)
 {
+
     Partial p;
-    for(unsigned i = times + REPS + 1; i > REPS; i--) {
+    for(unsigned i = 0; i <= times; i++) {
         p.Insert(i+1);
     }
 
 	Timer t;
-    t.start();
-	unsigned int comparisons = 0;
-    // This can be made into a vector as well
-    for(unsigned i = REPS; i > 0; i--) {
-		tree->comparisons = 0;
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Partial p_test = p;
+        int size = p.late()/2;
+        if(size % 2 == 0) {
+            size++;
+        }
         t.start();
-		tree->Insert(i+1, i);
+        p_test.Insert(i+1, size);
 		t.stop();
-		comparisons += tree->comparisons;
 
-		tree->DeleteMin();
     }
-    t.stop();
+
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
 }
 
-void Tester::QueueInsertRandom(const unsigned int times)
+void Tester::PartialUpdateBottom(const unsigned int times)
 {
-	auto tree = MakeQueue();    
-    for(unsigned i = times + REPS; i >= REPS; --i) {
-        tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
+    Partial p;
+    for(unsigned i = 0; i <= times; i++) {
+        p.Insert(i+1);
     }
-	tree->DeleteMin();
 
 	Timer t;
-    t.start();
-	unsigned int comparisons = 0;
-    for(unsigned i = 0; i < REPS; ++i) {
-		tree->comparisons = 0;
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Partial p_test = p;
         t.start();
-		tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
+        p_test.Insert(i+1, 1);
 		t.stop();
-		comparisons += tree->comparisons;
 
-		tree->DeleteMin();
     }
-    t.stop();
+
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
+
 }
 
 /*
  * DELE TESTS
  */
-void Tester::QueueDeleteMinBig(const unsigned int times)
+void Tester::FullyUpdateTop(const unsigned int times)
 {
-	auto tree = MakeQueue();  
-    for(unsigned i = 0; i < times; i++) {
-        tree->Insert(i+1, i);
+    Fully f;
+    for(unsigned i = 0; i <= times; i++) {
+        f.Insert(i+1);
     }
-    tree->DeleteMin();
 
 	Timer t;
-	unsigned int comparisons = 0;
-	for(unsigned i = times; i < times + REPS; i++) {
-		tree->comparisons = 0;
-		t.start();
-		tree->DeleteMin();
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Fully f_test = f;
+        t.start();
+        f_test.Insert(i+1);
 		t.stop();
-		comparisons += tree->comparisons;
-		tree->Insert(i+1, i);
-    }
 
-   std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
-}
-
-void Tester::QueueDeleteMinSmall(const unsigned int times)
-{
-	auto tree = MakeQueue();  
-    for(unsigned i = times + REPS + 1; i > REPS; i--) {
-        tree->Insert(i+1, i);
-    }
-	tree->DeleteMin();
-
-	Timer t;
-	unsigned int comparisons = 0;
-	for(unsigned i = REPS; i > 0; i--) {
-		tree->comparisons = 0;
-		t.start();
-		tree->DeleteMin();
-		t.stop();
-		comparisons += tree->comparisons;
-
-		tree->Insert(i+1, i);
     }
 
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
 }
 
-void Tester::QueueDeleteMinRandom(const unsigned int times)
+void Tester::FullyUpdateMid(const unsigned int times)
 {
-	auto tree = MakeQueue();   
-    for(unsigned i = times; i > 0; i--) {
-        tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
-    }
-	tree->DeleteMin();
-    
-	Timer t;
-	unsigned int comparisons = 0;
-	for(unsigned i = REPS + times + 1; i > times + 1; i--) {
-		tree->comparisons = 0;
-		t.start();
-		tree->DeleteMin();
-		t.stop();
-		comparisons += tree->comparisons;
-		tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
+    Fully f;
+    for(unsigned i = 0; i <= times; i++) {
+        f.Insert(i+1);
     }
 
-   std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+	Timer t;
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Fully f_test = f;
+        int size = f.late()/2;
+        if(size % 2 == 0) {
+            size++;
+        }
+ 
+        t.start();
+        f_test.Insert(i+1,size);
+		t.stop();
+
+    }
+
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
+
+
+}
+
+void Tester::FullyUpdateBottom(const unsigned int times)
+{
+    Fully f;
+    for(unsigned i = 0; i <= times; i++) {
+        f.Insert(i+1);
+    }
+
+	Timer t;
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Fully f_test = f;
+        t.start();
+        f_test.Insert(i+1,1);
+		t.stop();
+
+    }
+
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
+
+
 }
 
 /*
  * DECREASE KEY TESTS
  */
-void Tester::QueueDecreaseKeySmall(const unsigned int times)       
+void Tester::PartialQueryTop(const unsigned int times)       
 {
-	auto fheap = MakeQueue(); 
-    for(unsigned i = times + REPS + 1; i > REPS; i--) {
-        fheap->Insert(i+1,i);
+    Partial p;
+    for(unsigned i = 0; i <= times; i++) {
+        p.Insert(i+1);
     }
-	fheap->DeleteMin();
 
 	Timer t;
-	unsigned int comparisons = 0;
-    for(unsigned i = REPS; i > 0; i--) {
-        
-		std::shared_ptr<INode> node = fheap->Insert(i+1,i);
-
-		fheap->comparisons = 0;
-		
-		t.start();
-		fheap->DecreaseKey(node, i + 1);
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Partial p_test = p;
+        t.start();
+        p_test.Query(1);
 		t.stop();
-		comparisons += fheap->comparisons;
 
-		fheap->DeleteMin();
     }
 
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
+
 }
 
-void Tester::QueueDecreaseKeyBig(const unsigned int times)
+void Tester::PartialQueryMid(const unsigned int times)
 {
-	auto fheap = MakeQueue(); 
-    for(unsigned i = 0; i < times + 1; i++) {
-        fheap->Insert(i+1,i);
+    Partial p;
+    for(unsigned i = 0; i <= times; i++) {
+        p.Insert(i+1);
     }
-	fheap->DeleteMin();
 
 	Timer t;
-	unsigned int comparisons = 0;
-    for(unsigned i = times; i < REPS + times; i++) {
-        
-		std::shared_ptr<INode> node = fheap->Insert(i+1,i);
-		fheap->DeleteMin();
-
-		fheap->comparisons = 0;
-		
-		t.start();
-		fheap->DecreaseKey(node, i + 1);
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Partial p_test = p;
+        int size = p.late()/2;
+        if(size % 2 == 0) {
+            size++;
+        }
+        t.start();
+        p_test.Query(1, size);
 		t.stop();
-		comparisons += fheap->comparisons;
+
     }
 
     std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
 }
 
-void Tester::QueueDecreaseKeyRandom(const unsigned int times)
+void Tester::PartialQueryBottom(const unsigned int times)
 {
-	auto tree = MakeQueue();  
-    for(unsigned i = times; i > 0; i--) {
-        tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
+    Partial p;
+    for(unsigned i = 0; i <= times; i++) {
+        p.Insert(i+1);
     }
-	tree->DeleteMin();
 
 	Timer t;
-	unsigned int comparisons = 0;
-	for(unsigned i = REPS + times + 1; i > times + 1; i--) {
-		std::shared_ptr<INode> node = tree->Insert(RAN_NUMS.at(i), RAN_NUMS.at(i+1));
-		tree->DeleteMin();
-
-		tree->comparisons = 0;
-		
-		t.start();
-		tree->DecreaseKey(node, i + 1);
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Partial p_test = p;
+        t.start();
+        p_test.Query(1, 3);
 		t.stop();
-		comparisons += tree->comparisons;
+
     }
 
-   std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
 }
 
-void Tester::TestQueue(const unsigned int highpower) {
+
+
+void Tester::FullyQueryTop(const unsigned int times)       
+{
+    Fully f;
+    for(unsigned i = 0; i <= times; i++) {
+        f.Insert(i+1);
+    }
+
+	Timer t;
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Fully f_test = f;
+        t.start();
+        f_test.Query(1);
+		t.stop();
+
+    }
+
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
+
+
+}
+
+void Tester::FullyQueryMid(const unsigned int times)
+{
+    Fully f;
+    for(unsigned i = 0; i <= times; i++) {
+        f.Insert(i+1);
+    }
+
+	Timer t;
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Fully f_test = f;
+        int size = f.late()/2;
+        if(size % 2 == 0) {
+            size++;
+        }
+        t.start();
+        f_test.Query(1, size);
+		t.stop();
+
+    }
+
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
+
+
+
+}
+
+void Tester::FullyQueryBottom(const unsigned int times)
+{
+    Fully f;
+    for(unsigned i = 0; i <= times; i++) {
+        f.Insert(i+1);
+    }
+
+	Timer t;
+    unsigned int comparisons = 0;
+    for(unsigned i = times + 1; i < REPS + times + 1; i++) {
+        Fully f_test = f;
+        t.start();
+        f_test.Query(1, 3);
+		t.stop();
+
+    }
+
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << comparisons << " comparisons" << std::endl;
+
+}
+
+void Tester::TestRetro(const unsigned int highpower) {
 	std::cout << "\n *** >>> Testing Queue <<< ***\n" << std::endl;
 	unsigned int i;
 	int power;
@@ -242,82 +313,109 @@ void Tester::TestQueue(const unsigned int highpower) {
 	i = 4;
     power = 2;
 	
-	std::cout << "\nTesting InsertBig\n" << std::endl;
+	std::cout << "\nTesting PartialUpdateTop\n" << std::endl;
 	
 	while(power <= highpower) {
-        QueueInsertBig(i);
+        PartialUpdateTop(i);
         power++;
         i = pow(2,power);
     }
 	
-	std::cout << "\nTesting InsertSmall\n" << std::endl;
+	std::cout << "\nTesting PartialUpdateMid\n" << std::endl;
 	i = 4;
     power = 2;
 	while(power <= highpower) {
-        QueueInsertSmall(i);
+        PartialUpdateMid(i);
         power++;
         i = pow(2,power);
     }
 	
-	std::cout << "\nTesting InsertRandom\n" << std::endl;
+	std::cout << "\nTesting PartialUpdateBottom\n" << std::endl;
     i = 4;
     power = 2;
 	while(power <= highpower) {
-        QueueInsertRandom(i);
+        PartialUpdateBottom(i);
         power++;
         i = pow(2,power);
     }
 
-	std::cout << "\nTesting DeleteMinBig\n" << std::endl;
+	std::cout << "\nTesting FullyUpdateTop\n" << std::endl;
 	i = 4;
     power = 2;
 	while(power <= highpower) {
-        QueueDeleteMinBig(i);
+        FullyUpdateTop(i);
         power++;
         i = pow(2,power);
     }
 
-	std::cout << "\nTesting DeleteMinSmall\n" << std::endl;
+	std::cout << "\nTesting FullyUpdateMid\n" << std::endl;
 	i = 4;
     power = 2;
 	while(power <= highpower) {
-        QueueDeleteMinSmall(i);
+        FullyUpdateMid(i);
         power++;
         i = pow(2,power);
     }
 
-    std::cout << "\nTesting DeleteMinRandom\n" << std::endl;
+    std::cout << "\nTesting FullyUpdateBottom\n" << std::endl;
     i = 4;
     power = 2;
 	while(power <= highpower) {
-        QueueDeleteMinRandom(i);
+        FullyUpdateBottom(i);
+        power++;
+        i = pow(2,power);
+    }
+
+    std::cout << "\nTesting PartialQueryTop\n" << std::endl;
+	i = 4;
+    power = 2;
+	while(power <= highpower) {
+		PartialQueryTop(i);
+        power++;
+        i = pow(2,power);
+    }
+
+	std::cout << "\nTesting PartialQueryMid\n" << std::endl;
+	i = 4;
+    power = 2;
+	while(power <= highpower) {
+        PartialQueryMid(i);
+        power++;
+        i = pow(2,power);
+    }
+
+	std::cout << "\nTesting PartialQueryBottom\n" << std::endl;
+	i = 4;
+    power = 2;
+	while(power <= highpower) {
+		PartialQueryBottom(i);
         power++;
         i = pow(2,power);
     }
 	
-	std::cout << "\nTesting DecreaseKeyBig\n" << std::endl;
+	std::cout << "\nTesting FullyQueryTop\n" << std::endl;
 	i = 4;
     power = 2;
 	while(power <= highpower) {
-		QueueDecreaseKeyBig(i);
+		FullyQueryTop(i);
         power++;
         i = pow(2,power);
     }
 
-	std::cout << "\nTesting DecreaseKeySmall\n" << std::endl;
+	std::cout << "\nTesting FullyQueryMid\n" << std::endl;
 	i = 4;
     power = 2;
 	while(power <= highpower) {
-		QueueDecreaseKeySmall(i);
+        FullyQueryMid(i);
         power++;
         i = pow(2,power);
     }
 
-	std::cout << "\nTesting DecreaseKeyRandom\n" << std::endl;
+	std::cout << "\nTesting FullyQueryBottom\n" << std::endl;
 	i = 4;
     power = 2;
 	while(power <= highpower) {
-		QueueDecreaseKeyRandom(i);
+		FullyQueryBottom(i);
         power++;
         i = pow(2,power);
     }
@@ -339,5 +437,5 @@ void Tester::run(const unsigned int highpower) {
     std::random_shuffle(RAN_NUMS.begin(), RAN_NUMS.end()); // Shuffle the data
     std::reverse(DOWNS.begin(), DOWNS.end()); // Reverse the data
 
-	TestQueue(highpower);
+	TestRetro(highpower);
 }

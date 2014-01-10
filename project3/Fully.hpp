@@ -15,6 +15,8 @@ class Fully : public IRetro {
         void Test();
         void printInfo();
         int Query(int x, int time=0);
+        // Return the time of the latest action performed
+        int late() { return repo.at(repo.size()-1).late(); }
 
 
     private:
