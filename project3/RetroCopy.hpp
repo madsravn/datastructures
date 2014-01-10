@@ -4,17 +4,19 @@
 #include <vector>
 #include <memory>
 #include "IRetro.hpp"
+#include <map>
 
 class RetroCopy {
 	public :
 		RetroCopy();
 		~RetroCopy();
-		void add(std::shared_ptr<IRetro> tree);
-		std::shared_ptr<IRetro> get(int time);
+		void add(std::map<int, int> tree);
+		int size();
+		std::map<int, int> get(int time);
 		void clear();
 
 	private :
-		std::vector<std::shared_ptr<IRetro>> trees;
+		std::vector<std::map<int, int>> trees;
 		int currentTime;
 };
 

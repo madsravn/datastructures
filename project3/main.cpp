@@ -10,7 +10,7 @@ int main() {
 
 
     Tester t;
-    t.run(7);
+    t.run(2);
     // Eksempel på tilfældige tal.
     /*unsigned int seed = 12345;
     std::default_random_engine dre(seed);
@@ -75,6 +75,6 @@ int main() {
     bheap->printInformation();
     */
     //std::cout << "It took: " << t.duration().count() << " milliseconds" << std::endl;
-
+	std::cin.get();
     return 0;
 }
