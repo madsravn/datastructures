@@ -47,6 +47,8 @@ Partial::Query(int x, int time) {
                 temp.push_back(repository.at(i));
                 Undo(repository.at(i));
                 repository.pop_back();
+            } else {
+                break;
             }
 
         }
@@ -71,6 +73,8 @@ Partial::GetTree(int time) {
                 temp.push_back(repository.at(i));
                 Undo(repository.at(i));
                 repository.pop_back();
+            } else {
+                break;
             }
 
         }
@@ -160,6 +164,8 @@ Partial::doThis(int x, int time, std::string action) {
                 temp.push_back(repository.at(i));
                 Undo(repository.at(i));
                 repository.pop_back();
+            } else {
+                break;
             }
 
         }
