@@ -8,7 +8,7 @@ class Tester {
 
     public:
         Tester();
-		static const int REPS = 8;
+		static const int REPS = 20;
 		std::vector<int> RAN_NUMS, UPS, DOWNS;
 
 		void PartialUpdateTop(const unsigned int times);
@@ -28,7 +28,9 @@ class Tester {
         void FullyQueryBottom(const unsigned int times);
 
 		void TestRetro(const unsigned int highpower);
-		void TestRetroCopy(const unsigned int highpower);
+		void TestRetroCopyPartial(const unsigned int highpower);
+		void TestRetroCopyFully(const unsigned int highpower);
+		void TestRetroCopyComparison(const unsigned int highpower);
 
 		void printMap(std::map<int, int> pmap, std::map<int, int> rmap);
         void run(const unsigned int highpower);

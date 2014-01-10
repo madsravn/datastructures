@@ -317,7 +317,9 @@ void Tester::TestRetro(const unsigned int highpower) {
 	i = 4;
     power = 2;	
 	while(power <= highpower) {
-		TestRetroCopy(i);
+		TestRetroCopyPartial(i);
+		TestRetroCopyFully(i);
+		TestRetroCopyComparison(i);
         power++;
         i = pow(2,power);
     }
@@ -432,8 +434,8 @@ void Tester::TestRetro(const unsigned int highpower) {
     }*/
 }
 
-void Tester::TestRetroCopy(const unsigned int highpower) {
-	std::cout << "\Testing Retro Copy\n" << std::endl;
+void Tester::TestRetroCopyPartial(const unsigned int highpower) {
+	std::cout << "\nTesting Partial Retro Copy" << std::endl;
 	int i = 4;
 	int power = 2;
 	RetroCopy retroCopy = RetroCopy();
@@ -441,12 +443,6 @@ void Tester::TestRetroCopy(const unsigned int highpower) {
 	Partial p;
 	for(unsigned i = 0; i < REPS; i++) {
 		p.Insert(i, p.late() + 1);
-	}
-
-	if (p.GetTree(p.late()) == p.GetTree(p.late() + 1)) {
-		std::cout << "Late is same as late + 1" << std::endl;
-	} else {
-		std::cout << "Late is NOT same as late + 1" << std::endl;
 	}
 
 	retroCopy.add(p.GetTree(p.late()));
@@ -461,29 +457,84 @@ void Tester::TestRetroCopy(const unsigned int highpower) {
 		int x = 1;
 		std::map<int, int> pmap = p.GetTree(p.late() - i);
 		std::map<int, int> rmap = retroCopy.get(retroCopy.size() - 1 - i);
-			
-		/*printMap(pmap, rmap);			
-		if( pmap == rmap ) {
-			std::cout << "pmap and rmap are equal for i = " << i << std::endl;
-		} else {
-			std::cout << "pmap and rmap are NOT equal for i = " << i << std::endl;
-		}*/	
+		//printMap(pmap, rmap);
+		std::cout << ((pmap == rmap) ? "Maps are equal" : "Maps are NOT equal") << std::endl;
+	}
+}
+
+void Tester::TestRetroCopyFully(const unsigned int highpower) {
+	std::cout << "\nTesting Fully Retro Copy" << std::endl;
+	int i = 4;
+	int power = 2;
+	RetroCopy retroCopy = RetroCopy();
+
+	Fully f;
+	for(unsigned i = 0; i < REPS; i++) {
+		f.Insert(i, f.late() + 1);
+	}
+
+	retroCopy.add(f.GetTree(f.late()));
+
+	// Add a bunch of inserts to both trees
+	for (unsigned i = REPS; i < REPS + REPS; i++) {			
+		f.Insert(i, f.late() + 1);
+		retroCopy.add(f.GetTree(f.late()));
+	}
+
+	for (unsigned i = 0; i < REPS; i++) {
+		int x = 1;
+		std::map<int, int> fmap = f.GetTree(f.late() - i);
+		std::map<int, int> rmap = retroCopy.get(retroCopy.size() - 1 - i);
+		//printMap(fmap, rmap);
+		std::cout << ((fmap == rmap) ? "Maps are equal" : "Maps are NOT equal") << std::endl;
+	}
+}
+
+void Tester::TestRetroCopyComparison(const unsigned int highpower) {
+	std::cout << "\nTesting Retro Copy Comparison" << std::endl;
+	int i = 4;
+	int power = 2;
+
+	Fully f;
+	Partial p;
+	for(unsigned i = 0; i < REPS + REPS; i++) {
+		f.Insert(i, f.late() + 1);
+		p.Insert(i, p.late() + 1);
+	}
+
+	// Add a bunch of inserts to both trees
+	for(unsigned i = 0; i < REPS; i++) {		
+		f.Delete(i, f.late() - i);
+		p.Delete(i, p.late() - i);
 	}
 
 
+	for (unsigned i = 0; i < REPS; i++) {
+		int x = 1;
+		std::map<int, int> fmap = f.GetTree(f.late() - i);
+		std::map<int, int> pmap = p.GetTree(p.late() - i);
+		//printMap(fmap, rmap);
+
+		if (fmap == pmap) {
+			std::cout << "Maps are equal" << std::endl;
+		} else {
+			std::cout << "Maps are NOT equal" << std::endl;
+			printMap(fmap, pmap);
+		}
+	}
 }
 
 void Tester::printMap(std::map<int, int> pmap, std::map<int, int> rmap) {
-	std::cout << "\npmap" << std::endl;
+	std::cout << "\nmap1" << std::endl;
 	for(auto pit = pmap.cbegin(); pit != pmap.cend(); ++pit) {
 		std::cout << pit->second << "\t";
 	}
 
-	std::cout << "\nrmap" << std::endl;
+	std::cout << "\nmap2" << std::endl;
 	for(auto rit = rmap.cbegin(); rit != rmap.cend(); ++rit) {
 		std::cout << rit->second << "\t";
 	}
-	std::cout << std::endl;
+	std::cout << std::endl;	
 }
 
 void Tester::run(const unsigned int highpower) {	
