@@ -38,7 +38,6 @@ Partial::FindElement(int x) {
 
 int
 Partial::Query(int x, int time) {
-    int element = -1;
     if(time > latest) {
        return FindElement(x); 
     } else {
@@ -53,23 +52,19 @@ Partial::Query(int x, int time) {
             }
 
         }
-        element = FindElement(x); 
+        return FindElement(x); 
 
         for(int i = temp.size()-1; i >= 0; --i) {
             repository.push_back(temp.at(i));
             Redo(temp.at(i));
         }
     }
-    return element;
+    return -1;
 } 
 
 std::map<int, int>
 Partial::GetTree(int time) {
-<<<<<<< HEAD
 	std::map<int,int> queryt;
-=======
-    std::map<int, int> rtree;
->>>>>>> 430915a0f9dc031495394d843ab6f9ed6c031336
     if(time > latest) {
        return bt;
     } else {
@@ -84,21 +79,13 @@ Partial::GetTree(int time) {
             }
 
         }
-<<<<<<< HEAD
 		queryt = bt;
         
-=======
-        rtree = bt; 
->>>>>>> 430915a0f9dc031495394d843ab6f9ed6c031336
         for(int i = temp.size()-1; i >= 0; --i) {
             repository.push_back(temp.at(i));
             Redo(temp.at(i));
         }
-<<<<<<< HEAD
         return queryt;
-=======
-        return rtree;
->>>>>>> 430915a0f9dc031495394d843ab6f9ed6c031336
 
     }
     
