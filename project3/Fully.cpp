@@ -3,7 +3,7 @@
 
 Fully::Fully() {
     latest = 0;
-    m = 32;
+    m = 1024;
     sqrtm = ceil(sqrt(m));
     // Current D_n
     current = 0;

@@ -64,6 +64,7 @@ Partial::Query(int x, int time) {
 
 std::map<int, int>
 Partial::GetTree(int time) {
+	std::map<int,int> queryt;
     if(time > latest) {
        return bt;
     } else {
@@ -78,12 +79,13 @@ Partial::GetTree(int time) {
             }
 
         }
+		queryt = bt;
         
         for(int i = temp.size()-1; i >= 0; --i) {
             repository.push_back(temp.at(i));
             Redo(temp.at(i));
         }
-        return bt;
+        return queryt;
 
     }
     

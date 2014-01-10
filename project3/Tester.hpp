@@ -8,7 +8,7 @@ class Tester {
 
     public:
         Tester();
-		static const int REPS = 20;
+		static const int REPS = 10;
 		std::vector<int> RAN_NUMS, UPS, DOWNS;
 
 		void PartialUpdateTop(const unsigned int times);

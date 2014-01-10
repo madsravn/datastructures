@@ -457,7 +457,7 @@ void Tester::TestRetroCopyPartial(const unsigned int highpower) {
 		int x = 1;
 		std::map<int, int> pmap = p.GetTree(p.late() - i);
 		std::map<int, int> rmap = retroCopy.get(retroCopy.size() - 1 - i);
-		//printMap(pmap, rmap);
+		printMap(pmap, rmap);
 		std::cout << ((pmap == rmap) ? "Maps are equal" : "Maps are NOT equal") << std::endl;
 	}
 }
@@ -485,7 +485,7 @@ void Tester::TestRetroCopyFully(const unsigned int highpower) {
 		int x = 1;
 		std::map<int, int> fmap = f.GetTree(f.late() - i);
 		std::map<int, int> rmap = retroCopy.get(retroCopy.size() - 1 - i);
-		//printMap(fmap, rmap);
+		printMap(fmap, rmap);
 		std::cout << ((fmap == rmap) ? "Maps are equal" : "Maps are NOT equal") << std::endl;
 	}
 }
@@ -497,25 +497,25 @@ void Tester::TestRetroCopyComparison(const unsigned int highpower) {
 
 	Fully f;
 	Partial p;
-	for(unsigned i = 0; i < REPS + REPS; i++) {
+	// Inserting REPS + REPS times
+	for(unsigned i = 0; i < REPS + REPS; i += 2) {
 		f.Insert(i, f.late() + 1);
 		p.Insert(i, p.late() + 1);
         std::cout << "Inserting " << i << " at " << p.late()+1 << " == " << f.late()+1 << std::endl;
-
 	}
 
-	for(unsigned i = 0; i < REPS; i++) {		
-		f.Delete(i, f.late() - i);
-		p.Delete(i, p.late() - i);
-
+	// Deleting REPS + REPS times
+	for(unsigned i = 1; i < REPS + REPS; i += 2) {		
+		f.Delete(i, f.late() - 1);
+		p.Delete(i, p.late() - 1);
+        std::cout << "Deleting " << i << " at " << p.late()-i << " == " << f.late()-i << std::endl;	
 	}
 
-
-	for (unsigned i = 0; i < REPS; i++) {
+	// Checking for equality
+	for (unsigned i = 0; i < REPS + REPS; i++) {
 		int x = 1;
 		std::map<int, int> fmap = f.GetTree(f.late() - i);
 		std::map<int, int> pmap = p.GetTree(p.late() - i);
-        std::cout << "Deleting " << i << " at " << p.late()-i << " == " << f.late()-i << std::endl;
 		//printMap(fmap, rmap);
 
 		if (fmap == pmap) {
