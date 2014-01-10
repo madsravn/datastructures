@@ -500,12 +500,14 @@ void Tester::TestRetroCopyComparison(const unsigned int highpower) {
 	for(unsigned i = 0; i < REPS + REPS; i++) {
 		f.Insert(i, f.late() + 1);
 		p.Insert(i, p.late() + 1);
+        std::cout << "Inserting " << i << " at " << p.late()+1 << " == " << f.late()+1 << std::endl;
+
 	}
 
-	// Add a bunch of inserts to both trees
 	for(unsigned i = 0; i < REPS; i++) {		
 		f.Delete(i, f.late() - i);
 		p.Delete(i, p.late() - i);
+
 	}
 
 
@@ -513,6 +515,7 @@ void Tester::TestRetroCopyComparison(const unsigned int highpower) {
 		int x = 1;
 		std::map<int, int> fmap = f.GetTree(f.late() - i);
 		std::map<int, int> pmap = p.GetTree(p.late() - i);
+        std::cout << "Deleting " << i << " at " << p.late()-i << " == " << f.late()-i << std::endl;
 		//printMap(fmap, rmap);
 
 		if (fmap == pmap) {

@@ -78,13 +78,15 @@ Partial::GetTree(int time) {
             }
 
         }
-        return bt;
-
+        
         for(int i = temp.size()-1; i >= 0; --i) {
             repository.push_back(temp.at(i));
             Redo(temp.at(i));
         }
+        return bt;
+
     }
+    
 }
 
 

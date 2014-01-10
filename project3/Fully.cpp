@@ -3,7 +3,7 @@
 
 Fully::Fully() {
     latest = 0;
-    m = 1024;
+    m = 32;
     sqrtm = ceil(sqrt(m));
     // Current D_n
     current = 0;
@@ -30,7 +30,7 @@ Fully::Query(int x, int time) {
     if(time == 0) {
         time = latest+1;
     }
-    int i = FindPosition(i);
+    int i = FindPosition(time);
     return repo.at(i).Query(x);
 }
 
