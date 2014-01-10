@@ -7,7 +7,7 @@ class VEBTester {
 
     public:
         VEBTester();
-		static const int REPS = 10000;
+		static const int REPS = 100000;
 		std::vector<int> RAN_NUMS, UPS, DOWNS;
 
         void VEBTreeInsert(const unsigned int times, std::vector<int> build_range, std::vector<int> update_range);
