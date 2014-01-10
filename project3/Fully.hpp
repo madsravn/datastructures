@@ -18,6 +18,7 @@ class Fully : public IRetro {
         // Return the time of the latest action performed
         int late() { return repo.at(repo.size()-1).late(); }
         void Rebalance();
+        std::map<int, int> GetTree(int time);
 
 
     private:

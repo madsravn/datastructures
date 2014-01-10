@@ -91,6 +91,12 @@ Fully::FindPosition(int time) {
     return repo.size()-1;
 }
 
+std::map<int, int>
+Fully::GetTree(int time) {
+    int i = FindPosition(time);
+    return repo.at(i).GetTree(time);
+}
+
 int
 Fully::size(int position) {
     if(position == 0) {
