@@ -16,7 +16,7 @@ void RetroCopy::add(std::shared_ptr<IRetro> tree) {
 }
 
 std::shared_ptr<IRetro> RetroCopy::get(int time) {
-	if (time < 0 || time > trees.size) 
+	if (time < 0 || time > trees.size()) 
 		std::cout << "Exception occurred: time out of range" << std::endl;
 
 	return trees.at(time);
