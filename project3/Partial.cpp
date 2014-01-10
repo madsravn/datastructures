@@ -60,6 +60,29 @@ Partial::Query(int x, int time) {
     return -1;
 } 
 
+std::map<int, int>
+Partial::GetTree(int time) {
+    if(time > latest) {
+       return bt;
+    } else {
+        std::vector<ActionTimeElement> temp;
+        for(int i = repository.size()-1; i >= 0; --i) {
+            if(repository.at(i).time > time) {
+                temp.push_back(repository.at(i));
+                Undo(repository.at(i));
+                repository.pop_back();
+            }
+
+        }
+        return bt;
+
+        for(int i = temp.size()-1; i >= 0; --i) {
+            repository.push_back(temp.at(i));
+            Redo(temp.at(i));
+        }
+    }
+}
+
 
 // Undo or "reverse" a given action. 
 // "insert 5" becomes "delete 5"

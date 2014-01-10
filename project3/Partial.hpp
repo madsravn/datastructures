@@ -28,6 +28,7 @@ class Partial : public IRetro {
         int late() { return latest; }
         int Query(int x, int time=0);
         int FindElement(int x);
+        std::map<int,int> GetTree(int time);
 
 
     private:
