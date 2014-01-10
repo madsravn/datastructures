@@ -7,7 +7,7 @@ MKDIR		= @mkdir
 MKDEP		= @mkdep
 ECHO		= @echo
 LDFLAGS		= -O3 
-CFLAGS          = -O3 -std=c++11 -ggdb
+CFLAGS          = -O3 -std=c++11 #-ggdb
 
 .SUFFIXES: .cpp .h .d .o
 
