@@ -33,7 +33,7 @@ RBTester::RBTreeInsertBig(const unsigned int times) {
 		//std::cout << tree->toString("after deleteMin");
     }
 
-    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons)/REPS << " comparisons" << std::endl;
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons) << " comparisons" << std::endl;
 }
 
 void
@@ -56,7 +56,7 @@ RBTester::RBTreeInsertSmall(const unsigned int times) {
 		tree->deleteMin();
     }
     t.stop();
-    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons)/REPS << " comparisons" << std::endl;
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons) << " comparisons" << std::endl;
 }
 
 void RBTester::RBTreeDeleteMinBig(const unsigned int times) {
@@ -77,7 +77,7 @@ void RBTester::RBTreeDeleteMinBig(const unsigned int times) {
 		tree->insert(i+1);
     }
 
-   std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons)/REPS << " comparisons" << std::endl;
+   std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons) << " comparisons" << std::endl;
 }
 
 void RBTester::RBTreeDeleteMinSmall(const unsigned int times) {
@@ -98,7 +98,7 @@ void RBTester::RBTreeDeleteMinSmall(const unsigned int times) {
 		tree->insert(i+1);
     }
 
-    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons)/REPS << " comparisons" << std::endl;
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons) << " comparisons" << std::endl;
 }
 
 void RBTester::RBTreeFindSuccSmall(const unsigned int times) {
@@ -117,7 +117,7 @@ void RBTester::RBTreeFindSuccSmall(const unsigned int times) {
 		comparisons += tree->comparisons;
     }
 
-    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons)/REPS << " comparisons" << std::endl;
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons) << " comparisons" << std::endl;
 }
 
 void RBTester::RBTreeFindSuccBig(const unsigned int times) {
@@ -136,7 +136,7 @@ void RBTester::RBTreeFindSuccBig(const unsigned int times) {
 		comparisons += tree->comparisons;
     }
 
-    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons)/REPS << " comparisons" << std::endl;
+    std::cout << "N: \t" << times << "\t" << t.duration().count() <<  " ms\t" << float(comparisons) << " comparisons" << std::endl;
 }
 
 void RBTester::RBTreeFindSuccRandom(const unsigned int times) {

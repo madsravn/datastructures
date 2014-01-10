@@ -191,12 +191,14 @@ void QueueTester::QueueDecreaseKeySmall(const unsigned int times)
 	unsigned int comparisons = 0;
     for(unsigned i = REPS; i > 0; i--) {
         
-		std::shared_ptr<INode> node = fheap->Insert(i+1,i);
+		std::shared_ptr<INode> node = fheap->Insert(1,i);
+		//std::shared_ptr<INode> node = fheap->Insert(i+1,i);
 
 		fheap->comparisons = 0;
 		
 		t.start();
-		fheap->DecreaseKey(node, i + 1);
+		fheap->DecreaseKey(node, 1);
+		//fheap->DecreaseKey(node, i + 1);
 		t.stop();
 		comparisons += fheap->comparisons;
 
@@ -218,13 +220,16 @@ void QueueTester::QueueDecreaseKeyBig(const unsigned int times)
 	unsigned int comparisons = 0;
     for(unsigned i = times; i < REPS + times; i++) {
         
-		std::shared_ptr<INode> node = fheap->Insert(i+1,i);
+		
+		std::shared_ptr<INode> node = fheap->Insert(times + 2,i);
+		//std::shared_ptr<INode> node = fheap->Insert(i+1,i);
 		fheap->DeleteMin();
 
 		fheap->comparisons = 0;
 		
 		t.start();
-		fheap->DecreaseKey(node, i + 1);
+		fheap->DecreaseKey(node, times + 2);
+		//fheap->DecreaseKey(node, i + 1);
 		t.stop();
 		comparisons += fheap->comparisons;
     }
@@ -265,7 +270,7 @@ void QueueTester::TestQueue(const unsigned int highpower) {
 	
 	i = 4;
     power = 2;
-	
+	/*
 	std::cout << "\nTesting InsertBig\n" << std::endl;
 	
 	while(power <= highpower) {
@@ -335,7 +340,7 @@ void QueueTester::TestQueue(const unsigned int highpower) {
 		QueueDecreaseKeySmall(i);
         power++;
         i = pow(2,power);
-    }
+    }*/
 
 	std::cout << "\nTesting DecreaseKeyRandom\n" << std::endl;
 	i = 4;
